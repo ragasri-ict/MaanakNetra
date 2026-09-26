@@ -1,0 +1,817 @@
+[
+  {
+    "is_number": "IS 14220",
+    "title": "Openwell Submersible Pumpsets — Specification",
+    "scope": "Covers requirements for openwell submersible pumpsets (monoset or motor and pump coupled) for handling clear, cold water up to 33°C, for agricultural and rural water supply purposes up to 45 kW.",
+    "category": "Mechanical Engineering / Fluid Flow Systems",
+    "product_types": [
+      "Openwell Submersible Pumpset",
+      "Submersible Monobloc Pump",
+      "Agricultural Openwell Pump"
+    ],
+    "keywords": [
+      "openwell",
+      "submersible pump",
+      "clear cold water",
+      "overall efficiency",
+      "head",
+      "discharge",
+      "motor rating"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 14220:2018",
+    "publication_year": 2018,
+    "amendments": [
+      {
+        "amendment_number": "Amendment No. 1",
+        "issue_date": "2020-03",
+        "gazette_notification": null,
+        "summary": "Updates to testing tolerances and cable gland specifications as per Product Manual PM/IS 14220.",
+        "affected_clauses": ["Clause 7.2", "Clause 14.1"]
+      }
+    ],
+    "supersedes": ["IS 14220:1994"],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 9283",
+      "IS 5120",
+      "IS 11346"
+    ],
+    "test_standards": [
+      "IS 11346",
+      "IS 9283"
+    ],
+    "safety_standards": [
+      "IS 9283"
+    ],
+    "installation_standards": [
+      "IS 14220"
+    ],
+    "related_standards": [
+      "IS 8034",
+      "IS 9079"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Overall Efficiency",
+        "governing_clause": "Clause 9.1, Table 1",
+        "requirement_text": "Overall efficiency of the openwell pumpset shall not be less than the values specified in Table 1 corresponding to the rated head and discharge point. Tested strictly in accordance with IS 11346.",
+        "min_value": null,
+        "max_value": null,
+        "unit": "%",
+        "test_method_standard": "IS 11346",
+        "test_method_clause": "Clause 8",
+        "notes": "VERIFIED FACT: Efficiency is determined dynamically from Table 1 curves based on duty point (head H and discharge Q) and tested as per IS 11346. PENDING VERIFICATION: Numerical scalar cutoff (such as fixed 35%) is not universally valid across all ratings and must not be used as a hard regulatory rule without duty point inputs."
+      },
+      {
+        "parameter_name": "Hydrostatic Test Pressure",
+        "governing_clause": "Clause 13.1",
+        "requirement_text": "Pump casing shall withstand hydrostatic test pressure of 1.5 times the maximum discharge pressure or 2.0 bar, whichever is higher, for a minimum duration of 2 minutes without leakage.",
+        "min_value": 2.0,
+        "max_value": null,
+        "unit": "bar",
+        "test_method_standard": "IS 5120",
+        "test_method_clause": "Clause 11.2",
+        "notes": "VERIFIED FACT: 1.5x max discharge pressure or 2.0 bar minimum for 2 minutes without leakage."
+      },
+      {
+        "parameter_name": "Operating Voltage Range",
+        "governing_clause": "Clause 6.2",
+        "requirement_text": "Motor shall be capable of operating satisfactorily with supply voltage variation of +6% to -15% of rated voltage (415V for 3-phase, 240V for 1-phase).",
+        "min_value": 352.0,
+        "max_value": 440.0,
+        "unit": "V",
+        "test_method_standard": "IS 9283",
+        "test_method_clause": "Clause 14",
+        "notes": "VERIFIED FACT: Evaluated at rated frequency of 50 Hz ± 3%."
+      },
+      {
+        "parameter_name": "Insulation Resistance",
+        "governing_clause": "Clause 14.3",
+        "requirement_text": "Insulation resistance between winding and motor frame shall not be less than 20 Megaohms when measured with 500V DC megger in dry condition and 5 Megaohms after immersion test.",
+        "min_value": 5.0,
+        "max_value": null,
+        "unit": "MOhm",
+        "test_method_standard": "IS 9283",
+        "test_method_clause": "Clause 15.1",
+        "notes": "VERIFIED FACT: Minimum 5 Megaohms post-immersion with 500V DC test voltage."
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Product Certification)",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Conformity Assessment Regulations 2018, Product Manual PM/IS 14220"
+    },
+    "qco": {
+      "is_covered_by_qco": true,
+      "qco_title": "Pumps (Quality Control) Order, 2023",
+      "issuing_ministry": "Department for Promotion of Industry and Internal Trade (DPIIT)",
+      "order_number": "S.O. 4333(E)",
+      "gazette_date": "2023-10-06",
+      "effective_date": "2024-10-06",
+      "isi_mark_mandatory": true,
+      "exemption_provisions": "VERIFIED FACT: Statutory exemption applies to goods manufactured domestically exclusively for export. PENDING VERIFICATION: Specific phased enforcement transition dates for Micro and Small Enterprises under subsequent DPIIT facilitation orders."
+    },
+    "source": {
+      "portal_url": "https://www.bis.gov.in/wp-content/uploads/2024/07/PM-IS-14220.pdf",
+      "gazette_citation": "Gazette of India Extraordinary Part II Sec 3(ii) S.O. 4333(E)",
+      "official_publication_ref": "PM/IS 14220/3 July 2024",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Verified against BIS official Product Manual PM/IS 14220 and DPIIT Gazette notification S.O. 4333(E)."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-09-26T00:10:00Z",
+      "verification_method": "BIS_OFFICIAL_PRODUCT_MANUAL_AUDIT"
+    },
+    "last_verified": "2026-09-26T00:10:00Z"
+  },
+  {
+    "is_number": "IS 14220:1994",
+    "title": "Openwell Submersible Pumpsets — Specification (First Edition)",
+    "scope": "Original 1994 specification for openwell submersible pumpsets.",
+    "category": "Mechanical Engineering / Fluid Flow Systems",
+    "product_types": [
+      "Openwell Submersible Pumpset"
+    ],
+    "keywords": [
+      "openwell",
+      "submersible pump",
+      "superseded"
+    ],
+    "status": "SUPERSEDED",
+    "current_version": "IS 14220:1994",
+    "publication_year": 1994,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": "IS 14220:2018",
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 9283:1979",
+      "IS 5120:1977"
+    ],
+    "test_standards": [
+      "IS 11346"
+    ],
+    "safety_standards": [],
+    "installation_standards": [],
+    "related_standards": [],
+    "structured_parameters": [
+      {
+        "parameter_name": "Overall Efficiency",
+        "governing_clause": "Clause 8.1",
+        "requirement_text": "Efficiency limits based on superseded 1994 baseline tables (lower than 2018 First Revision requirements).",
+        "min_value": null,
+        "max_value": null,
+        "unit": "%",
+        "test_method_standard": "IS 11346",
+        "test_method_clause": "Clause 7",
+        "notes": "Superseded baseline edition."
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Obsolete Edition)",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": null
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": null,
+      "issuing_ministry": null,
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": null
+    },
+    "source": {
+      "portal_url": "https://www.bis.gov.in/wp-content/uploads/2024/07/PM-IS-14220.pdf",
+      "gazette_citation": null,
+      "official_publication_ref": "IS 14220:1994 (superseded by First Revision IS 14220:2018)",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "VERIFIED FACT: Recorded to enable deterministic detection of obsolete tender citations."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-09-26T00:10:00Z",
+      "verification_method": "BIS_PORTAL_REVISION_TRACKING"
+    },
+    "last_verified": "2026-09-26T00:10:00Z"
+  },
+  {
+    "is_number": "IS 8034",
+    "title": "Submersible Pumpsets — Specification",
+    "scope": "Specifies requirements for deepwell / borehole submersible pumpsets (pumps directly driven by submersible motor) for clear, cold water.",
+    "category": "Mechanical Engineering / Pumps",
+    "product_types": [
+      "Borehole Submersible Pumpset",
+      "Deepwell Submersible Pumpset",
+      "Multi-stage Submersible Pump"
+    ],
+    "keywords": [
+      "submersible pump",
+      "borehole",
+      "deepwell",
+      "clear cold water",
+      "discharge",
+      "multi-stage"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 8034:2018",
+    "publication_year": 2018,
+    "amendments": [
+      {
+        "amendment_number": "Amendment No. 1",
+        "issue_date": "2021-02",
+        "gazette_notification": null,
+        "summary": "Clarification on test tolerances and sampling criteria.",
+        "affected_clauses": ["Clause 10.3"]
+      }
+    ],
+    "supersedes": ["IS 8034:2002"],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 9283",
+      "IS 5120",
+      "IS 11346"
+    ],
+    "test_standards": [
+      "IS 11346",
+      "IS 9283"
+    ],
+    "safety_standards": [
+      "IS 9283"
+    ],
+    "installation_standards": [
+      "IS 8034"
+    ],
+    "related_standards": [
+      "IS 14220",
+      "IS 9079"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Hydrostatic Casing Test",
+        "governing_clause": "Clause 14.1",
+        "requirement_text": "Pump bowl and discharge casing shall withstand test pressure of 1.5 times maximum shut-off head or 2.0 bar minimum for 2 minutes.",
+        "min_value": 2.0,
+        "max_value": null,
+        "unit": "bar",
+        "test_method_standard": "IS 5120",
+        "test_method_clause": "Clause 11",
+        "notes": "Zero leakage tolerance."
+      },
+      {
+        "parameter_name": "Sand Content Allowance",
+        "governing_clause": "Clause 5.2",
+        "requirement_text": "Pumpset shall be designed for water with maximum allowable sand content not exceeding 50 parts per million (50 ppm).",
+        "min_value": null,
+        "max_value": 50.0,
+        "unit": "ppm",
+        "test_method_standard": null,
+        "test_method_clause": null,
+        "notes": "Operational limit for standard borehole water."
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Product Certification)",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Product Manual PM/IS 8034"
+    },
+    "qco": {
+      "is_covered_by_qco": true,
+      "qco_title": "Pumps (Quality Control) Order, 2023",
+      "issuing_ministry": "Department for Promotion of Industry and Internal Trade (DPIIT)",
+      "order_number": "S.O. 4333(E)",
+      "gazette_date": "2023-10-06",
+      "effective_date": "2024-10-06",
+      "isi_mark_mandatory": true,
+      "exemption_provisions": "VERIFIED FACT: Statutory exemption applies to goods manufactured exclusively for export. PENDING VERIFICATION: Phased MSME transition dates."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails?is_no=IS+8034",
+      "gazette_citation": "Gazette of India S.O. 4333(E)",
+      "official_publication_ref": "PM/IS 8034 Third Revision",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Verified from official BIS Standards portal and PM/IS 8034."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-09-26T00:10:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOG_AUDIT"
+    },
+    "last_verified": "2026-09-26T00:10:00Z"
+  },
+  {
+    "is_number": "IS 9283",
+    "title": "Line Operated A.C. Motors for Submersible Pumpsets — Specification",
+    "scope": "Specifies requirements for 2-pole and 4-pole continuous-duty line-operated squirrel cage induction motors suitable for operating under water in submersible pumpsets.",
+    "category": "Electrotechnical / Rotating Electrical Machinery",
+    "product_types": [
+      "Submersible Motor",
+      "Water-Filled Submersible Motor",
+      "Oil-Filled Submersible Motor"
+    ],
+    "keywords": [
+      "submersible motor",
+      "squirrel cage",
+      "water filled",
+      "insulation resistance",
+      "high voltage test",
+      "thrust bearing"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 9283:2024",
+    "publication_year": 2024,
+    "amendments": [],
+    "supersedes": ["IS 9283:2013"],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 12615",
+      "IS 4905"
+    ],
+    "test_standards": [
+      "IS 9283",
+      "IS 12615"
+    ],
+    "safety_standards": [
+      "IS 9283"
+    ],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 14220",
+      "IS 8034"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "High Voltage Dielectric Test",
+        "governing_clause": "Clause 16.1",
+        "requirement_text": "Motors shall withstand 1000V + 2 times rated voltage (minimum 1500V rms) at 50 Hz for 1 minute between windings and frame.",
+        "min_value": 1500.0,
+        "max_value": null,
+        "unit": "V",
+        "test_method_standard": "IS 9283",
+        "test_method_clause": "Clause 16.1",
+        "notes": "1000V + 2xUn test condition for 60 seconds."
+      },
+      {
+        "parameter_name": "Locked Rotor Current",
+        "governing_clause": "Clause 12.2",
+        "requirement_text": "Starting locked-rotor current shall not exceed 6 times full-load current for direct-on-line starting.",
+        "min_value": null,
+        "max_value": 6.0,
+        "unit": "ratio",
+        "test_method_standard": "IS 9283",
+        "test_method_clause": "Clause 12.2",
+        "notes": "Ratio of locked-rotor current to full-load current (I_start / I_rated <= 6.0)."
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Product Certification)",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Sectional Committee ETD 15"
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": null,
+      "issuing_ministry": null,
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": null
+    },
+    "source": {
+      "portal_url": "https://lims.bis.gov.in/",
+      "gazette_citation": null,
+      "official_publication_ref": "IS 9283:2024 Third Revision (Published 2024)",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "VERIFIED FACT: Third revision gazetted in 2024 replacing IS 9283:2013. PENDING VERIFICATION: Do not treat any 12-month dual-running grace period as an automatic legal rule; acceptance of IS 9283:2013 during transition depends on specific procuring entity policy. Cross-applicability of mandatory IS 12615 IE2 QCO to wet submersible motors remains PENDING_VERIFICATION."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-09-26T00:10:00Z",
+      "verification_method": "BIS_LIMS_AND_STANDARDS_PORTAL"
+    },
+    "last_verified": "2026-09-26T00:10:00Z"
+  },
+  {
+    "is_number": "IS 9079",
+    "title": "Monoset Pumps for Clear, Cold Water for Agricultural and Water Supply Purposes — Specification",
+    "scope": "Specifies requirements for monoset (monobloc) pumps with common shaft or coupled construction for clear, cold water.",
+    "category": "Mechanical Engineering / Pumps",
+    "product_types": [
+      "Monobloc Pump",
+      "Monoset Agricultural Pump",
+      "Centrifugal Monobloc"
+    ],
+    "keywords": [
+      "monoset",
+      "monobloc",
+      "clear cold water",
+      "agricultural pump"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 9079:2018",
+    "publication_year": 2018,
+    "amendments": [],
+    "supersedes": ["IS 9079:2002"],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 5120",
+      "IS 11346"
+    ],
+    "test_standards": [
+      "IS 11346"
+    ],
+    "safety_standards": [],
+    "installation_standards": [
+      "IS 9079"
+    ],
+    "related_standards": [
+      "IS 14220",
+      "IS 6595 (Part 1)"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Minimum Head Tolerances",
+        "governing_clause": "Clause 11.1",
+        "requirement_text": "Delivery head tolerance at specified duty point shall be within ±4% or ±0.5 m, whichever is higher.",
+        "min_value": -4.0,
+        "max_value": 4.0,
+        "unit": "%",
+        "test_method_standard": "IS 11346",
+        "test_method_clause": "Clause 9",
+        "notes": "Tolerance on guaranteed head."
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Product Certification)",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Product Manual PM/IS 9079"
+    },
+    "qco": {
+      "is_covered_by_qco": true,
+      "qco_title": "Pumps (Quality Control) Order, 2023",
+      "issuing_ministry": "Department for Promotion of Industry and Internal Trade (DPIIT)",
+      "order_number": "S.O. 4333(E)",
+      "gazette_date": "2023-10-06",
+      "effective_date": "2024-10-06",
+      "isi_mark_mandatory": true,
+      "exemption_provisions": "VERIFIED FACT: Export goods exempted. PENDING VERIFICATION: MSME facilitation transition timeline."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails?is_no=IS+9079",
+      "gazette_citation": "S.O. 4333(E)",
+      "official_publication_ref": "IS 9079:2018 Third Revision",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Verified from official BIS Standards portal and QCO S.O. 4333(E)."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-09-26T00:10:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOG_AUDIT"
+    },
+    "last_verified": "2026-09-26T00:10:00Z"
+  },
+  {
+    "is_number": "IS 6595 (Part 1)",
+    "title": "Horizontal Centrifugal Pumps for Clear, Cold Water — Specification — Part 1: Agricultural and Rural Water Supply Purposes",
+    "scope": "Specifies requirements for rotodynamic horizontal centrifugal pumps for handling clear, cold water for agricultural and rural water supply purposes.",
+    "category": "Mechanical Engineering / Pumps",
+    "product_types": [
+      "Horizontal Centrifugal Pump",
+      "Surface Centrifugal Pump"
+    ],
+    "keywords": [
+      "horizontal centrifugal pump",
+      "clear cold water",
+      "rural water supply",
+      "agricultural"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 6595 (Part 1):2018",
+    "publication_year": 2018,
+    "amendments": [],
+    "supersedes": ["IS 6595 (Part 1):1993"],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 5120",
+      "IS 11346"
+    ],
+    "test_standards": [
+      "IS 11346"
+    ],
+    "safety_standards": [],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 9079"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Casing Pressure Test",
+        "governing_clause": "Clause 12.1",
+        "requirement_text": "Hydraulic pressure testing of pump casing shall be carried out at 1.5 times maximum discharge head for 2 minutes.",
+        "min_value": 1.5,
+        "max_value": null,
+        "unit": "ratio",
+        "test_method_standard": "IS 5120",
+        "test_method_clause": "Clause 11",
+        "notes": "Multiplied by maximum discharge head."
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Product Certification)",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Product Manual PM/IS 6595 Part 1"
+    },
+    "qco": {
+      "is_covered_by_qco": true,
+      "qco_title": "Pumps (Quality Control) Order, 2023",
+      "issuing_ministry": "Department for Promotion of Industry and Internal Trade (DPIIT)",
+      "order_number": "S.O. 4333(E)",
+      "gazette_date": "2023-10-06",
+      "effective_date": "2024-10-06",
+      "isi_mark_mandatory": true,
+      "exemption_provisions": "VERIFIED FACT: Export goods exempted. PENDING VERIFICATION: MSME facilitation transition timeline."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails?is_no=IS+6595+%28Part+1%29",
+      "gazette_citation": "S.O. 4333(E)",
+      "official_publication_ref": "IS 6595 (Part 1):2018 Third Revision",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Verified from BIS catalog."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-09-26T00:10:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOG_AUDIT"
+    },
+    "last_verified": "2026-09-26T00:10:00Z"
+  },
+  {
+    "is_number": "IS 8472",
+    "title": "Centrifugal Regenerative Pumps for Clear, Cold Water — Specification",
+    "scope": "Specifies requirements for centrifugal regenerative pumps (self-priming and non-self-priming) for clear, cold water for domestic, agricultural, and general purposes.",
+    "category": "Mechanical Engineering / Pumps",
+    "product_types": [
+      "Regenerative Pump",
+      "Self-Priming Regenerative Pump"
+    ],
+    "keywords": [
+      "regenerative pump",
+      "self-priming",
+      "peripheral pump",
+      "domestic pump"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 8472:2019",
+    "publication_year": 2019,
+    "amendments": [],
+    "supersedes": ["IS 8472:1998"],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 5120",
+      "IS 11346"
+    ],
+    "test_standards": [
+      "IS 11346"
+    ],
+    "safety_standards": [],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 9079"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Priming Time (Self-Priming Type)",
+        "governing_clause": "Clause 8.3",
+        "requirement_text": "Priming time shall not exceed 5 minutes at specified suction lift.",
+        "min_value": null,
+        "max_value": 5.0,
+        "unit": "min",
+        "test_method_standard": "IS 8472",
+        "test_method_clause": "Clause 14",
+        "notes": "Applies strictly to self-priming versions."
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Product Certification)",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": null
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": null,
+      "issuing_ministry": null,
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": null
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails?is_no=IS+8472",
+      "gazette_citation": null,
+      "official_publication_ref": "IS 8472:2019 Second Revision",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Verified from BIS catalog."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-09-26T00:10:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOG_AUDIT"
+    },
+    "last_verified": "2026-09-26T00:10:00Z"
+  },
+  {
+    "is_number": "IS 996",
+    "title": "Single-Phase A.C. Induction Motors for General Purpose — Specification",
+    "scope": "Specifies requirements for single-phase AC induction motors for general purpose and domestic appliance applications.",
+    "category": "Electrotechnical / Electric Motors",
+    "product_types": [
+      "Single Phase AC Motor",
+      "Capacitor Start Induction Run Motor",
+      "Fractional Horsepower Motor"
+    ],
+    "keywords": [
+      "single phase motor",
+      "induction motor",
+      "small motors",
+      "capacitor start"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 996:2009",
+    "publication_year": 2009,
+    "amendments": [],
+    "supersedes": ["IS 996:1979"],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 1231",
+      "IS 2223"
+    ],
+    "test_standards": [
+      "IS 996"
+    ],
+    "safety_standards": [],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 9283"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Voltage Variation Tolerance",
+        "governing_clause": "Clause 5.1",
+        "requirement_text": "Motors shall be capable of operating satisfactorily with voltage variation of ±10% at rated 240V.",
+        "min_value": 216.0,
+        "max_value": 264.0,
+        "unit": "V",
+        "test_method_standard": "IS 996",
+        "test_method_clause": "Clause 11",
+        "notes": "Supply frequency tolerance ±5%."
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Product Certification)",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": null
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": null,
+      "issuing_ministry": null,
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": null
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails?is_no=IS+996",
+      "gazette_citation": null,
+      "official_publication_ref": "IS 996:2009 Fourth Revision",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Fourth Revision (2009) confirmed on BIS portal; draft revisions under ETD 15 noted. Lifecycle transition and concurrent validity cut-off date remain PENDING_VERIFICATION."
+    },
+    "verification": {
+      "verification_status": "PENDING_VERIFICATION",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-09-26T00:10:00Z",
+      "verification_method": "BIS_PORTAL_PRELIMINARY_CROSS_CHECK"
+    },
+    "last_verified": "2026-09-26T00:10:00Z"
+  },
+  {
+    "is_number": "IS 12615",
+    "title": "Line Operated Three-Phase A.C. Motors (IE Code) — Specification",
+    "scope": "Specifies efficiency classes (IE2, IE3, IE4) and performance requirements for line-operated three-phase squirrel cage induction motors.",
+    "category": "Electrotechnical / Energy Efficiency & Electric Motors",
+    "product_types": [
+      "Three-Phase Induction Motor",
+      "Energy Efficient Motor (IE Code)",
+      "Industrial Squirrel Cage Motor"
+    ],
+    "keywords": [
+      "three-phase motor",
+      "energy efficient motor",
+      "IE code",
+      "IE2",
+      "IE3",
+      "induction motor"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 12615:2018",
+    "publication_year": 2018,
+    "amendments": [
+      {
+        "amendment_number": "Amendment No. 1",
+        "issue_date": "2021-06",
+        "gazette_notification": null,
+        "summary": "Mandating minimum IE2 efficiency level under central government energy efficiency orders.",
+        "affected_clauses": ["Clause 6.1"]
+      }
+    ],
+    "supersedes": ["IS 12615:2011"],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 15999 (Part 2/Sec 1)",
+      "IS 1231"
+    ],
+    "test_standards": [
+      "IS 15999 (Part 2/Sec 1)"
+    ],
+    "safety_standards": [
+      "IS 12615"
+    ],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 9283"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Minimum Efficiency Class",
+        "governing_clause": "Clause 6.1",
+        "requirement_text": "Motors covered under statutory QCO shall conform to minimum energy efficiency class IE2 as per Table 2.",
+        "min_value": null,
+        "max_value": null,
+        "unit": null,
+        "test_method_standard": "IS 15999 (Part 2/Sec 1)",
+        "test_method_clause": "Clause 7",
+        "notes": "Mandatory minimum IE2 efficiency level for line operated surface motors. PENDING VERIFICATION: Cross-applicability of this mandatory requirement to wet submersible motors (IS 9283) is pending official technical committee harmonisation ruling."
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Product Certification)",
+      "is_mandatory": true,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 Section 16"
+    },
+    "qco": {
+      "is_covered_by_qco": true,
+      "qco_title": "Energy Efficient Induction Motors — Three Phase Squirrel Cage (Quality Control) Order, 2017",
+      "issuing_ministry": "Department for Promotion of Industry and Internal Trade (DPIIT) / Ministry of Heavy Industries",
+      "order_number": "S.O. 167(E)",
+      "gazette_date": "2017-01-18",
+      "effective_date": "2018-01-01",
+      "isi_mark_mandatory": true,
+      "exemption_provisions": "VERIFIED FACT: Exempts motors specifically designed for traction, mining hazardous duty, or export. PENDING VERIFICATION: Wet submersible pump motors operating submerged are not explicitly enumerated under S.O. 167(E) and must not be automatically penalized without human verification."
+    },
+    "source": {
+      "portal_url": "https://dpiit.gov.in/sites/default/files/Order_Motors_18Jan2017.pdf",
+      "gazette_citation": "Gazette of India S.O. 167(E)",
+      "official_publication_ref": "IS 12615:2018 Third Revision",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Statutory QCO in force since 2018 for line-operated surface motors. Cross-application to submersible motors remains PENDING_VERIFICATION."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-09-26T00:10:00Z",
+      "verification_method": "GAZETTE_ORDER_AND_BIS_AUDIT"
+    },
+    "last_verified": "2026-09-26T00:10:00Z"
+  }
+]

@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://maanaknetra.gov.in/schemas/document.schema.json",
+  "title": "IngestedDocument",
+  "description": "Schema representing a structured, parsed procurement tender document across PDF, DOCX, and TXT formats.",
+  "type": "object",
+  "properties": {
+    "document_id": {
+      "type": "string",
+      "description": "Unique deterministic or UUID identifier for the ingested document."
+    },
+    "filename": {
+      "type": "string",
+      "description": "Original file name of the uploaded document."
+    },
+    "file_type": {
+      "type": "string",
+      "enum": ["PDF", "DOCX", "TXT"],
+      "description": "Detected format of the source document."
+    },
+    "page_count": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Total number of pages extracted."
+    },
+    "extracted_text": {
+      "type": "string",
+      "description": "Consolidated normalized text of the entire document across all pages."
+    },
+    "character_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total character count of the consolidated text."
+    },
+    "ingested_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of ingestion."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional file metadata such as file size, hash, or parser details.",
+      "properties": {
+        "file_size_bytes": { "type": "integer" },
+        "file_hash_sha256": { "type": "string" },
+        "parser_version": { "type": "string" }
+      }
+    },
+    "pages": {
+      "type": "array",
+      "description": "Ordered array of extracted pages preserving document layout boundaries.",
+      "items": {
+        "$ref": "#/definitions/PageObject"
+      }
+    }
+  },
+  "required": [
+    "document_id",
+    "filename",
+    "file_type",
+    "page_count",
+    "extracted_text",
+    "pages"
+  ],
+  "definitions": {
+    "PageObject": {
+      "type": "object",
+      "description": "A single page representation with text and block locations.",
+      "properties": {
+        "page_number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "1-indexed page number."
+        },
+        "text": {
+          "type": "string",
+          "description": "Normalized text content of this page."
+        },
+        "extraction_method": {
+          "type": "string",
+          "enum": ["TEXT", "OCR", "MIXED"],
+          "description": "Method used to extract text for this page."
+        },
+        "character_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Character count of this page's text."
+        },
+        "blocks": {
+          "type": "array",
+          "description": "Extracted paragraphs, clauses, or text blocks with offset locations.",
+          "items": {
+            "$ref": "#/definitions/TextBlock"
+          }
+        }
+      },
+      "required": [
+        "page_number",
+        "text",
+        "extraction_method",
+        "character_count"
+      ]
+    },
+    "TextBlock": {
+      "type": "object",
+      "description": "A discrete clause, heading, or paragraph within a page.",
+      "properties": {
+        "block_id": {
+          "type": "string",
+          "description": "Block index or unique identifier."
+        },
+        "clause_number": {
+          "type": ["string", "null"],
+          "description": "Extracted clause or section number (e.g. '4.1', 'Section 2')."
+        },
+        "text": {
+          "type": "string",
+          "description": "Verbatim text of the block."
+        },
+        "page_number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Page on which this block resides."
+        },
+        "char_start": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "Character offset start on the page."
+        },
+        "char_end": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "Character offset end on the page."
+        }
+      },
+      "required": ["text", "page_number"]
+    }
+  }
+}

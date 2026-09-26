@@ -1,0 +1,101 @@
+[
+  {
+    "standard_code": "IS 14220",
+    "version": "IS 14220:2018",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2018,
+    "lifecycle_evidence": "BIS Product Manual PM/IS 14220/3 (July 2024) confirms IS 14220:2018 (First Revision) as the active specification for openwell submersible pumpsets.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 14220:1994",
+    "version": "IS 14220:1994",
+    "status": "SUPERSEDED",
+    "superseded_by": "IS 14220:2018",
+    "effective_year": 1994,
+    "lifecycle_evidence": "Official BIS standard title and catalog record designate IS 14220:2018 as First Revision replacing original 1994 edition.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 8034",
+    "version": "IS 8034:2018",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2018,
+    "lifecycle_evidence": "BIS official catalog lists IS 8034:2018 (Third Revision) as the active specification for borehole submersible pumpsets.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 8034:2002",
+    "version": "IS 8034:2002",
+    "status": "SUPERSEDED",
+    "superseded_by": "IS 8034:2018",
+    "effective_year": 2002,
+    "lifecycle_evidence": "Product Manual PM/IS 8034 confirms 2018 Third Revision replaces the 2002 Second Revision.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 9283",
+    "version": "IS 9283:2024",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2024,
+    "lifecycle_evidence": "BIS LIMS scope list and Sectional Committee ETD 15 show IS 9283:2024 (Third Revision) as newly notified, replacing IS 9283:2013. Any transitional grace period for dual-running in public tenders is subject to procuring entity discretion and is not a universal statutory exemption.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 9283:2013",
+    "version": "IS 9283:2013",
+    "status": "SUPERSEDED",
+    "superseded_by": "IS 9283:2024",
+    "effective_year": 2013,
+    "lifecycle_evidence": "Replaced by IS 9283:2024 Third Revision as listed in official BIS gazetted updates.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 9079",
+    "version": "IS 9079:2018",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2018,
+    "lifecycle_evidence": "BIS catalog confirms IS 9079:2018 (Third Revision) as current active standard for monoset agricultural pumps.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 6595 (Part 1)",
+    "version": "IS 6595 (Part 1):2018",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2018,
+    "lifecycle_evidence": "BIS catalog confirms IS 6595 (Part 1):2018 Third Revision as current active standard for horizontal centrifugal pumps for rural/agricultural use.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 8472",
+    "version": "IS 8472:2019",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2019,
+    "lifecycle_evidence": "BIS catalog confirms IS 8472:2019 Second Revision as current active standard for regenerative pumps.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 996",
+    "version": "IS 996:2009",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2009,
+    "lifecycle_evidence": "BIS portal lists IS 996:2009 Fourth Revision. While newer revisions are drafted under ETD 15, official gazette cessation of the 2009 edition remains unverified.",
+    "verification_status": "PENDING_VERIFICATION"
+  },
+  {
+    "standard_code": "IS 12615",
+    "version": "IS 12615:2018",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2018,
+    "lifecycle_evidence": "Notified under statutory DPIIT Quality Control Order S.O. 167(E) as active standard for line operated three phase surface induction motors.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  }
+]

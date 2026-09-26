@@ -1,0 +1,204 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://maanaknetra.gov.in/schemas/finding.schema.json",
+  "title": "TenderLinterFinding",
+  "description": "Schema representing a single Tender Linter finding, discrepancy, regulatory violation, or compliance risk.",
+  "type": "object",
+  "properties": {
+    "finding_id": {
+      "type": "string",
+      "description": "Unique deterministic identifier for the finding (e.g., 'FIND_001')."
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
+      "description": "Risk impact level of the finding on procurement legality, audit integrity, and physical safety."
+    },
+    "finding_type": {
+      "type": "string",
+      "enum": [
+        "OUTDATED_STANDARD",
+        "WITHDRAWN_STANDARD",
+        "MISSING_ALLIED_STANDARD",
+        "MISSING_TEST_STANDARD",
+        "MISSING_CERTIFICATION",
+        "PARAMETER_CONFLICT",
+        "VAGUE_REQUIREMENT",
+        "OTHER"
+      ],
+      "description": "Controlled taxonomy of procurement compliance discrepancies."
+    },
+    "title": {
+      "type": "string",
+      "description": "Short, informative headline for the finding (e.g., 'Superseded Structural Steel Standard Cited', 'Mandatory QCO ISI Mark Omitted')."
+    },
+    "tender_text": {
+      "type": "string",
+      "description": "Verbatim excerpt from the tender specification containing the issue or clause."
+    },
+    "affected_requirement": {
+      "type": "object",
+      "description": "Reference to the extracted tender requirement involved.",
+      "properties": {
+        "requirement_id": {
+          "type": ["string", "null"],
+          "description": "Identifier matching a RequirementItem in requirements.schema.json."
+        },
+        "parameter_name": {
+          "type": ["string", "null"],
+          "description": "Parameter involved (if parameter-specific)."
+        },
+        "tender_clause": {
+          "type": ["string", "null"],
+          "description": "Clause or page reference in tender document."
+        }
+      }
+    },
+    "affected_standard": {
+      "type": "object",
+      "description": "Reference to the Indian Standard involved in this finding.",
+      "properties": {
+        "is_number": {
+          "type": "string",
+          "description": "Governing standard number (e.g., 'IS 2062')."
+        },
+        "version_cited": {
+          "type": ["string", "null"],
+          "description": "Version or year as cited in tender (e.g., '1999')."
+        },
+        "current_status": {
+          "type": "string",
+          "enum": ["CURRENT", "SUPERSEDED", "WITHDRAWN", "UNDER_REVISION", "UNKNOWN"],
+          "description": "Current lifecycle status of the standard."
+        },
+        "replacement_standard": {
+          "type": ["string", "null"],
+          "description": "Current valid standard code if superseded (e.g., 'IS 2062:2011')."
+        }
+      },
+      "required": ["is_number", "current_status"]
+    },
+    "explanation": {
+      "type": "string",
+      "description": "Detailed technical explanation explaining why this clause is non-compliant, outdated, or risky."
+    },
+    "evidence": {
+      "type": "object",
+      "description": "Grounding facts, citations, and regulatory provisions supporting the finding.",
+      "properties": {
+        "standard_clause_reference": {
+          "type": ["string", "null"],
+          "description": "Specific clause or table in the BIS standard."
+        },
+        "qco_order_number": {
+          "type": ["string", "null"],
+          "description": "Gazette notification S.O. number if related to a mandatory QCO."
+        },
+        "gazette_date": {
+          "type": ["string", "null"],
+          "description": "Date of gazette notification."
+        },
+        "factual_summary": {
+          "type": "string",
+          "description": "Concise factual statement of ground truth."
+        }
+      },
+      "required": ["factual_summary"]
+    },
+    "source": {
+      "type": "object",
+      "description": "Provenance metadata identifying the regulatory rule or official source backing this finding.",
+      "properties": {
+        "source_type": {
+          "type": "string",
+          "enum": ["BIS_CATALOG", "GAZETTE_QCO_ORDER", "DETERMINISTIC_RULE_ENGINE", "STANDARDS_GRAPH"],
+          "description": "Origin of the verification logic."
+        },
+        "rule_id": {
+          "type": "string",
+          "description": "Deterministic rule identifier (e.g., 'RULE_SUPERSEDED_IS2062', 'RULE_QCO_STEEL_2020')."
+        },
+        "official_url": {
+          "type": ["string", "null"],
+          "description": "Link to official BIS or Ministry Gazette reference."
+        }
+      },
+      "required": ["source_type", "rule_id"]
+    },
+    "suggested_fix": {
+      "type": "object",
+      "description": "Actionable rectification proposed for the procurement officer.",
+      "properties": {
+        "replacement_clause_text": {
+          "type": "string",
+          "description": "Ready-to-use replacement wording for the tender specification."
+        },
+        "recommended_action_summary": {
+          "type": "string",
+          "description": "Instruction for the drafting officer (e.g., 'Update cited standard to IS 2062:2011 Grade E250 and insert mandatory ISI mark requirement')."
+        }
+      },
+      "required": ["replacement_clause_text", "recommended_action_summary"]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Confidence score of this finding (1.0 for deterministic rule matches; 0.0-1.0 for AI-assisted extractions)."
+    },
+    "requires_human_review": {
+      "type": "boolean",
+      "description": "Flag indicating whether a procurement officer must review and approve this finding prior to final tender publication."
+    },
+    "resolution_status": {
+      "type": "string",
+      "enum": ["PENDING", "ACCEPTED", "REJECTED", "OVERRIDDEN"],
+      "default": "PENDING",
+      "description": "Procurement officer review status for this finding."
+    },
+    "officer_justification": {
+      "type": ["string", "null"],
+      "description": "Written rationale provided by the officer if this finding was overridden, rejected, or accepted with remarks."
+    },
+    "resolved_by": {
+      "type": ["string", "null"],
+      "description": "Identity, designation, or employee ID of the reviewing procurement officer."
+    },
+    "resolved_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when human resolution was recorded."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "finding_type": { "const": "PARAMETER_CONFLICT" } }
+      },
+      "then": {
+        "required": ["affected_requirement"],
+        "properties": {
+          "affected_requirement": {
+            "type": "object",
+            "required": ["requirement_id"]
+          }
+        }
+      }
+    }
+  ],
+  "required": [
+    "finding_id",
+    "severity",
+    "finding_type",
+    "title",
+    "tender_text",
+    "affected_standard",
+    "explanation",
+    "evidence",
+    "source",
+    "suggested_fix",
+    "confidence",
+    "requires_human_review",
+    "resolution_status"
+  ]
+}

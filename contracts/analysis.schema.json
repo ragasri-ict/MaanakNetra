@@ -1,0 +1,410 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://maanaknetra.gov.in/schemas/analysis.schema.json",
+  "title": "TenderAnalysisResultDocument",
+  "description": "Complete, auditable output document produced by MAANAKNETRA upon auditing a tender or procurement specification.",
+  "type": "object",
+  "properties": {
+    "tender_metadata": {
+      "type": "object",
+      "description": "General identification metadata for the audited tender.",
+      "properties": {
+        "analysis_id": {
+          "type": "string",
+          "description": "Unique identifier for this analysis run."
+        },
+        "document_title": {
+          "type": "string",
+          "description": "Title or reference number of the tender document."
+        },
+        "file_name": {
+          "type": "string",
+          "description": "Name of the uploaded tender file."
+        },
+        "file_hash_sha256": {
+          "type": ["string", "null"],
+          "description": "SHA-256 cryptographic hash of source tender document for audit integrity."
+        },
+        "page_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "analyzed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "procuring_department": {
+          "type": ["string", "null"]
+        }
+      },
+      "required": ["analysis_id", "document_title", "file_name", "analyzed_at"]
+    },
+    "extracted_requirements": {
+      "type": "array",
+      "description": "Complete list of technical parameters extracted from the tender.",
+      "items": {
+        "$ref": "requirements.schema.json#/definitions/RequirementItem"
+      }
+    },
+    "already_cited_standards": {
+      "type": "array",
+      "description": "Standards explicitly referenced in the raw tender text.",
+      "items": {
+        "$ref": "requirements.schema.json#/definitions/AlreadyCitedStandard"
+      }
+    },
+    "recommended_standards": {
+      "type": "array",
+      "description": "Primary and applicable Indian Standards recommended by the hybrid intelligence engine.",
+      "items": {
+        "$ref": "#/definitions/RecommendedStandardItem"
+      }
+    },
+    "related_standards": {
+      "type": "array",
+      "description": "Allied, normative, testing, safety, and installation standards discovered via graph expansion.",
+      "items": {
+        "$ref": "#/definitions/RelatedStandardItem"
+      }
+    },
+    "graph_summary": {
+      "type": "object",
+      "description": "Summary of the standards knowledge graph traversed for this tender.",
+      "properties": {
+        "total_nodes": {
+          "type": "integer"
+        },
+        "total_edges": {
+          "type": "integer"
+        },
+        "primary_clusters": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "expansion_depth": {
+          "type": "integer"
+        }
+      },
+      "required": ["total_nodes", "total_edges", "expansion_depth"]
+    },
+    "status_flags": {
+      "type": "object",
+      "description": "High-level deterministic flags regarding currency of cited and recommended standards.",
+      "properties": {
+        "has_superseded_standards": {
+          "type": "boolean",
+          "description": "True if tender cites one or more superseded standards."
+        },
+        "has_withdrawn_standards": {
+          "type": "boolean",
+          "description": "True if tender cites one or more withdrawn standards."
+        },
+        "all_standards_current": {
+          "type": "boolean",
+          "description": "True if all cited and applicable standards are active and current."
+        },
+        "superseded_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "withdrawn_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "has_superseded_standards",
+        "has_withdrawn_standards",
+        "all_standards_current",
+        "superseded_count",
+        "withdrawn_count"
+      ]
+    },
+    "certification_flags": {
+      "type": "object",
+      "description": "High-level deterministic flags regarding mandatory Quality Control Orders and certification mandates.",
+      "properties": {
+        "qco_mandate_applicable": {
+          "type": "boolean",
+          "description": "True if the product category is covered under an official Quality Control Order."
+        },
+        "mandatory_isi_clause_present": {
+          "type": "boolean",
+          "description": "True if tender explicitly requires valid BIS Standard Mark (ISI mark)."
+        },
+        "qco_violation_risk": {
+          "type": "boolean",
+          "description": "True if QCO is mandatory but tender omitted the mandatory certification clause."
+        },
+        "governing_qco_orders": {
+          "type": "array",
+          "description": "List of gazetted QCO orders applicable to this procurement.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "order_name": { "type": "string" },
+              "order_number": { "type": "string" },
+              "issuing_ministry": { "type": "string" },
+              "effective_date": { "type": "string" }
+            },
+            "required": ["order_name", "issuing_ministry"]
+          }
+        }
+      },
+      "required": [
+        "qco_mandate_applicable",
+        "mandatory_isi_clause_present",
+        "qco_violation_risk",
+        "governing_qco_orders"
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "description": "List of all Tender Linter audit findings and discrepancies.",
+      "items": {
+        "$ref": "finding.schema.json"
+      }
+    },
+    "standards_bom": {
+      "type": "array",
+      "description": "Standards Bill of Materials (BOM): Comprehensive list of all standards required for end-to-end execution of this procurement.",
+      "items": {
+        "$ref": "#/definitions/StandardsBOMItem"
+      }
+    },
+    "corrected_clause": {
+      "type": "array",
+      "description": "Side-by-side corrected clauses ready to replace non-compliant sections in the tender.",
+      "items": {
+        "$ref": "#/definitions/CorrectedClauseItem"
+      }
+    },
+    "risk_indicator": {
+      "type": "object",
+      "description": "Overall procurement risk score and evaluation.",
+      "properties": {
+        "risk_level": {
+          "type": "string",
+          "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
+          "description": "Overall risk tier based on QCO violations and superseded codes."
+        },
+        "compliance_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "description": "Overall compliance percentage (0 to 100)."
+        },
+        "critical_issues_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "high_issues_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "medium_issues_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "summary": {
+          "type": "string",
+          "description": "Executive summary of risk assessment for procurement officer."
+        }
+      },
+      "required": [
+        "risk_level",
+        "compliance_score",
+        "critical_issues_count",
+        "high_issues_count",
+        "medium_issues_count",
+        "summary"
+      ]
+    },
+    "human_review_required": {
+      "type": "boolean",
+      "description": "Flag indicating that manual review by a procurement officer is strictly required before proceeding."
+    }
+  },
+  "required": [
+    "tender_metadata",
+    "extracted_requirements",
+    "already_cited_standards",
+    "recommended_standards",
+    "related_standards",
+    "graph_summary",
+    "status_flags",
+    "certification_flags",
+    "findings",
+    "standards_bom",
+    "corrected_clause",
+    "risk_indicator",
+    "human_review_required"
+  ],
+  "definitions": {
+    "RecommendedStandardItem": {
+      "type": "object",
+      "description": "Detailed recommendation record for an applicable Indian Standard.",
+      "properties": {
+        "standard": {
+          "type": "object",
+          "properties": {
+            "is_number": { "type": "string" },
+            "title": { "type": "string" },
+            "year": { "type": "integer" },
+            "current_status": {
+              "type": "string",
+              "enum": ["CURRENT", "SUPERSEDED", "WITHDRAWN", "UNDER_REVISION"]
+            }
+          },
+          "required": ["is_number", "title", "current_status"]
+        },
+        "applicability_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Relevance score computed from hybrid retrieval and reranking."
+        },
+        "evidence": {
+          "type": "array",
+          "description": "Verbatim citations or parameter matches justifying applicability.",
+          "items": { "type": "string" }
+        },
+        "matched_requirements": {
+          "type": "array",
+          "description": "List of requirement_ids from extracted_requirements covered by this standard.",
+          "items": { "type": "string" }
+        },
+        "parameter_fit": {
+          "type": "array",
+          "description": "Detailed fit evaluation for each parameter specified in tender against this standard.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "parameter_name": { "type": "string" },
+              "tender_value": { "type": "string" },
+              "standard_value": { "type": "string" },
+              "fit_status": {
+                "type": "string",
+                "enum": ["COMPLIANT", "NON_COMPLIANT", "DEVIATING", "NOT_SPECIFIED_IN_TENDER"]
+              },
+              "tolerance_evaluation": {
+                "type": ["string", "null"]
+              }
+            },
+            "required": ["parameter_name", "tender_value", "standard_value", "fit_status"]
+          }
+        },
+        "explanation": {
+          "type": "string",
+          "description": "Natural language technical rationale for this recommendation."
+        },
+        "source": {
+          "type": "object",
+          "description": "Provenance of standard record.",
+          "properties": {
+            "portal_url": { "type": "string" },
+            "official_publication_ref": { "type": "string" },
+            "curated_by": { "type": "string" }
+          },
+          "required": ["portal_url", "curated_by"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["CURRENT", "SUPERSEDED", "WITHDRAWN", "UNDER_REVISION"]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      },
+      "required": [
+        "standard",
+        "applicability_score",
+        "evidence",
+        "matched_requirements",
+        "parameter_fit",
+        "explanation",
+        "source",
+        "status",
+        "confidence"
+      ]
+    },
+    "RelatedStandardItem": {
+      "type": "object",
+      "description": "Allied standard connected via relationship graph.",
+      "properties": {
+        "is_number": { "type": "string" },
+        "title": { "type": "string" },
+        "relationship_type": {
+          "type": "string",
+          "enum": ["NORMATIVE_REFERENCE", "TEST_METHOD", "SAFETY_STANDARD", "INSTALLATION_PRACTICE", "SUPERSEDED_REPLACEMENT"]
+        },
+        "governing_primary_standard": {
+          "type": "string",
+          "description": "The primary standard node that links to this allied standard."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["CURRENT", "SUPERSEDED", "WITHDRAWN", "UNDER_REVISION"]
+        },
+        "importance": {
+          "type": "string",
+          "enum": ["MANDATORY", "RECOMMENDED", "INFORMATIVE"]
+        },
+        "relevance_notes": {
+          "type": "string"
+        }
+      },
+      "required": ["is_number", "title", "relationship_type", "governing_primary_standard", "status", "importance"]
+    },
+    "StandardsBOMItem": {
+      "type": "object",
+      "description": "An entry in the consolidated Standards Bill of Materials for this tender.",
+      "properties": {
+        "item_number": { "type": "integer" },
+        "is_number": { "type": "string" },
+        "title": { "type": "string" },
+        "role": {
+          "type": "string",
+          "enum": ["PRIMARY_PRODUCT_STANDARD", "TEST_METHOD", "SAFETY_CODE", "CODE_OF_PRACTICE_INSTALLATION", "MATERIAL_SPECIFICATION"]
+        },
+        "is_mandatory_qco": { "type": "boolean" },
+        "compliance_status": {
+          "type": "string",
+          "enum": ["ALREADY_CITED_CORRECTLY", "CITED_BUT_OUTDATED", "MISSING_FROM_TENDER", "RECOMMENDED_ALLIED"]
+        },
+        "action_required": { "type": "string" }
+      },
+      "required": ["item_number", "is_number", "title", "role", "is_mandatory_qco", "compliance_status", "action_required"]
+    },
+    "CorrectedClauseItem": {
+      "type": "object",
+      "description": "A rectified tender clause proposed for adoption.",
+      "properties": {
+        "clause_id": { "type": "string" },
+        "source_clause_reference": { "type": "string" },
+        "original_tender_text": { "type": "string" },
+        "corrected_text": { "type": "string" },
+        "rationale": { "type": "string" },
+        "governing_rules": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "linked_finding_ids": {
+          "type": "array",
+          "description": "List of finding_id strings that necessitated or triggered this clause correction.",
+          "items": { "type": "string" }
+        }
+      },
+      "required": [
+        "clause_id",
+        "source_clause_reference",
+        "original_tender_text",
+        "corrected_text",
+        "rationale",
+        "linked_finding_ids"
+      ]
+    }
+  }
+}

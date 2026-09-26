@@ -1,0 +1,1853 @@
+{
+  "tender_metadata": {
+    "analysis_id": "ANALYSIS_1790419184",
+    "document_title": "sample_tender.pdf",
+    "file_name": "sample_tender.pdf",
+    "file_hash_sha256": "b59f9166a22732df2ae67f91bce73260feaa5f3b09767741e1b06c2e37ff22f2",
+    "page_count": 3,
+    "analyzed_at": "2026-09-26T10:39:44.463248+00:00",
+    "procuring_department": null
+  },
+  "extracted_requirements": [
+    {
+      "requirement_id": "REQ_001",
+      "field": "Commercial / Supply",
+      "category": "QUANTITY",
+      "parameter_name": "Procurement Quantity",
+      "value": "150 units",
+      "unit": "units",
+      "normalized_value": {
+        "numeric_value": 150.0,
+        "min_value": 150.0,
+        "max_value": 150.0,
+        "unit": "units",
+        "operator": "EQUAL",
+        "text_value": "150.0 units"
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": true,
+      "source_text": "1.1 The contractor shall manufacture, inspect, test, pack, and deliver 150 units of Openwell Submersible Pumpsets\nsuitable for direct submerged operation in village open intake wells and masonry community sumps.",
+      "source_location": {
+        "source_page": 1,
+        "clause_number": "1.1",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 559,
+        "char_end": 941,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.95,
+      "notes": "Deterministic regex extraction (QUANTITY)."
+    },
+    {
+      "requirement_id": "REQ_002",
+      "field": "General Specification",
+      "category": "OTHER_TECHNICAL_PARAMETER",
+      "parameter_name": "Other_Technical_Parameter Requirement",
+      "value": "1.2 The equipment shall comprise a multi-stage centrifugal pump directly coupled to a water-filled, continuous-duty\nsubm...",
+      "unit": null,
+      "normalized_value": {
+        "numeric_value": null,
+        "min_value": null,
+        "max_value": null,
+        "unit": null,
+        "operator": "TEXT_EXACT",
+        "text_value": "1.2 The equipment shall comprise a multi-stage centrifugal pump directly coupled to a water-filled, continuous-duty\nsubmersible electric motor."
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": true,
+      "source_text": "1.2 The equipment shall comprise a multi-stage centrifugal pump directly coupled to a water-filled, continuous-duty\nsubmersible electric motor.",
+      "source_location": {
+        "source_page": 1,
+        "clause_number": "1.2",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 559,
+        "char_end": 941,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.88,
+      "notes": "Qualitative specification clause."
+    },
+    {
+      "requirement_id": "REQ_003",
+      "field": "Environmental",
+      "category": "OPERATING_ENVIRONMENT",
+      "parameter_name": "Operating_Environment Requirement",
+      "value": "2.1 Liquid Pumped: Clear, cold drinking water, non-aggressive, free from abrasive solids.",
+      "unit": null,
+      "normalized_value": {
+        "numeric_value": null,
+        "min_value": null,
+        "max_value": null,
+        "unit": null,
+        "operator": "TEXT_EXACT",
+        "text_value": "2.1 Liquid Pumped: Clear, cold drinking water, non-aggressive, free from abrasive solids."
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": false,
+      "source_text": "2.1 Liquid Pumped: Clear, cold drinking water, non-aggressive, free from abrasive solids.",
+      "source_location": {
+        "source_page": 1,
+        "clause_number": "2.1",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 943,
+        "char_end": 1348,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.88,
+      "notes": "Qualitative specification clause."
+    },
+    {
+      "requirement_id": "REQ_004",
+      "field": "Operating Environment",
+      "category": "TEMPERATURE",
+      "parameter_name": "Maximum Water Temperature",
+      "value": "33\u00b0C",
+      "unit": "deg C",
+      "normalized_value": {
+        "numeric_value": 33.0,
+        "min_value": null,
+        "max_value": 33.0,
+        "unit": "deg C",
+        "operator": "LTE",
+        "text_value": "<=33.0 deg C"
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": true,
+      "source_text": "2.2 Water Temperature: Ambient, not exceeding 33\u00b0C.",
+      "source_location": {
+        "source_page": 1,
+        "clause_number": "2.2",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 943,
+        "char_end": 1348,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.95,
+      "notes": "Deterministic regex extraction (TEMPERATURE)."
+    },
+    {
+      "requirement_id": "REQ_005",
+      "field": "Mechanical / Hydraulic",
+      "category": "HEAD",
+      "parameter_name": "Maximum Submergence Depth",
+      "value": "15 meters ",
+      "unit": "m",
+      "normalized_value": {
+        "numeric_value": 15.0,
+        "min_value": null,
+        "max_value": 15.0,
+        "unit": "m",
+        "operator": "LTE",
+        "text_value": "<=15.0 m"
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": true,
+      "source_text": "2.3 Installation Depth: Fully submerged up to a maximum water submergence depth of 15 meters below lowest water\nlevel.",
+      "source_location": {
+        "source_page": 1,
+        "clause_number": "2.3",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 943,
+        "char_end": 1348,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.95,
+      "notes": "Deterministic regex extraction (HEAD)."
+    },
+    {
+      "requirement_id": "REQ_006",
+      "field": "Environmental",
+      "category": "OPERATING_ENVIRONMENT",
+      "parameter_name": "Operating_Environment Requirement",
+      "value": "2.4 Operating Environment: Open rural agricultural wells subject to seasonal water table drawdown.",
+      "unit": null,
+      "normalized_value": {
+        "numeric_value": null,
+        "min_value": null,
+        "max_value": null,
+        "unit": null,
+        "operator": "TEXT_EXACT",
+        "text_value": "2.4 Operating Environment: Open rural agricultural wells subject to seasonal water table drawdown."
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": false,
+      "source_text": "2.4 Operating Environment: Open rural agricultural wells subject to seasonal water table drawdown.",
+      "source_location": {
+        "source_page": 1,
+        "clause_number": "2.4",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 943,
+        "char_end": 1348,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.88,
+      "notes": "Qualitative specification clause."
+    },
+    {
+      "requirement_id": "REQ_007",
+      "field": "Electrical",
+      "category": "POWER",
+      "parameter_name": "Rated Power Output",
+      "value": "7.5 kW (10.0 HP)",
+      "unit": "kW",
+      "normalized_value": {
+        "numeric_value": 7.5,
+        "min_value": 7.5,
+        "max_value": 7.5,
+        "unit": "kW",
+        "operator": "EQUAL",
+        "text_value": "7.5 kW"
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": false,
+      "source_text": "3.1 Power Rating: 7.5 kW (10.0 HP) continuous rated output.",
+      "source_location": {
+        "source_page": 2,
+        "clause_number": "3.1",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 0,
+        "char_end": 394,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.95,
+      "notes": "Dual-unit specification: 7.5 kW primary (alternate: 10.0 HP)."
+    },
+    {
+      "requirement_id": "REQ_008",
+      "field": "Electrical",
+      "category": "VOLTAGE",
+      "parameter_name": "Rated Supply Voltage",
+      "value": "415 V",
+      "unit": "V",
+      "normalized_value": {
+        "numeric_value": 415.0,
+        "min_value": 415.0,
+        "max_value": 415.0,
+        "unit": "V",
+        "operator": "EQUAL",
+        "text_value": "415.0 V"
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": false,
+      "source_text": "3.2 Supply Voltage: 415 V, 3-Phase, 50 Hz A.C. supply.",
+      "source_location": {
+        "source_page": 2,
+        "clause_number": "3.2",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 0,
+        "char_end": 394,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.95,
+      "notes": "Deterministic regex extraction (VOLTAGE)."
+    },
+    {
+      "requirement_id": "REQ_009",
+      "field": "Electrical",
+      "category": "FREQUENCY",
+      "parameter_name": "Rated Supply Frequency",
+      "value": "50 Hz",
+      "unit": "Hz",
+      "normalized_value": {
+        "numeric_value": 50.0,
+        "min_value": 50.0,
+        "max_value": 50.0,
+        "unit": "Hz",
+        "operator": "EQUAL",
+        "text_value": "50.0 Hz"
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": false,
+      "source_text": "3.2 Supply Voltage: 415 V, 3-Phase, 50 Hz A.C. supply.",
+      "source_location": {
+        "source_page": 2,
+        "clause_number": "3.2",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 0,
+        "char_end": 394,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.95,
+      "notes": "Deterministic regex extraction (FREQUENCY)."
+    },
+    {
+      "requirement_id": "REQ_010",
+      "field": "Electrical",
+      "category": "VOLTAGE",
+      "parameter_name": "Permissible Voltage Variation Band",
+      "value": "350V to 440V",
+      "unit": "V",
+      "normalized_value": {
+        "numeric_value": null,
+        "min_value": 350.0,
+        "max_value": 440.0,
+        "unit": "V",
+        "operator": "RANGE",
+        "text_value": "350.0 to 440.0 V"
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": true,
+      "source_text": "3.3 Voltage Variation: Motor shall be capable of operating continuously within voltage band of 350V to 440V without\nwinding overheating.",
+      "source_location": {
+        "source_page": 2,
+        "clause_number": "3.3",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 0,
+        "char_end": 394,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.95,
+      "notes": "Continuous voltage variation band: 350V to 440V."
+    },
+    {
+      "requirement_id": "REQ_011",
+      "field": "Compliance",
+      "category": "EXISTING_IS_REFERENCE",
+      "parameter_name": "Existing_Is_Reference Requirement",
+      "value": "4.1 The openwell submersible pumpsets shall strictly comply with the design, manufacturing, and performance\nrequirements...",
+      "unit": null,
+      "normalized_value": {
+        "numeric_value": null,
+        "min_value": null,
+        "max_value": null,
+        "unit": null,
+        "operator": "TEXT_EXACT",
+        "text_value": "4.1 The openwell submersible pumpsets shall strictly comply with the design, manufacturing, and performance\nrequirements of IS 14220:1994 (\"Openwell Submersible Pumpsets - Specification\")."
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": true,
+      "source_text": "4.1 The openwell submersible pumpsets shall strictly comply with the design, manufacturing, and performance\nrequirements of IS 14220:1994 (\"Openwell Submersible Pumpsets - Specification\").",
+      "source_location": {
+        "source_page": 2,
+        "clause_number": "4.1",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 396,
+        "char_end": 889,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.88,
+      "notes": "Qualitative specification clause."
+    },
+    {
+      "requirement_id": "REQ_012",
+      "field": "Electrical",
+      "category": "VOLTAGE",
+      "parameter_name": "Megger Test Voltage",
+      "value": "500V",
+      "unit": "V",
+      "normalized_value": {
+        "numeric_value": 500.0,
+        "min_value": 500.0,
+        "max_value": 500.0,
+        "unit": "V",
+        "operator": "EQUAL",
+        "text_value": "500.0 V"
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": true,
+      "source_text": "4.2 Testing of electrical insulation shall be carried out with 500V DC megger and must not be less than 5 Megaohms\nafter 24 hours immersion.",
+      "source_location": {
+        "source_page": 2,
+        "clause_number": "4.2",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 396,
+        "char_end": 889,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.95,
+      "notes": "Deterministic regex extraction (VOLTAGE)."
+    },
+    {
+      "requirement_id": "REQ_013",
+      "field": "Electrical / Insulation",
+      "category": "TESTING",
+      "parameter_name": "Insulation Resistance",
+      "value": "5 Megaohms",
+      "unit": "Megaohms",
+      "normalized_value": {
+        "numeric_value": 5.0,
+        "min_value": 5.0,
+        "max_value": 5.0,
+        "unit": "Megaohms",
+        "operator": "EQUAL",
+        "text_value": "5.0 Megaohms"
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": true,
+      "source_text": "4.2 Testing of electrical insulation shall be carried out with 500V DC megger and must not be less than 5 Megaohms\nafter 24 hours immersion.",
+      "source_location": {
+        "source_page": 2,
+        "clause_number": "4.2",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 396,
+        "char_end": 889,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.95,
+      "notes": "Deterministic regex extraction (TESTING)."
+    },
+    {
+      "requirement_id": "REQ_014",
+      "field": "Mechanical / Testing",
+      "category": "TESTING",
+      "parameter_name": "Casing Hydrostatic Test Pressure Multiplier",
+      "value": "1.5 times the maximum operating head",
+      "unit": "x multiplier",
+      "normalized_value": {
+        "numeric_value": 1.5,
+        "min_value": 1.5,
+        "max_value": 1.5,
+        "unit": "x multiplier",
+        "operator": "EQUAL",
+        "text_value": "1.5x maximum operating head"
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": true,
+      "source_text": "4.3 Hydrostatic pressure testing of the pump casing shall be conducted at 1.5 times the maximum operating head.",
+      "source_location": {
+        "source_page": 2,
+        "clause_number": "4.3",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 396,
+        "char_end": 889,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.95,
+      "notes": "Relative multiplier: 1.5x maximum operating head. Traceable relative specification."
+    },
+    {
+      "requirement_id": "REQ_015",
+      "field": "Mechanical / Hydraulic",
+      "category": "HEAD",
+      "parameter_name": "Rated Operating Head",
+      "value": "32.0 Meters",
+      "unit": "m",
+      "normalized_value": {
+        "numeric_value": 32.0,
+        "min_value": 32.0,
+        "max_value": 32.0,
+        "unit": "m",
+        "operator": "EQUAL",
+        "text_value": "32.0 m"
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": false,
+      "source_text": "5.1 Rated Operating Head: 32.0 Meters (Total Dynamic Head).",
+      "source_location": {
+        "source_page": 2,
+        "clause_number": "5.1",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 891,
+        "char_end": 1251,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.95,
+      "notes": "Deterministic regex extraction (HEAD)."
+    },
+    {
+      "requirement_id": "REQ_016",
+      "field": "Mechanical / Hydraulic",
+      "category": "FLOW_RATE",
+      "parameter_name": "Discharge Rate at Duty Point",
+      "value": "18.0 Litres per Second (64.8 m\u00b3/hr)",
+      "unit": "L/sec",
+      "normalized_value": {
+        "numeric_value": 18.0,
+        "min_value": 18.0,
+        "max_value": 18.0,
+        "unit": "L/sec",
+        "operator": "EQUAL",
+        "text_value": "18.0 L/sec"
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": false,
+      "source_text": "5.2 Discharge at Duty Point: 18.0 Litres per Second (64.8 m\u00b3/hr).",
+      "source_location": {
+        "source_page": 2,
+        "clause_number": "5.2",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 891,
+        "char_end": 1251,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.95,
+      "notes": "Dual-unit specification: 18.0 L/sec primary (alternate: 64.8 m\u00b3/hr)."
+    },
+    {
+      "requirement_id": "REQ_017",
+      "field": "Performance",
+      "category": "EFFICIENCY",
+      "parameter_name": "Overall Pumpset Efficiency",
+      "value": "48.0%",
+      "unit": "%",
+      "normalized_value": {
+        "numeric_value": 48.0,
+        "min_value": 48.0,
+        "max_value": null,
+        "unit": "%",
+        "operator": "GTE",
+        "text_value": ">=48.0 %"
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": true,
+      "source_text": "5.3 Overall Efficiency: The overall efficiency (wire-to-water) of the complete pumpset at guaranteed duty point shall be\nnot less than 48.0%.",
+      "source_location": {
+        "source_page": 2,
+        "clause_number": "5.3",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 891,
+        "char_end": 1251,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.95,
+      "notes": "Deterministic regex extraction (EFFICIENCY)."
+    },
+    {
+      "requirement_id": "REQ_018",
+      "field": "Mechanical / Hydraulic",
+      "category": "HEAD",
+      "parameter_name": "Minimum Shut-off Head",
+      "value": "42.0 meters",
+      "unit": "m",
+      "normalized_value": {
+        "numeric_value": 42.0,
+        "min_value": 42.0,
+        "max_value": null,
+        "unit": "m",
+        "operator": "GTE",
+        "text_value": ">=42.0 m"
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": true,
+      "source_text": "5.4 Shut-off Head: Not less than 42.0 meters.",
+      "source_location": {
+        "source_page": 2,
+        "clause_number": "5.4",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 891,
+        "char_end": 1251,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.95,
+      "notes": "Deterministic regex extraction (HEAD)."
+    },
+    {
+      "requirement_id": "REQ_019",
+      "field": "Mechanical / Civil",
+      "category": "INSTALLATION",
+      "parameter_name": "Installation Requirement",
+      "value": "6.1 The pumpset shall be designed for horizontal/vertical bed mounting at the bottom of the open well on a\nprefabricated...",
+      "unit": null,
+      "normalized_value": {
+        "numeric_value": null,
+        "min_value": null,
+        "max_value": null,
+        "unit": null,
+        "operator": "TEXT_EXACT",
+        "text_value": "6.1 The pumpset shall be designed for horizontal/vertical bed mounting at the bottom of the open well on a\nprefabricated civil pedestal."
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": true,
+      "source_text": "6.1 The pumpset shall be designed for horizontal/vertical bed mounting at the bottom of the open well on a\nprefabricated civil pedestal.",
+      "source_location": {
+        "source_page": 3,
+        "clause_number": "6.1",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 0,
+        "char_end": 692,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.88,
+      "notes": "Qualitative specification clause."
+    },
+    {
+      "requirement_id": "REQ_020",
+      "field": "Mechanical / Civil",
+      "category": "INSTALLATION",
+      "parameter_name": "Installation Requirement",
+      "value": "6.2 Mechanical suspension eyes shall be provided on the motor casing to facilitate lowering and lifting via high-tensile...",
+      "unit": null,
+      "normalized_value": {
+        "numeric_value": null,
+        "min_value": null,
+        "max_value": null,
+        "unit": null,
+        "operator": "TEXT_EXACT",
+        "text_value": "6.2 Mechanical suspension eyes shall be provided on the motor casing to facilitate lowering and lifting via high-tensile\nstainless steel wire rope."
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": true,
+      "source_text": "6.2 Mechanical suspension eyes shall be provided on the motor casing to facilitate lowering and lifting via high-tensile\nstainless steel wire rope.",
+      "source_location": {
+        "source_page": 3,
+        "clause_number": "6.2",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 0,
+        "char_end": 692,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.88,
+      "notes": "Qualitative specification clause."
+    },
+    {
+      "requirement_id": "REQ_021",
+      "field": "Mechanical",
+      "category": "SIZE/DIMENSION",
+      "parameter_name": "Nominal Delivery Bore",
+      "value": "80 mm nominal bore",
+      "unit": "mm",
+      "normalized_value": {
+        "numeric_value": 80.0,
+        "min_value": 80.0,
+        "max_value": 80.0,
+        "unit": "mm",
+        "operator": "EQUAL",
+        "text_value": "80.0 mm"
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": false,
+      "source_text": "6.3 Flanged delivery connection of 80 mm nominal bore (NB) conforming to standard pipe flanging.",
+      "source_location": {
+        "source_page": 3,
+        "clause_number": "6.3",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 0,
+        "char_end": 692,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.95,
+      "notes": "Deterministic regex extraction (SIZE/DIMENSION)."
+    },
+    {
+      "requirement_id": "REQ_022",
+      "field": "Material Quality",
+      "category": "MATERIAL",
+      "parameter_name": "Material Requirement",
+      "value": "6.4 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"The entire assembly shall be manufactured with superior engineering workmans...",
+      "unit": null,
+      "normalized_value": {
+        "numeric_value": null,
+        "min_value": null,
+        "max_value": null,
+        "unit": null,
+        "operator": "TEXT_EXACT",
+        "text_value": "6.4 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"The entire assembly shall be manufactured with superior engineering workmanship, excellent corrosion\nresistance, and high-grade durable components to ensure long trouble-free service life under harsh village\nconditions.\""
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": true,
+      "source_text": "6.4 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"The entire assembly shall be manufactured with superior engineering workmanship, excellent corrosion\nresistance, and high-grade durable components to ensure long trouble-free service life under harsh village\nconditions.\"",
+      "source_location": {
+        "source_page": 3,
+        "clause_number": "6.4",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 0,
+        "char_end": 692,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.88,
+      "notes": "Qualitative specification clause."
+    },
+    {
+      "requirement_id": "REQ_023",
+      "field": "Quality Assurance",
+      "category": "TESTING",
+      "parameter_name": "Testing Requirement",
+      "value": "7.1 Manufacturer must furnish internal routine test certificates covering high-voltage testing, insulation resistance, a...",
+      "unit": null,
+      "normalized_value": {
+        "numeric_value": null,
+        "min_value": null,
+        "max_value": null,
+        "unit": null,
+        "operator": "TEXT_EXACT",
+        "text_value": "7.1 Manufacturer must furnish internal routine test certificates covering high-voltage testing, insulation resistance, and\nhead-discharge-power characteristics before dispatch."
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": true,
+      "source_text": "7.1 Manufacturer must furnish internal routine test certificates covering high-voltage testing, insulation resistance, and\nhead-discharge-power characteristics before dispatch.",
+      "source_location": {
+        "source_page": 3,
+        "clause_number": "7.1",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 694,
+        "char_end": 1163,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.88,
+      "notes": "Qualitative specification clause."
+    },
+    {
+      "requirement_id": "REQ_024",
+      "field": "Material Quality",
+      "category": "MATERIAL",
+      "parameter_name": "Material Requirement",
+      "value": "7.2 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"All pump materials shall be of standard commercial grade and suitable for wa...",
+      "unit": null,
+      "normalized_value": {
+        "numeric_value": null,
+        "min_value": null,
+        "max_value": null,
+        "unit": null,
+        "operator": "TEXT_EXACT",
+        "text_value": "7.2 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"All pump materials shall be of standard commercial grade and suitable for water contact.\""
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": true,
+      "source_text": "7.2 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"All pump materials shall be of standard commercial grade and suitable for water contact.\"",
+      "source_location": {
+        "source_page": 3,
+        "clause_number": "7.2",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 694,
+        "char_end": 1163,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.88,
+      "notes": "Qualitative specification clause."
+    },
+    {
+      "requirement_id": "REQ_025",
+      "field": "Quality Assurance",
+      "category": "TESTING",
+      "parameter_name": "Testing Requirement",
+      "value": "7.3 The departmental inspection officer reserves the right to witness prototype testing at the manufacturer's works.",
+      "unit": null,
+      "normalized_value": {
+        "numeric_value": null,
+        "min_value": null,
+        "max_value": null,
+        "unit": null,
+        "operator": "TEXT_EXACT",
+        "text_value": "7.3 The departmental inspection officer reserves the right to witness prototype testing at the manufacturer's works."
+      },
+      "product_category_context": "Openwell Submersible Pumpsets",
+      "is_mandatory": false,
+      "source_text": "7.3 The departmental inspection officer reserves the right to witness prototype testing at the manufacturer's works.",
+      "source_location": {
+        "source_page": 3,
+        "clause_number": "7.3",
+        "line_number": null,
+        "table_identifier": null,
+        "char_start": 694,
+        "char_end": 1163,
+        "bounding_box": null
+      },
+      "extraction_confidence": 0.88,
+      "notes": "Qualitative specification clause."
+    }
+  ],
+  "already_cited_standards": [
+    {
+      "citation_id": "CITE_001",
+      "raw_citation": "IS 14220:1994",
+      "standard_code": "IS 14220",
+      "part_number": null,
+      "year_cited": 1994,
+      "clause_reference": null,
+      "source_text": "requirements of IS 14220:1994 (\"Openwell Submersible Pumpsets - Specification\").",
+      "source_page": 2,
+      "extraction_confidence": 0.98
+    }
+  ],
+  "recommended_standards": [
+    {
+      "standard": {
+        "is_number": "IS 14220",
+        "title": "Openwell Submersible Pumpsets \u2014 Specification",
+        "year": 2018,
+        "current_status": "CURRENT"
+      },
+      "applicability_score": 0.8991,
+      "evidence": [
+        "Product Type Match: Standard covers Openwell Submersible Pumpset, Submersible Monobloc Pump, Agricultural Openwell Pump.",
+        "Covered under Scope: 'Covers requirements for openwell submersible pumpsets (monoset or motor and pump coupled) for handling clear, cold water up to 33\u00b0C, for agricultural and rural water supply purposes up to 45 kW.'",
+        "Scope handles water up to 33\u00b0C: 'Covers requirements for openwell submersible pumpsets (monoset or motor and pump coupled) for handling clear, cold water up to 33\u00b0C, for agricultural and rural water supply purposes up to 45 kW.'",
+        "Hydraulic duties specified in standard: Openwell Submersible Pumpsets \u2014 Specification",
+        "Scope covers power ratings up to 45.0 kW (tender requires 7.5 kW).",
+        "Clause 6.2: Motor shall be capable of operating satisfactorily with supply voltage variation of +6% to -15% of rated voltage (415V for 3-phase, 240V for 1-phase).",
+        "Clause 14.3: Insulation resistance between winding and motor frame shall not be less than 20 Megaohms when measured with 500V DC megger in dry condition and 5 Megaohms after immersion test.",
+        "Clause 13.1: Pump casing shall withstand hydrostatic test pressure of 1.5 times the maximum discharge pressure or 2.0 bar, whichever is higher, for a minimum duration of 2 minutes without leakage.",
+        "Clause 9.1, Table 1: Overall efficiency of the openwell pumpset shall not be less than the values specified in Table 1 corresponding to the rated head and discharge point. Tested strictly in accordance with IS 11346.",
+        "Installation provisions covered for openwell/sump mounting: Openwell Submersible Pumpsets \u2014 Specification"
+      ],
+      "matched_requirements": [
+        "REQ_003",
+        "REQ_004",
+        "REQ_005",
+        "REQ_006",
+        "REQ_007",
+        "REQ_008",
+        "REQ_010",
+        "REQ_012",
+        "REQ_013",
+        "REQ_014",
+        "REQ_015",
+        "REQ_016",
+        "REQ_017",
+        "REQ_018",
+        "REQ_019",
+        "REQ_020"
+      ],
+      "parameter_fit": [
+        {
+          "parameter_name": "Operating_Environment Requirement",
+          "tender_value": "2.1 Liquid Pumped: Clear, cold drinking water, non-aggressive, free from abrasive solids.",
+          "standard_value": "Covered under Scope: 'Covers requirements for openwell submersible pumpsets (monoset or motor and pump coupled) for handling clear, cold water up to 33\u00b0C, for agricultural and rural water supply purposes up to 45 kW.'",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Maximum Water Temperature",
+          "tender_value": "33\u00b0C",
+          "standard_value": "Scope handles water up to 33\u00b0C: 'Covers requirements for openwell submersible pumpsets (monoset or motor and pump coupled) for handling clear, cold water up to 33\u00b0C, for agricultural and rural water supply purposes up to 45 kW.'",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Maximum Submergence Depth",
+          "tender_value": "15 meters ",
+          "standard_value": "Hydraulic duties specified in standard: Openwell Submersible Pumpsets \u2014 Specification",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Operating_Environment Requirement",
+          "tender_value": "2.4 Operating Environment: Open rural agricultural wells subject to seasonal water table drawdown.",
+          "standard_value": "Covered under Scope: 'Covers requirements for openwell submersible pumpsets (monoset or motor and pump coupled) for handling clear, cold water up to 33\u00b0C, for agricultural and rural water supply purposes up to 45 kW.'",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Rated Power Output",
+          "tender_value": "7.5 kW (10.0 HP)",
+          "standard_value": "Scope covers power ratings up to 45.0 kW (tender requires 7.5 kW).",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Rated Supply Voltage",
+          "tender_value": "415 V",
+          "standard_value": "Clause 6.2: Motor shall be capable of operating satisfactorily with supply voltage variation of +6% to -15% of rated voltage (415V for 3-phase, 240V for 1-phase).",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Permissible Voltage Variation Band",
+          "tender_value": "350V to 440V",
+          "standard_value": "Clause 6.2: Motor shall be capable of operating satisfactorily with supply voltage variation of +6% to -15% of rated voltage (415V for 3-phase, 240V for 1-phase).",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Megger Test Voltage",
+          "tender_value": "500V",
+          "standard_value": "Clause 6.2: Motor shall be capable of operating satisfactorily with supply voltage variation of +6% to -15% of rated voltage (415V for 3-phase, 240V for 1-phase).",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Insulation Resistance",
+          "tender_value": "5 Megaohms",
+          "standard_value": "Clause 14.3: Insulation resistance between winding and motor frame shall not be less than 20 Megaohms when measured with 500V DC megger in dry condition and 5 Megaohms after immersion test.",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Casing Hydrostatic Test Pressure Multiplier",
+          "tender_value": "1.5 times the maximum operating head",
+          "standard_value": "Clause 13.1: Pump casing shall withstand hydrostatic test pressure of 1.5 times the maximum discharge pressure or 2.0 bar, whichever is higher, for a minimum duration of 2 minutes without leakage.",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Rated Operating Head",
+          "tender_value": "32.0 Meters",
+          "standard_value": "Hydraulic duties specified in standard: Openwell Submersible Pumpsets \u2014 Specification",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Discharge Rate at Duty Point",
+          "tender_value": "18.0 Litres per Second (64.8 m\u00b3/hr)",
+          "standard_value": "Hydraulic duties specified in standard: Openwell Submersible Pumpsets \u2014 Specification",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Overall Pumpset Efficiency",
+          "tender_value": "48.0%",
+          "standard_value": "Clause 9.1, Table 1: Overall efficiency of the openwell pumpset shall not be less than the values specified in Table 1 corresponding to the rated head and discharge point. Tested strictly in accordance with IS 11346.",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Minimum Shut-off Head",
+          "tender_value": "42.0 meters",
+          "standard_value": "Hydraulic duties specified in standard: Openwell Submersible Pumpsets \u2014 Specification",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Installation Requirement",
+          "tender_value": "6.1 The pumpset shall be designed for horizontal/vertical bed mounting at the bottom of the open well on a\nprefabricated...",
+          "standard_value": "Installation provisions covered for openwell/sump mounting: Openwell Submersible Pumpsets \u2014 Specification",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Installation Requirement",
+          "tender_value": "6.2 Mechanical suspension eyes shall be provided on the motor casing to facilitate lowering and lifting via high-tensile...",
+          "standard_value": "Installation provisions covered for openwell/sump mounting: Openwell Submersible Pumpsets \u2014 Specification",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Procurement Quantity",
+          "tender_value": "150 units",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Other_Technical_Parameter Requirement",
+          "tender_value": "1.2 The equipment shall comprise a multi-stage centrifugal pump directly coupled to a water-filled, continuous-duty\nsubm...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Rated Supply Frequency",
+          "tender_value": "50 Hz",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Existing_Is_Reference Requirement",
+          "tender_value": "4.1 The openwell submersible pumpsets shall strictly comply with the design, manufacturing, and performance\nrequirements...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Nominal Delivery Bore",
+          "tender_value": "80 mm nominal bore",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Material Requirement",
+          "tender_value": "6.4 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"The entire assembly shall be manufactured with superior engineering workmans...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Testing Requirement",
+          "tender_value": "7.1 Manufacturer must furnish internal routine test certificates covering high-voltage testing, insulation resistance, a...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Material Requirement",
+          "tender_value": "7.2 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"All pump materials shall be of standard commercial grade and suitable for wa...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Testing Requirement",
+          "tender_value": "7.3 The departmental inspection officer reserves the right to witness prototype testing at the manufacturer's works.",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        }
+      ],
+      "explanation": "Applicability: 0.90 (Param Fit: 0.93, Semantic: 0.75, Lexical: 1.00). Matched 16 of 25 requirements. Product Type Match: True. Coverage encompasses key parameters from scope & structured clauses.",
+      "source": {
+        "portal_url": "https://www.bis.gov.in/wp-content/uploads/2024/07/PM-IS-14220.pdf",
+        "official_publication_ref": "PM/IS 14220/3 July 2024",
+        "curated_by": "HUMAN_CURATOR"
+      },
+      "status": "CURRENT",
+      "confidence": 0.9
+    },
+    {
+      "standard": {
+        "is_number": "IS 14220:1994",
+        "title": "Openwell Submersible Pumpsets \u2014 Specification (First Edition)",
+        "year": 1994,
+        "current_status": "SUPERSEDED"
+      },
+      "applicability_score": 0.5262,
+      "evidence": [
+        "Product Type Match: Standard covers Openwell Submersible Pumpset.",
+        "Covered under Scope: 'Original 1994 specification for openwell submersible pumpsets.'",
+        "Applicable power rating covered under equipment specification: Openwell Submersible Pumpsets \u2014 Specification (First Edition)",
+        "Clause 8.1: Efficiency limits based on superseded 1994 baseline tables (lower than 2018 First Revision requirements).",
+        "Installation provisions covered for openwell/sump mounting: Openwell Submersible Pumpsets \u2014 Specification (First Edition)"
+      ],
+      "matched_requirements": [
+        "REQ_003",
+        "REQ_006",
+        "REQ_007",
+        "REQ_017",
+        "REQ_019",
+        "REQ_020"
+      ],
+      "parameter_fit": [
+        {
+          "parameter_name": "Operating_Environment Requirement",
+          "tender_value": "2.1 Liquid Pumped: Clear, cold drinking water, non-aggressive, free from abrasive solids.",
+          "standard_value": "Covered under Scope: 'Original 1994 specification for openwell submersible pumpsets.'",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Operating_Environment Requirement",
+          "tender_value": "2.4 Operating Environment: Open rural agricultural wells subject to seasonal water table drawdown.",
+          "standard_value": "Covered under Scope: 'Original 1994 specification for openwell submersible pumpsets.'",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Rated Power Output",
+          "tender_value": "7.5 kW (10.0 HP)",
+          "standard_value": "Applicable power rating covered under equipment specification: Openwell Submersible Pumpsets \u2014 Specification (First Edition)",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Overall Pumpset Efficiency",
+          "tender_value": "48.0%",
+          "standard_value": "Clause 8.1: Efficiency limits based on superseded 1994 baseline tables (lower than 2018 First Revision requirements).",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Installation Requirement",
+          "tender_value": "6.1 The pumpset shall be designed for horizontal/vertical bed mounting at the bottom of the open well on a\nprefabricated...",
+          "standard_value": "Installation provisions covered for openwell/sump mounting: Openwell Submersible Pumpsets \u2014 Specification (First Edition)",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Installation Requirement",
+          "tender_value": "6.2 Mechanical suspension eyes shall be provided on the motor casing to facilitate lowering and lifting via high-tensile...",
+          "standard_value": "Installation provisions covered for openwell/sump mounting: Openwell Submersible Pumpsets \u2014 Specification (First Edition)",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Procurement Quantity",
+          "tender_value": "150 units",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Other_Technical_Parameter Requirement",
+          "tender_value": "1.2 The equipment shall comprise a multi-stage centrifugal pump directly coupled to a water-filled, continuous-duty\nsubm...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Maximum Water Temperature",
+          "tender_value": "33\u00b0C",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Maximum Submergence Depth",
+          "tender_value": "15 meters ",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Rated Supply Voltage",
+          "tender_value": "415 V",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Rated Supply Frequency",
+          "tender_value": "50 Hz",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Permissible Voltage Variation Band",
+          "tender_value": "350V to 440V",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Existing_Is_Reference Requirement",
+          "tender_value": "4.1 The openwell submersible pumpsets shall strictly comply with the design, manufacturing, and performance\nrequirements...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Megger Test Voltage",
+          "tender_value": "500V",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Insulation Resistance",
+          "tender_value": "5 Megaohms",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Casing Hydrostatic Test Pressure Multiplier",
+          "tender_value": "1.5 times the maximum operating head",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Rated Operating Head",
+          "tender_value": "32.0 Meters",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Discharge Rate at Duty Point",
+          "tender_value": "18.0 Litres per Second (64.8 m\u00b3/hr)",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Minimum Shut-off Head",
+          "tender_value": "42.0 meters",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Nominal Delivery Bore",
+          "tender_value": "80 mm nominal bore",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Material Requirement",
+          "tender_value": "6.4 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"The entire assembly shall be manufactured with superior engineering workmans...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Testing Requirement",
+          "tender_value": "7.1 Manufacturer must furnish internal routine test certificates covering high-voltage testing, insulation resistance, a...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Material Requirement",
+          "tender_value": "7.2 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"All pump materials shall be of standard commercial grade and suitable for wa...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Testing Requirement",
+          "tender_value": "7.3 The departmental inspection officer reserves the right to witness prototype testing at the manufacturer's works.",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        }
+      ],
+      "explanation": "Applicability: 0.53 (Param Fit: 0.40, Semantic: 0.72, Lexical: 0.24). Matched 6 of 25 requirements. Product Type Match: True. Coverage encompasses key parameters from scope & structured clauses.",
+      "source": {
+        "portal_url": "https://www.bis.gov.in/wp-content/uploads/2024/07/PM-IS-14220.pdf",
+        "official_publication_ref": "IS 14220:1994 (superseded by First Revision IS 14220:2018)",
+        "curated_by": "HUMAN_CURATOR"
+      },
+      "status": "SUPERSEDED",
+      "confidence": 0.53
+    },
+    {
+      "standard": {
+        "is_number": "IS 8034",
+        "title": "Submersible Pumpsets \u2014 Specification",
+        "year": 2018,
+        "current_status": "CURRENT"
+      },
+      "applicability_score": 0.4448,
+      "evidence": [
+        "Hydraulic duties specified in standard: Submersible Pumpsets \u2014 Specification",
+        "Applicable power rating covered under equipment specification: Submersible Pumpsets \u2014 Specification"
+      ],
+      "matched_requirements": [
+        "REQ_005",
+        "REQ_007",
+        "REQ_015",
+        "REQ_016",
+        "REQ_018"
+      ],
+      "parameter_fit": [
+        {
+          "parameter_name": "Maximum Submergence Depth",
+          "tender_value": "15 meters ",
+          "standard_value": "Hydraulic duties specified in standard: Submersible Pumpsets \u2014 Specification",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Rated Power Output",
+          "tender_value": "7.5 kW (10.0 HP)",
+          "standard_value": "Applicable power rating covered under equipment specification: Submersible Pumpsets \u2014 Specification",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Rated Operating Head",
+          "tender_value": "32.0 Meters",
+          "standard_value": "Hydraulic duties specified in standard: Submersible Pumpsets \u2014 Specification",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Discharge Rate at Duty Point",
+          "tender_value": "18.0 Litres per Second (64.8 m\u00b3/hr)",
+          "standard_value": "Hydraulic duties specified in standard: Submersible Pumpsets \u2014 Specification",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Minimum Shut-off Head",
+          "tender_value": "42.0 meters",
+          "standard_value": "Hydraulic duties specified in standard: Submersible Pumpsets \u2014 Specification",
+          "fit_status": "COMPLIANT",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Procurement Quantity",
+          "tender_value": "150 units",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Other_Technical_Parameter Requirement",
+          "tender_value": "1.2 The equipment shall comprise a multi-stage centrifugal pump directly coupled to a water-filled, continuous-duty\nsubm...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Operating_Environment Requirement",
+          "tender_value": "2.1 Liquid Pumped: Clear, cold drinking water, non-aggressive, free from abrasive solids.",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Maximum Water Temperature",
+          "tender_value": "33\u00b0C",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Operating_Environment Requirement",
+          "tender_value": "2.4 Operating Environment: Open rural agricultural wells subject to seasonal water table drawdown.",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Rated Supply Voltage",
+          "tender_value": "415 V",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Rated Supply Frequency",
+          "tender_value": "50 Hz",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Permissible Voltage Variation Band",
+          "tender_value": "350V to 440V",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Existing_Is_Reference Requirement",
+          "tender_value": "4.1 The openwell submersible pumpsets shall strictly comply with the design, manufacturing, and performance\nrequirements...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Megger Test Voltage",
+          "tender_value": "500V",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Insulation Resistance",
+          "tender_value": "5 Megaohms",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Casing Hydrostatic Test Pressure Multiplier",
+          "tender_value": "1.5 times the maximum operating head",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Overall Pumpset Efficiency",
+          "tender_value": "48.0%",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Installation Requirement",
+          "tender_value": "6.1 The pumpset shall be designed for horizontal/vertical bed mounting at the bottom of the open well on a\nprefabricated...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Installation Requirement",
+          "tender_value": "6.2 Mechanical suspension eyes shall be provided on the motor casing to facilitate lowering and lifting via high-tensile...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Nominal Delivery Bore",
+          "tender_value": "80 mm nominal bore",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Material Requirement",
+          "tender_value": "6.4 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"The entire assembly shall be manufactured with superior engineering workmans...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Testing Requirement",
+          "tender_value": "7.1 Manufacturer must furnish internal routine test certificates covering high-voltage testing, insulation resistance, a...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Material Requirement",
+          "tender_value": "7.2 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"All pump materials shall be of standard commercial grade and suitable for wa...",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        },
+        {
+          "parameter_name": "Testing Requirement",
+          "tender_value": "7.3 The departmental inspection officer reserves the right to witness prototype testing at the manufacturer's works.",
+          "standard_value": "NOT_SPECIFIED_IN_STANDARD",
+          "fit_status": "NOT_SPECIFIED_IN_TENDER",
+          "tolerance_evaluation": null
+        }
+      ],
+      "explanation": "Applicability: 0.44 (Param Fit: 0.28, Semantic: 0.61, Lexical: 0.40). Matched 5 of 25 requirements. Product Type Match: False. Coverage encompasses key parameters from scope & structured clauses.",
+      "source": {
+        "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails?is_no=IS+8034",
+        "official_publication_ref": "PM/IS 8034 Third Revision",
+        "curated_by": "HUMAN_CURATOR"
+      },
+      "status": "CURRENT",
+      "confidence": 0.44
+    }
+  ],
+  "related_standards": [
+    {
+      "is_number": "IS 9283",
+      "title": "Line Operated A.C. Motors for Submersible Pumpsets \u2014 Specification",
+      "relationship_type": "NORMATIVE_REFERENCE",
+      "governing_primary_standard": "IS 14220",
+      "status": "CURRENT",
+      "importance": "RECOMMENDED",
+      "relevance_notes": "BIS Product Manual PM/IS 14220/3 (July 2024) Clause 2 & Annex B specifies IS 9283 for motor requirements and submersible electrical test gear."
+    },
+    {
+      "is_number": "IS 8034",
+      "title": "Submersible Pumpsets \u2014 Specification",
+      "relationship_type": "NORMATIVE_REFERENCE",
+      "governing_primary_standard": "IS 14220",
+      "status": "CURRENT",
+      "importance": "MANDATORY",
+      "relevance_notes": "Both standards fall under BIS Sectional Committee MED 20 (Pumps) and govern clear cold water submersible pumping technologies."
+    }
+  ],
+  "graph_summary": {
+    "total_nodes": 9,
+    "total_edges": 5,
+    "primary_clusters": [
+      "IS 14220"
+    ],
+    "expansion_depth": 1
+  },
+  "status_flags": {
+    "has_superseded_standards": true,
+    "has_withdrawn_standards": false,
+    "all_standards_current": false,
+    "superseded_count": 2,
+    "withdrawn_count": 0
+  },
+  "certification_flags": {
+    "qco_mandate_applicable": true,
+    "mandatory_isi_clause_present": false,
+    "qco_violation_risk": true,
+    "governing_qco_orders": [
+      {
+        "order_name": "Pumps (Quality Control) Order, 2023",
+        "order_number": "S.O. 4333(E)",
+        "issuing_ministry": "Department for Promotion of Industry and Internal Trade (DPIIT)",
+        "effective_date": "2024-10-06"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "finding_id": "FIND_SUPERSEDED_IS_14220_1994",
+      "severity": "HIGH",
+      "finding_type": "OUTDATED_STANDARD",
+      "title": "Superseded Indian Standard Cited: IS 14220:1994",
+      "tender_text": "requirements of IS 14220:1994 (\"Openwell Submersible Pumpsets - Specification\").",
+      "affected_standard": {
+        "is_number": "IS 14220:1994",
+        "version_cited": "1994",
+        "current_status": "SUPERSEDED",
+        "replacement_standard": "IS 14220:2018"
+      },
+      "explanation": "The tender cites 'IS 14220:1994', which has been officially superseded by 'IS 14220:2018'. Procurement specifications citing obsolete standard editions violate public procurement rules and lead to rejection during technical and audit inspections.",
+      "evidence": {
+        "standard_clause_reference": "Page 2",
+        "factual_summary": "Official BIS standard title and catalog record designate IS 14220:2018 as First Revision replacing original 1994 edition."
+      },
+      "source": {
+        "source_type": "BIS_CATALOG",
+        "rule_id": "RULE_SUPERSEDED_IS_14220_1994",
+        "official_url": "https://www.bis.gov.in/wp-content/uploads/2024/07/PM-IS-14220.pdf"
+      },
+      "suggested_fix": {
+        "replacement_clause_text": "The equipment shall strictly comply with active Indian Standard IS 14220:2018.",
+        "recommended_action_summary": "Replace obsolete reference 'IS 14220:1994' with active standard 'IS 14220:2018'."
+      },
+      "confidence": 1.0,
+      "requires_human_review": true,
+      "resolution_status": "PENDING"
+    },
+    {
+      "finding_id": "FIND_MISSING_TEST_IS_11346",
+      "severity": "MEDIUM",
+      "finding_type": "MISSING_TEST_STANDARD",
+      "title": "Standard-Required Acceptance Test Standard Omitted: IS 11346",
+      "tender_text": "Section 7: Quality Assurance & Inspection (Test method standard absent)",
+      "affected_standard": {
+        "is_number": "IS 11346",
+        "current_status": "CURRENT"
+      },
+      "explanation": "The governing product standard IS 14220 explicitly stipulates that hydraulic performance, tolerances, and acceptance tests shall be conducted in accordance with IS 11346 (Test Standard IS 11346). Omitting this standard leaves test methodologies and tolerance bands legally unanchored.",
+      "evidence": {
+        "standard_clause_reference": "IS 14220 Clause 9.1 & Clause 13",
+        "factual_summary": "Standard IS 14220 requires testing according to IS 11346. Absent from tender."
+      },
+      "source": {
+        "source_type": "STANDARDS_GRAPH",
+        "rule_id": "RULE_MISSING_TEST_IS_11346",
+        "official_url": null
+      },
+      "suggested_fix": {
+        "replacement_clause_text": "Performance and hydrostatic testing shall be conducted strictly in accordance with IS 11346.",
+        "recommended_action_summary": "Incorporate standard-required test method IS 11346 into inspection clauses."
+      },
+      "confidence": 1.0,
+      "requires_human_review": false,
+      "resolution_status": "PENDING"
+    },
+    {
+      "finding_id": "FIND_MISSING_TEST_IS_9283",
+      "severity": "MEDIUM",
+      "finding_type": "MISSING_TEST_STANDARD",
+      "title": "Standard-Required Acceptance Test Standard Omitted: IS 9283",
+      "tender_text": "Section 7: Quality Assurance & Inspection (Test method standard absent)",
+      "affected_standard": {
+        "is_number": "IS 9283",
+        "current_status": "CURRENT"
+      },
+      "explanation": "The governing product standard IS 14220 explicitly stipulates that hydraulic performance, tolerances, and acceptance tests shall be conducted in accordance with IS 9283 (Line Operated A.C. Motors for Submersible Pumpsets \u2014 Specification). Omitting this standard leaves test methodologies and tolerance bands legally unanchored.",
+      "evidence": {
+        "standard_clause_reference": "IS 14220 Clause 9.1 & Clause 13",
+        "factual_summary": "Standard IS 14220 requires testing according to IS 9283. Absent from tender."
+      },
+      "source": {
+        "source_type": "STANDARDS_GRAPH",
+        "rule_id": "RULE_MISSING_TEST_IS_9283",
+        "official_url": "https://lims.bis.gov.in/"
+      },
+      "suggested_fix": {
+        "replacement_clause_text": "Performance and hydrostatic testing shall be conducted strictly in accordance with IS 9283.",
+        "recommended_action_summary": "Incorporate standard-required test method IS 9283 into inspection clauses."
+      },
+      "confidence": 1.0,
+      "requires_human_review": false,
+      "resolution_status": "PENDING"
+    },
+    {
+      "finding_id": "FIND_QCO_MISSING_QCO_PUMPS_2023",
+      "severity": "CRITICAL",
+      "finding_type": "MISSING_CERTIFICATION",
+      "title": "Mandatory BIS ISI Mark Omitted under Pumps (Quality Control) Order, 2023",
+      "tender_text": "The tender specification does not stipulate mandatory BIS Standard Mark (ISI mark) licensing for the equipment.",
+      "affected_standard": {
+        "is_number": "IS 14220",
+        "current_status": "CURRENT"
+      },
+      "explanation": "Under statutory order S.O. 4333(E) (Pumps (Quality Control) Order, 2023) issued by the Department for Promotion of Industry and Internal Trade (DPIIT), it is legally mandatory that goods cannot be manufactured, imported, or procured without a valid BIS Standard Mark (ISI mark) under Scheme I. Omitting this requirement creates legal non-compliance and permits uncertified equipment.",
+      "evidence": {
+        "factual_summary": "Statutory Quality Control Order S.O. 4333(E) published in The Gazette of India: Extraordinary, Part II\u2014Section 3\u2014Sub-section (ii), S.O. 4333(E). Mandatory ISI Mark: True.",
+        "qco_order_number": "S.O. 4333(E)",
+        "gazette_date": "2023-10-06"
+      },
+      "source": {
+        "source_type": "GAZETTE_QCO_ORDER",
+        "rule_id": "RULE_QCO_QCO_PUMPS_2023",
+        "official_url": "https://dpiit.gov.in/sites/default/files/QCO_Pumps_06October2023.pdf"
+      },
+      "suggested_fix": {
+        "replacement_clause_text": "Bidders must possess a valid Bureau of Indian Standards (BIS) Standard Mark (ISI mark) license under Scheme I of BIS (Conformity Assessment) Regulations 2018 for IS 14220 as mandated by Pumps (Quality Control) Order, 2023.",
+        "recommended_action_summary": "Mandate compulsory BIS ISI certification in technical eligibility and delivery terms."
+      },
+      "confidence": 1.0,
+      "requires_human_review": true,
+      "resolution_status": "PENDING"
+    },
+    {
+      "finding_id": "FIND_VAGUE_superior_engineering_workmansh",
+      "severity": "MEDIUM",
+      "finding_type": "VAGUE_REQUIREMENT",
+      "title": "Ambiguous / Qualitative Specification Phrase: 'superior engineering workmanship'",
+      "tender_text": "6.4 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"The entire assembly shall be manufactured with superior engineering workmanship, excellent corrosion\nresistance, and high-grade durable components to ensure long trouble-free service life under harsh village\nconditions.\"",
+      "affected_standard": {
+        "is_number": "IS 14220",
+        "current_status": "CURRENT"
+      },
+      "explanation": "The clause uses the unquantified phrase 'superior engineering workmanship'. Subjective specification language creates audit ambiguity, prevents objective lab testing, and can lead to supplier disputes.",
+      "evidence": {
+        "standard_clause_reference": "6.4",
+        "factual_summary": "Unquantified qualitative requirement 'superior engineering workmanship' without objective standard reference."
+      },
+      "source": {
+        "source_type": "DETERMINISTIC_RULE_ENGINE",
+        "rule_id": "RULE_VAGUE_superior_engineering_workmansh"
+      },
+      "suggested_fix": {
+        "replacement_clause_text": "[Draft Replacement]: Replace 'superior engineering workmanship' with explicit parameters per Specify standard workmanship clauses from IS 14220 Clause 6 or relevant BIS code..",
+        "recommended_action_summary": "Replace ambiguous phrasing with quantifiable requirements (Specify standard workmanship clauses from IS 14220 Clause 6 or relevant BIS code.)."
+      },
+      "confidence": 0.95,
+      "requires_human_review": true,
+      "resolution_status": "PENDING",
+      "affected_requirement": {
+        "requirement_id": "REQ_022",
+        "parameter_name": "Material Requirement",
+        "tender_clause": "6.4"
+      }
+    },
+    {
+      "finding_id": "FIND_VAGUE_standard_commercial_grade",
+      "severity": "MEDIUM",
+      "finding_type": "VAGUE_REQUIREMENT",
+      "title": "Ambiguous / Qualitative Specification Phrase: 'standard commercial grade'",
+      "tender_text": "7.2 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"All pump materials shall be of standard commercial grade and suitable for water contact.\"",
+      "affected_standard": {
+        "is_number": "IS 14220",
+        "current_status": "CURRENT"
+      },
+      "explanation": "The clause uses the unquantified phrase 'standard commercial grade'. Subjective specification language creates audit ambiguity, prevents objective lab testing, and can lead to supplier disputes.",
+      "evidence": {
+        "standard_clause_reference": "7.2",
+        "factual_summary": "Unquantified qualitative requirement 'standard commercial grade' without objective standard reference."
+      },
+      "source": {
+        "source_type": "DETERMINISTIC_RULE_ENGINE",
+        "rule_id": "RULE_VAGUE_standard_commercial_grade"
+      },
+      "suggested_fix": {
+        "replacement_clause_text": "[Draft Replacement]: Replace 'standard commercial grade' with explicit parameters per Specify exact metallurgical grades conforming to IS 14220 Table 2 (e.g. FG 200 for grey iron, AISI 410 for shaft)..",
+        "recommended_action_summary": "Replace ambiguous phrasing with quantifiable requirements (Specify exact metallurgical grades conforming to IS 14220 Table 2 (e.g. FG 200 for grey iron, AISI 410 for shaft).)."
+      },
+      "confidence": 0.95,
+      "requires_human_review": true,
+      "resolution_status": "PENDING",
+      "affected_requirement": {
+        "requirement_id": "REQ_024",
+        "parameter_name": "Material Requirement",
+        "tender_clause": "7.2"
+      }
+    },
+    {
+      "finding_id": "FIND_VAGUE_high-grade_durable_components",
+      "severity": "MEDIUM",
+      "finding_type": "VAGUE_REQUIREMENT",
+      "title": "Ambiguous / Qualitative Specification Phrase: 'high-grade durable components'",
+      "tender_text": "6.4 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"The entire assembly shall be manufactured with superior engineering workmanship, excellent corrosion\nresistance, and high-grade durable components to ensure long trouble-free service life under harsh village\nconditions.\"",
+      "affected_standard": {
+        "is_number": "IS 14220",
+        "current_status": "CURRENT"
+      },
+      "explanation": "The clause uses the unquantified phrase 'high-grade durable components'. Subjective specification language creates audit ambiguity, prevents objective lab testing, and can lead to supplier disputes.",
+      "evidence": {
+        "standard_clause_reference": "6.4",
+        "factual_summary": "Unquantified qualitative requirement 'high-grade durable components' without objective standard reference."
+      },
+      "source": {
+        "source_type": "DETERMINISTIC_RULE_ENGINE",
+        "rule_id": "RULE_VAGUE_high-grade_durable_components"
+      },
+      "suggested_fix": {
+        "replacement_clause_text": "[Draft Replacement]: Replace 'high-grade durable components' with explicit parameters per Specify exact material standards conforming to IS 14220 / IS 5120 specifications..",
+        "recommended_action_summary": "Replace ambiguous phrasing with quantifiable requirements (Specify exact material standards conforming to IS 14220 / IS 5120 specifications.)."
+      },
+      "confidence": 0.95,
+      "requires_human_review": true,
+      "resolution_status": "PENDING",
+      "affected_requirement": {
+        "requirement_id": "REQ_022",
+        "parameter_name": "Material Requirement",
+        "tender_clause": "6.4"
+      }
+    },
+    {
+      "finding_id": "FIND_VAGUE_suitable_for_water_contact",
+      "severity": "MEDIUM",
+      "finding_type": "VAGUE_REQUIREMENT",
+      "title": "Ambiguous / Qualitative Specification Phrase: 'suitable for water contact'",
+      "tender_text": "7.2 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"All pump materials shall be of standard commercial grade and suitable for water contact.\"",
+      "affected_standard": {
+        "is_number": "IS 14220",
+        "current_status": "CURRENT"
+      },
+      "explanation": "The clause uses the unquantified phrase 'suitable for water contact'. Subjective specification language creates audit ambiguity, prevents objective lab testing, and can lead to supplier disputes.",
+      "evidence": {
+        "standard_clause_reference": "7.2",
+        "factual_summary": "Unquantified qualitative requirement 'suitable for water contact' without objective standard reference."
+      },
+      "source": {
+        "source_type": "DETERMINISTIC_RULE_ENGINE",
+        "rule_id": "RULE_VAGUE_suitable_for_water_contact"
+      },
+      "suggested_fix": {
+        "replacement_clause_text": "[Draft Replacement]: Replace 'suitable for water contact' with explicit parameters per Specify corrosion-resistant metallurgy (e.g. Bronze Grade LTB 2 or Stainless Steel Grade CF8M)..",
+        "recommended_action_summary": "Replace ambiguous phrasing with quantifiable requirements (Specify corrosion-resistant metallurgy (e.g. Bronze Grade LTB 2 or Stainless Steel Grade CF8M).)."
+      },
+      "confidence": 0.95,
+      "requires_human_review": true,
+      "resolution_status": "PENDING",
+      "affected_requirement": {
+        "requirement_id": "REQ_024",
+        "parameter_name": "Material Requirement",
+        "tender_clause": "7.2"
+      }
+    }
+  ],
+  "standards_bom": [
+    {
+      "item_number": 1,
+      "is_number": "IS 14220",
+      "title": "Openwell Submersible Pumpsets \u2014 Specification",
+      "role": "PRIMARY_PRODUCT_STANDARD",
+      "is_mandatory_qco": true,
+      "compliance_status": "CITED_BUT_OUTDATED",
+      "action_required": "Update tender citation to active edition and require ISI mark license."
+    },
+    {
+      "item_number": 2,
+      "is_number": "IS 9283",
+      "title": "Line Operated A.C. Motors for Submersible Pumpsets \u2014 Specification",
+      "role": "MATERIAL_SPECIFICATION",
+      "is_mandatory_qco": false,
+      "compliance_status": "RECOMMENDED_ALLIED",
+      "action_required": "Reference as normative reference in quality assurance section."
+    },
+    {
+      "item_number": 3,
+      "is_number": "IS 8034",
+      "title": "Submersible Pumpsets \u2014 Specification",
+      "role": "MATERIAL_SPECIFICATION",
+      "is_mandatory_qco": true,
+      "compliance_status": "RECOMMENDED_ALLIED",
+      "action_required": "Reference as normative reference in quality assurance section."
+    }
+  ],
+  "corrected_clause": [
+    {
+      "clause_id": "CORR_001",
+      "source_clause_reference": "Page 2",
+      "original_tender_text": "requirements of IS 14220:1994 (\"Openwell Submersible Pumpsets - Specification\").",
+      "corrected_text": "The equipment shall strictly comply with the design, manufacturing, and performance requirements of IS 14220:2018.",
+      "rationale": "Replaces superseded IS 14220:1994 with active revision IS 14220:2018 as confirmed in official BIS Product Manual.",
+      "governing_rules": [
+        "RULE_SUPERSEDED_IS_14220:1994"
+      ],
+      "linked_finding_ids": [
+        "FIND_SUPERSEDED_IS_14220_1994"
+      ]
+    },
+    {
+      "clause_id": "CORR_002",
+      "source_clause_reference": "Section 7: Quality Assurance & Inspection (Clause 7.1)",
+      "original_tender_text": "Manufacturer must furnish internal routine test certificates... before dispatch.",
+      "corrected_text": "Manufacturer must furnish test certificates strictly complying with IS 11346 acceptance testing protocols, covering head-discharge, overall efficiency, and hydrostatic pressure characteristics.",
+      "rationale": "Explicitly anchors factory and site acceptance testing to IS 11346 as required by IS 14220.",
+      "governing_rules": [
+        "RULE_MISSING_TEST_IS_11346"
+      ],
+      "linked_finding_ids": [
+        "FIND_MISSING_TEST_IS_11346"
+      ]
+    },
+    {
+      "clause_id": "CORR_003",
+      "source_clause_reference": "Section 7: Quality Assurance & Inspection (Clause 7.1)",
+      "original_tender_text": "Manufacturer must furnish internal routine test certificates... before dispatch.",
+      "corrected_text": "Manufacturer must furnish test certificates strictly complying with IS 9283 acceptance testing protocols, covering head-discharge, overall efficiency, and hydrostatic pressure characteristics.",
+      "rationale": "Explicitly anchors factory and site acceptance testing to IS 9283 as required by IS 14220.",
+      "governing_rules": [
+        "RULE_MISSING_TEST_IS_9283"
+      ],
+      "linked_finding_ids": [
+        "FIND_MISSING_TEST_IS_9283"
+      ]
+    },
+    {
+      "clause_id": "CORR_004",
+      "source_clause_reference": "Quality Assurance & Certification Clause",
+      "original_tender_text": "[Mandatory BIS ISI Mark Certification Clause Omitted in Original Tender]",
+      "corrected_text": "The contractor must possess a valid BIS Standard Mark (ISI mark) license under Scheme I for IS 14220 as mandated by Pumps (Quality Control) Order, 2023 (S.O. 4333(E)). Tenders lacking verified BIS license certificates shall be summarily rejected.",
+      "rationale": "Enforces compliance with statutory Quality Control Order S.O. 4333(E) effective 2024-10-06.",
+      "governing_rules": [
+        "RULE_QCO_QCO_PUMPS_2023"
+      ],
+      "linked_finding_ids": [
+        "FIND_QCO_MISSING_QCO_PUMPS_2023"
+      ]
+    },
+    {
+      "clause_id": "CORR_005",
+      "source_clause_reference": "6.4",
+      "original_tender_text": "6.4 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"The entire assembly shall be manufactured with superior engineering workmanship, excellent corrosion\nresistance, and high-grade durable components to ensure long trouble-free service life under harsh village\nconditions.\"",
+      "corrected_text": "[Corrected Draft]: Specify standard workmanship clauses from IS 14220 Clause 6 or relevant BIS code.",
+      "rationale": "Replaces ambiguous phrase 'superior engineering workmanship' with objective BIS criteria.",
+      "governing_rules": [
+        "RULE_VAGUE_superior_engineering_workmansh"
+      ],
+      "linked_finding_ids": [
+        "FIND_VAGUE_superior_engineering_workmansh"
+      ]
+    },
+    {
+      "clause_id": "CORR_006",
+      "source_clause_reference": "7.2",
+      "original_tender_text": "7.2 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"All pump materials shall be of standard commercial grade and suitable for water contact.\"",
+      "corrected_text": "[Corrected Draft]: Specify exact metallurgical grades conforming to IS 14220 Table 2 (e.g. FG 200 for grey iron, AISI 410 for shaft).",
+      "rationale": "Replaces ambiguous phrase 'standard commercial grade' with objective BIS criteria.",
+      "governing_rules": [
+        "RULE_VAGUE_standard_commercial_grade"
+      ],
+      "linked_finding_ids": [
+        "FIND_VAGUE_standard_commercial_grade"
+      ]
+    },
+    {
+      "clause_id": "CORR_007",
+      "source_clause_reference": "6.4",
+      "original_tender_text": "6.4 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"The entire assembly shall be manufactured with superior engineering workmanship, excellent corrosion\nresistance, and high-grade durable components to ensure long trouble-free service life under harsh village\nconditions.\"",
+      "corrected_text": "[Corrected Draft]: Specify exact material standards conforming to IS 14220 / IS 5120 specifications.",
+      "rationale": "Replaces ambiguous phrase 'high-grade durable components' with objective BIS criteria.",
+      "governing_rules": [
+        "RULE_VAGUE_high-grade_durable_components"
+      ],
+      "linked_finding_ids": [
+        "FIND_VAGUE_high-grade_durable_components"
+      ]
+    },
+    {
+      "clause_id": "CORR_008",
+      "source_clause_reference": "7.2",
+      "original_tender_text": "7.2 [INTENTIONALLY VAGUE REQUIREMENT]:\n    \"All pump materials shall be of standard commercial grade and suitable for water contact.\"",
+      "corrected_text": "[Corrected Draft]: Specify corrosion-resistant metallurgy (e.g. Bronze Grade LTB 2 or Stainless Steel Grade CF8M).",
+      "rationale": "Replaces ambiguous phrase 'suitable for water contact' with objective BIS criteria.",
+      "governing_rules": [
+        "RULE_VAGUE_suitable_for_water_contact"
+      ],
+      "linked_finding_ids": [
+        "FIND_VAGUE_suitable_for_water_contact"
+      ]
+    }
+  ],
+  "risk_indicator": {
+    "risk_level": "CRITICAL",
+    "compliance_score": 25.0,
+    "critical_issues_count": 1,
+    "high_issues_count": 1,
+    "medium_issues_count": 6,
+    "summary": "1 critical statutory violation(s) (e.g. mandatory QCO omission); 1 high-severity issue(s) (e.g. superseded standard cited)"
+  },
+  "human_review_required": true
+}

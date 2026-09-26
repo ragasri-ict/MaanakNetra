@@ -1,0 +1,54 @@
+[
+  {
+    "qco_id": "QCO_PUMPS_2023",
+    "order_title": "Pumps (Quality Control) Order, 2023",
+    "issuing_ministry": "Department for Promotion of Industry and Internal Trade (DPIIT)",
+    "order_number": "S.O. 4333(E)",
+    "gazette_date": "2023-10-06",
+    "effective_date": "2024-10-06",
+    "isi_mark_mandatory": true,
+    "covered_standards": [
+      {
+        "is_number": "IS 14220:2018",
+        "product_name": "Openwell Submersible Pumpsets"
+      },
+      {
+        "is_number": "IS 8034:2018",
+        "product_name": "Submersible Pumpsets"
+      },
+      {
+        "is_number": "IS 9079:2018",
+        "product_name": "Monoset Pumps for Clear, Cold Water"
+      },
+      {
+        "is_number": "IS 6595 (Part 1):2018",
+        "product_name": "Horizontal Centrifugal Pumps for Agricultural/Rural Water Supply"
+      }
+    ],
+    "exemption_clauses": "VERIFIED FACT: Domestic goods manufactured exclusively for export are exempt. PENDING VERIFICATION: Tiered transition facilitation dates for Micro and Small Enterprises.",
+    "source_url": "https://dpiit.gov.in/sites/default/files/QCO_Pumps_06October2023.pdf",
+    "gazette_reference": "The Gazette of India: Extraordinary, Part II—Section 3—Sub-section (ii), S.O. 4333(E)",
+    "verification_status": "VERIFIED_OFFICIAL",
+    "notes": "VERIFIED FACT: Mandates Standard Mark under Scheme I of BIS Conformity Assessment Regulations 2018 for all four listed pump standards."
+  },
+  {
+    "qco_id": "QCO_MOTORS_2017",
+    "order_title": "Energy Efficient Induction Motors — Three Phase Squirrel Cage (Quality Control) Order, 2017",
+    "issuing_ministry": "Department for Promotion of Industry and Internal Trade (DPIIT) / Ministry of Heavy Industries",
+    "order_number": "S.O. 167(E)",
+    "gazette_date": "2017-01-18",
+    "effective_date": "2018-01-01",
+    "isi_mark_mandatory": true,
+    "covered_standards": [
+      {
+        "is_number": "IS 12615",
+        "product_name": "Energy Efficient Three-Phase Induction Motors (IE Code)"
+      }
+    ],
+    "exemption_clauses": "VERIFIED FACT: Exempts motors for traction and explosive atmosphere mining operations. PENDING VERIFICATION: Submersible pump motors operating underwater inside sumps/boreholes are not explicitly enumerated under S.O. 167(E) and their cross-applicability requires human regulatory determination.",
+    "source_url": "https://dpiit.gov.in/sites/default/files/Order_Motors_18Jan2017.pdf",
+    "gazette_reference": "The Gazette of India: Extraordinary, Part II—Section 3—Sub-section (ii), S.O. 167(E)",
+    "verification_status": "VERIFIED_OFFICIAL",
+    "notes": "VERIFIED FACT: Mandatory since January 1, 2018 for standard line-operated surface induction motors; enforces minimum IE2 efficiency rating."
+  }
+]

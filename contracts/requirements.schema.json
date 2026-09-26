@@ -1,0 +1,281 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://maanaknetra.gov.in/schemas/requirements.schema.json",
+  "title": "TenderRequirementsExtractionDocument",
+  "description": "Schema representing procurement requirements, technical parameters, and explicit standard citations extracted from a tender document.",
+  "type": "object",
+  "properties": {
+    "document_metadata": {
+      "type": "object",
+      "description": "Metadata regarding the uploaded tender or specification document.",
+      "properties": {
+        "document_id": {
+          "type": "string",
+          "description": "Unique identifier for the parsed tender document."
+        },
+        "document_title": {
+          "type": "string",
+          "description": "Title or reference number of the tender document."
+        },
+        "file_name": {
+          "type": "string",
+          "description": "Original file name of the document."
+        },
+        "page_count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Total number of pages in the tender document."
+        },
+        "extracted_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of extraction."
+        },
+        "procuring_entity": {
+          "type": ["string", "null"],
+          "description": "Name of the government department, PSU, or organization issuing the tender."
+        }
+      },
+      "required": ["document_id", "document_title", "extracted_at"]
+    },
+    "product_context": {
+      "type": "object",
+      "description": "High-level domain and product classification inferred from the tender specifications.",
+      "properties": {
+        "primary_item_name": {
+          "type": "string",
+          "description": "Name of the primary equipment, item, or material sought."
+        },
+        "category": {
+          "type": "string",
+          "description": "Broad industrial or procurement domain (e.g. Electrical Cables, Structural Steel, Cement, Transformers)."
+        },
+        "summary": {
+          "type": "string",
+          "description": "Brief executive summary of the technical scope."
+        }
+      },
+      "required": ["primary_item_name", "category"]
+    },
+    "extracted_requirements": {
+      "type": "array",
+      "description": "Collection of individual technical parameters and requirements extracted from the tender.",
+      "items": {
+        "$ref": "#/definitions/RequirementItem"
+      }
+    },
+    "already_cited_standards": {
+      "type": "array",
+      "description": "Standard references (e.g., IS, ISO, IEC) explicitly named in the tender prose.",
+      "items": {
+        "$ref": "#/definitions/AlreadyCitedStandard"
+      }
+    }
+  },
+  "required": [
+    "document_metadata",
+    "product_context",
+    "extracted_requirements",
+    "already_cited_standards"
+  ],
+  "definitions": {
+    "RequirementItem": {
+      "type": "object",
+      "description": "A single extracted procurement requirement or technical specification.",
+      "properties": {
+        "requirement_id": {
+          "type": "string",
+          "description": "Unique deterministic identifier for the requirement (e.g. 'REQ_001')."
+        },
+        "field": {
+          "type": "string",
+          "description": "Technical discipline or category (e.g., 'Mechanical', 'Electrical', 'Chemical', 'Environmental', 'Safety', 'Inspection', 'Packaging')."
+        },
+        "category": {
+          "type": "string",
+          "description": "Sub-domain grouping (e.g., 'Tensile Properties', 'Insulation Resistance', 'Operating Limits')."
+        },
+        "parameter_name": {
+          "type": "string",
+          "description": "Standardized canonical name of the parameter (e.g., 'Tensile Strength', 'Conductor Resistance', 'Voltage Rating')."
+        },
+        "value": {
+          "type": "string",
+          "description": "Raw extracted value string as written in the tender (e.g., '410 MPa min', '0.5 ohm/km max', '11 kV')."
+        },
+        "unit": {
+          "type": ["string", "null"],
+          "description": "Engineering unit of measurement (e.g., 'MPa', 'ohm/km', 'kV', 'mm', 'deg C')."
+        },
+        "normalized_value": {
+          "$ref": "#/definitions/NormalizedValue"
+        },
+        "product_category_context": {
+          "type": "string",
+          "description": "Contextual product tag associated with this parameter."
+        },
+        "is_mandatory": {
+          "type": "boolean",
+          "description": "True if the requirement is mandatory (shall/must); false if optional or desirable (may/should)."
+        },
+        "source_text": {
+          "type": "string",
+          "description": "Verbatim sentence or clause from the tender containing the requirement."
+        },
+        "source_location": {
+          "$ref": "#/definitions/SourceLocation"
+        },
+        "extraction_confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Model confidence score for the extraction accuracy (0.0 to 1.0)."
+        },
+        "notes": {
+          "type": ["string", "null"],
+          "description": "Supplementary parsing notes, edge case observations, or disambiguation remarks."
+        }
+      },
+      "required": [
+        "requirement_id",
+        "field",
+        "parameter_name",
+        "value",
+        "normalized_value",
+        "is_mandatory",
+        "source_text",
+        "source_location",
+        "extraction_confidence"
+      ]
+    },
+    "NormalizedValue": {
+      "type": "object",
+      "description": "Machine-readable parsed representation of quantitative/qualitative parameters for deterministic matching.",
+      "properties": {
+        "numeric_value": {
+          "type": ["number", "null"],
+          "description": "Single discrete numeric value if specified without inequality."
+        },
+        "min_value": {
+          "type": ["number", "null"],
+          "description": "Lower bound numerical threshold."
+        },
+        "max_value": {
+          "type": ["number", "null"],
+          "description": "Upper bound numerical threshold."
+        },
+        "unit": {
+          "type": ["string", "null"],
+          "description": "Normalized SI or engineering unit."
+        },
+        "operator": {
+          "type": "string",
+          "enum": ["EQUAL", "GTE", "LTE", "RANGE", "CONTAINS", "TEXT_EXACT"],
+          "description": "Relational operator for evaluation against standard tolerance."
+        },
+        "text_value": {
+          "type": ["string", "null"],
+          "description": "Canonical text representation if purely qualitative."
+        }
+      },
+      "required": ["operator"]
+    },
+    "SourceLocation": {
+      "type": "object",
+      "description": "Exact traceability location inside the tender document.",
+      "properties": {
+        "source_page": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "description": "1-indexed page number in the source document."
+        },
+        "clause_number": {
+          "type": ["string", "null"],
+          "description": "Clause or section header reference (e.g., 'Clause 4.2.1', 'Section B')."
+        },
+        "line_number": {
+          "type": ["integer", "null"],
+          "description": "Approximate line number on page if available."
+        },
+        "table_identifier": {
+          "type": ["string", "null"],
+          "description": "Identifier or title of table if requirement was extracted from tabular data."
+        },
+        "char_start": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "Optional 0-indexed character start offset for future UI text highlighting."
+        },
+        "char_end": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "Optional 0-indexed character end offset for future UI text highlighting."
+        },
+        "bounding_box": {
+          "type": ["object", "null"],
+          "description": "Optional bounding box coordinates on PDF page for future UI visual highlighting.",
+          "properties": {
+            "x0": { "type": "number", "description": "Left coordinate" },
+            "y0": { "type": "number", "description": "Top coordinate" },
+            "x1": { "type": "number", "description": "Right coordinate" },
+            "y1": { "type": "number", "description": "Bottom coordinate" },
+            "page_number": { "type": "integer", "minimum": 1, "description": "Page on which bounding box resides" }
+          },
+          "required": ["x0", "y0", "x1", "y1", "page_number"]
+        }
+      }
+    },
+    "AlreadyCitedStandard": {
+      "type": "object",
+      "description": "An Indian or international standard reference explicitly cited by the tender author.",
+      "properties": {
+        "citation_id": {
+          "type": "string",
+          "description": "Unique citation reference identifier (e.g. 'CITE_001')."
+        },
+        "raw_citation": {
+          "type": "string",
+          "description": "Verbatim citation text (e.g., 'IS 2062:1999 Grade A', 'as per IS:694 latest')."
+        },
+        "standard_code": {
+          "type": "string",
+          "description": "Normalized standard code (e.g., 'IS 2062', 'IS 694')."
+        },
+        "part_number": {
+          "type": ["string", "null"],
+          "description": "Part or section number if applicable (e.g., 'Part 1', 'Sec 2')."
+        },
+        "year_cited": {
+          "type": ["integer", "null"],
+          "description": "Specific edition year cited in tender, if any (e.g., 1999)."
+        },
+        "clause_reference": {
+          "type": ["string", "null"],
+          "description": "Tender clause where the standard is referenced."
+        },
+        "source_text": {
+          "type": "string",
+          "description": "Contextual sentence citing this standard."
+        },
+        "source_page": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "description": "Page where citation occurs."
+        },
+        "extraction_confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Confidence of standard code extraction."
+        }
+      },
+      "required": [
+        "citation_id",
+        "raw_citation",
+        "standard_code",
+        "source_text",
+        "extraction_confidence"
+      ]
+    }
+  }
+}

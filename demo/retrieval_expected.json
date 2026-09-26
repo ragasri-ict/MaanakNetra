@@ -1,0 +1,43 @@
+{
+  "target_tender": "demo/sample_tender.pdf",
+  "tender_scope": "Procurement of 150 units of Openwell Submersible Pumpsets for rural drinking water supply, 7.5 kW, 415V, 32m head, 18 L/s.",
+  "expected_primary_standard": {
+    "is_number": "IS 14220",
+    "title": "Openwell Submersible Pumpsets — Specification",
+    "status": "CURRENT",
+    "current_version": "IS 14220:2018",
+    "rationale": "Exact match for equipment type (Openwell Submersible Pumpset), power (up to 45 kW covers 7.5 kW), water temperature (up to 33°C), and application (rural water supply)."
+  },
+  "obsolete_cited_edition": {
+    "is_number": "IS 14220:1994",
+    "status": "SUPERSEDED",
+    "superseded_by": "IS 14220:2018",
+    "note": "Cited verbatim in tender Clause 4.1, but superseded by First Revision IS 14220:2018. Retrieval must independently rank current IS 14220 as primary."
+  },
+  "acceptable_related_standards": [
+    {
+      "is_number": "IS 9283",
+      "title": "Motors for Submersible Pumpsets — Specification",
+      "relationship": "NORMATIVE_REFERENCE",
+      "rationale": "Governs the submersible motor driving the pumpset, supply voltage tolerances (350V-440V), megger testing (500V DC), and insulation resistance (5 MOhm)."
+    },
+    {
+      "is_number": "IS 8034",
+      "title": "Submersible Pumpsets — Specification",
+      "relationship": "RELATED_EQUIPMENT",
+      "rationale": "Closely related submersible pumpset standard for deepwell/borehole applications sharing hydraulic testing principles."
+    },
+    {
+      "is_number": "IS 9079",
+      "title": "Electric Monoset Pumps for Clear, Cold Water for Agricultural and Water Supply Purposes — Specification",
+      "relationship": "RELATED_EQUIPMENT",
+      "rationale": "Alternative surface-mounted agricultural pumpset specification sharing clean cold water and motor rating domains."
+    },
+    {
+      "is_number": "IS 6595 (Part 1)",
+      "title": "Centrifugal Pumps for Clear, Cold, Fresh Water — Specification",
+      "relationship": "PARENT_HYDRAULIC_CLASS",
+      "rationale": "Broad technical standard for clear cold water centrifugal pumpsets."
+    }
+  ]
+}

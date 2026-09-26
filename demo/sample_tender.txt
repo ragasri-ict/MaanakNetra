@@ -1,0 +1,52 @@
+================================================================================
+SYNTHETIC DEMONSTRATION DATA — NOT AN OFFICIAL GOVERNMENT TENDER
+MAANAKNETRA TEST FIXTURE (SIH26108) — FOR EVALUATION PURPOSES ONLY
+================================================================================
+
+TENDER NOTICE REF NO: RWSS/ZONE-IV/PUMP-PROC/2026/088
+DEPARTMENT: Rural Water Supply and Sanitation Engineering Department (Fictional)
+SUBJECT: Supply, Delivery, and Site Testing of 7.5 kW (10 HP) Openwell Submersible Pumpsets for Community Water Supply Schemes.
+
+SECTION 1: SCOPE OF SUPPLY
+1.1 The contractor shall manufacture, inspect, test, pack, and deliver 150 units of Openwell Submersible Pumpsets suitable for direct submerged operation in village open intake wells and masonry community sumps.
+1.2 The equipment shall comprise a multi-stage centrifugal pump directly coupled to a water-filled, continuous-duty submersible electric motor.
+
+SECTION 2: OPERATING CONDITIONS & ENVIRONMENT
+2.1 Liquid Pumped: Clear, cold drinking water, non-aggressive, free from abrasive solids.
+2.2 Water Temperature: Ambient, not exceeding 33°C.
+2.3 Installation Depth: Fully submerged up to a maximum water submergence depth of 15 meters below lowest water level.
+2.4 Operating Environment: Open rural agricultural wells subject to seasonal water table drawdown.
+
+SECTION 3: ELECTRICAL RATING & POWER SUPPLY
+3.1 Power Rating: 7.5 kW (10.0 HP) continuous rated output.
+3.2 Supply Voltage: 415 V, 3-Phase, 50 Hz A.C. supply.
+3.3 Voltage Variation: Motor shall be capable of operating continuously within voltage band of 350V to 440V without winding overheating.
+3.4 Motor Type: 2-Pole squirrel-cage induction type, water-lubricated thrust and journal bearings.
+
+SECTION 4: GOVERNING STANDARDS (SPECIFIED CITATION)
+4.1 The openwell submersible pumpsets shall strictly comply with the design, manufacturing, and performance requirements of IS 14220:1994 ("Openwell Submersible Pumpsets - Specification").
+4.2 Testing of electrical insulation shall be carried out with 500V DC megger and must not be less than 5 Megaohms after 24 hours immersion.
+4.3 Hydrostatic pressure testing of the pump casing shall be conducted at 1.5 times the maximum operating head.
+
+SECTION 5: PERFORMANCE PARAMETERS & DUTY POINT
+5.1 Rated Operating Head: 32.0 Meters (Total Dynamic Head).
+5.2 Discharge at Duty Point: 18.0 Litres per Second (64.8 m³/hr).
+5.3 Overall Efficiency: The overall efficiency (wire-to-water) of the complete pumpset at guaranteed duty point shall be not less than 48.0%.
+5.4 Shut-off Head: Not less than 42.0 meters.
+
+SECTION 6: INSTALLATION & MOUNTING PROVISIONS
+6.1 The pumpset shall be designed for horizontal/vertical bed mounting at the bottom of the open well on a prefabricated civil pedestal.
+6.2 Mechanical suspension eyes shall be provided on the motor casing to facilitate lowering and lifting via high-tensile stainless steel wire rope.
+6.3 Flanged delivery connection of 80 mm nominal bore (NB) conforming to standard pipe flanging.
+6.4 [INTENTIONALLY VAGUE REQUIREMENT]:
+    "The entire assembly shall be manufactured with superior engineering workmanship, excellent corrosion resistance, and high-grade durable components to ensure long trouble-free service life under harsh village conditions."
+
+SECTION 7: QUALITY ASSURANCE & INSPECTION
+7.1 Manufacturer must furnish internal routine test certificates covering high-voltage testing, insulation resistance, and head-discharge-power characteristics before dispatch.
+7.2 [INTENTIONALLY VAGUE REQUIREMENT]:
+    "All pump materials shall be of standard commercial grade and suitable for water contact."
+7.3 The departmental inspection officer reserves the right to witness prototype testing at the manufacturer's works.
+
+================================================================================
+END OF SYNTHETIC TENDER SPECIFICATION
+================================================================================

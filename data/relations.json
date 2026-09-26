@@ -1,0 +1,86 @@
+[
+  {
+    "source": "IS 14220",
+    "target": "IS 9283",
+    "relationship_type": "NORMATIVE_REFERENCE",
+    "evidence": "BIS Product Manual PM/IS 14220/3 (July 2024) Clause 2 & Annex B specifies IS 9283 for motor requirements and submersible electrical test gear."
+  },
+  {
+    "source": "IS 14220",
+    "target": "IS 11346",
+    "relationship_type": "TEST_METHOD",
+    "evidence": "IS 14220:2018 Clause 9.1 mandates pump test verification of rate of flow, total head, and overall efficiency in accordance with IS 11346."
+  },
+  {
+    "source": "IS 14220",
+    "target": "IS 5120",
+    "relationship_type": "NORMATIVE_REFERENCE",
+    "evidence": "IS 14220:2018 Clause 13.1 references IS 5120 for casing hydrostatic pressure testing procedures and gasket tolerances."
+  },
+  {
+    "source": "IS 14220:1994",
+    "target": "IS 14220",
+    "relationship_type": "SUPERSEDED_BY",
+    "evidence": "Official BIS standard revision note on IS 14220:2018 declares it as the First Revision superseding IS 14220:1994."
+  },
+  {
+    "source": "IS 8034",
+    "target": "IS 9283",
+    "relationship_type": "NORMATIVE_REFERENCE",
+    "evidence": "IS 8034:2018 Clause 6.1 stipulates that submersible motors driving the borehole pumps shall conform to IS 9283."
+  },
+  {
+    "source": "IS 8034",
+    "target": "IS 11346",
+    "relationship_type": "TEST_METHOD",
+    "evidence": "IS 8034:2018 Clause 10 & PM/IS 8034 mandate hydraulic performance acceptance tests as per IS 11346."
+  },
+  {
+    "source": "IS 8034",
+    "target": "IS 5120",
+    "relationship_type": "NORMATIVE_REFERENCE",
+    "evidence": "IS 8034:2018 references IS 5120 for general technical requirements, casing pressure testing, and allowable materials."
+  },
+  {
+    "source": "IS 9283",
+    "target": "IS 12615",
+    "relationship_type": "NORMATIVE_REFERENCE",
+    "evidence": "IS 9283:2024 Sectional Committee ETD 15 references IS 12615 for efficiency classification and IE code alignment."
+  },
+  {
+    "source": "IS 9079",
+    "target": "IS 11346",
+    "relationship_type": "TEST_METHOD",
+    "evidence": "IS 9079:2018 Clause 9 mandates performance and duty point verification in accordance with IS 11346."
+  },
+  {
+    "source": "IS 9079",
+    "target": "IS 5120",
+    "relationship_type": "NORMATIVE_REFERENCE",
+    "evidence": "IS 9079:2018 Clause 12 references IS 5120 for hydrostatic casing test methodology."
+  },
+  {
+    "source": "IS 6595 (Part 1)",
+    "target": "IS 11346",
+    "relationship_type": "TEST_METHOD",
+    "evidence": "IS 6595 (Part 1):2018 specifies acceptance testing for agricultural centrifugal pumps as per IS 11346."
+  },
+  {
+    "source": "IS 6595 (Part 1)",
+    "target": "IS 5120",
+    "relationship_type": "NORMATIVE_REFERENCE",
+    "evidence": "IS 6595 (Part 1):2018 references IS 5120 for general rotodynamic pump specifications."
+  },
+  {
+    "source": "IS 8472",
+    "target": "IS 11346",
+    "relationship_type": "TEST_METHOD",
+    "evidence": "IS 8472:2019 Clause 14 specifies flow and head test measurement procedures following IS 11346."
+  },
+  {
+    "source": "IS 14220",
+    "target": "IS 8034",
+    "relationship_type": "ALLIED_STANDARD",
+    "evidence": "Both standards fall under BIS Sectional Committee MED 20 (Pumps) and govern clear cold water submersible pumping technologies."
+  }
+]

@@ -1,0 +1,360 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://maanaknetra.gov.in/schemas/standard.schema.json",
+  "title": "IndianStandardRecord",
+  "description": "Comprehensive schema representing a verified Bureau of Indian Standards (BIS) standard record.",
+  "type": "object",
+  "properties": {
+    "is_number": {
+      "type": "string",
+      "description": "Canonical Indian Standard designation (e.g., 'IS 2062', 'IS 7098 (Part 1)')."
+    },
+    "title": {
+      "type": "string",
+      "description": "Official title as published by the Bureau of Indian Standards."
+    },
+    "scope": {
+      "type": "string",
+      "description": "Official scope text outlining the applicability and technical boundaries of the standard."
+    },
+    "category": {
+      "type": "string",
+      "description": "Broad BIS engineering domain (e.g., 'Civil Engineering', 'Electrotechnical', 'Metallurgical Engineering', 'Chemical')."
+    },
+    "product_types": {
+      "type": "array",
+      "description": "List of equipment, materials, or items governed by this standard.",
+      "items": { "type": "string" }
+    },
+    "keywords": {
+      "type": "array",
+      "description": "Keywords and technical synonyms for hybrid retrieval indexing.",
+      "items": { "type": "string" }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["CURRENT", "SUPERSEDED", "WITHDRAWN", "UNDER_REVISION"],
+      "description": "Official lifecycle status of this standard."
+    },
+    "current_version": {
+      "type": "string",
+      "description": "Full current designation with reaffirmation/revision year (e.g., 'IS 2062:2011')."
+    },
+    "publication_year": {
+      "type": "integer",
+      "description": "Year of initial publication or latest major revision."
+    },
+    "amendments": {
+      "type": "array",
+      "description": "Official gazetted amendments issued for this standard.",
+      "items": {
+        "$ref": "#/definitions/AmendmentRecord"
+      }
+    },
+    "supersedes": {
+      "type": "array",
+      "description": "List of earlier standard codes or editions replaced by this standard.",
+      "items": { "type": "string" }
+    },
+    "superseded_by": {
+      "type": ["string", "null"],
+      "description": "The newer standard code that replaced this standard if status is SUPERSEDED."
+    },
+    "withdrawn_reason": {
+      "type": ["string", "null"],
+      "description": "Official technical committee reason for withdrawal if status is WITHDRAWN."
+    },
+    "normative_references": {
+      "type": "array",
+      "description": "Standards indispensable for the application of this document.",
+      "items": { "type": "string" }
+    },
+    "test_standards": {
+      "type": "array",
+      "description": "Standardized laboratory test methods referenced for verification of parameters.",
+      "items": { "type": "string" }
+    },
+    "safety_standards": {
+      "type": "array",
+      "description": "Safety guidelines, insulation protocols, or hazardous condition codes.",
+      "items": { "type": "string" }
+    },
+    "installation_standards": {
+      "type": "array",
+      "description": "Codes of practice for erection, installation, and field commissioning.",
+      "items": { "type": "string" }
+    },
+    "related_standards": {
+      "type": "array",
+      "description": "allied/related standards not already represented by one of the specific relationship categories.",
+      "items": { "type": "string" }
+    },
+    "structured_parameters": {
+      "type": "array",
+      "description": "Parametric specifications, limits, and tolerances defined within this standard.",
+      "items": {
+        "$ref": "#/definitions/StandardParameter"
+      }
+    },
+    "certification": {
+      "$ref": "#/definitions/CertificationScheme"
+    },
+    "qco": {
+      "$ref": "#/definitions/QualityControlOrder"
+    },
+    "source": {
+      "$ref": "#/definitions/ProvenanceRecord"
+    },
+    "verification": {
+      "$ref": "#/definitions/VerificationAudit"
+    },
+    "last_verified": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when this record was last verified against official portals."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "status": { "const": "SUPERSEDED" } }
+      },
+      "then": {
+        "required": ["superseded_by"],
+        "properties": {
+          "superseded_by": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The newer standard code that replaced this standard (required when status is SUPERSEDED)."
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "status": { "const": "WITHDRAWN" } }
+      },
+      "then": {
+        "required": ["withdrawn_reason"],
+        "properties": {
+          "withdrawn_reason": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Official technical committee reason for withdrawal (required when status is WITHDRAWN)."
+          }
+        }
+      }
+    }
+  ],
+  "required": [
+    "is_number",
+    "title",
+    "scope",
+    "category",
+    "product_types",
+    "keywords",
+    "status",
+    "current_version",
+    "publication_year",
+    "amendments",
+    "supersedes",
+    "normative_references",
+    "test_standards",
+    "safety_standards",
+    "installation_standards",
+    "related_standards",
+    "structured_parameters",
+    "certification",
+    "qco",
+    "source",
+    "verification",
+    "last_verified"
+  ],
+  "definitions": {
+    "AmendmentRecord": {
+      "type": "object",
+      "properties": {
+        "amendment_number": {
+          "type": "string",
+          "description": "Designation of amendment (e.g., 'Amendment No. 1')."
+        },
+        "issue_date": {
+          "type": "string",
+          "description": "Date or month/year of issue (e.g., 'November 2017')."
+        },
+        "gazette_notification": {
+          "type": ["string", "null"],
+          "description": "Official gazette publication reference if published."
+        },
+        "summary": {
+          "type": "string",
+          "description": "Technical summary of modifications introduced by this amendment."
+        },
+        "affected_clauses": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Clauses modified, deleted, or inserted."
+        }
+      },
+      "required": ["amendment_number", "issue_date", "summary"]
+    },
+    "StandardParameter": {
+      "type": "object",
+      "description": "Standardized physical, chemical, or operational tolerance.",
+      "properties": {
+        "parameter_name": {
+          "type": "string",
+          "description": "Canonical name (e.g., 'Tensile Strength', 'Elongation at Break', 'Conductor Resistance')."
+        },
+        "governing_clause": {
+          "type": "string",
+          "description": "Clause in the standard stipulating this parameter (e.g., 'Table 2, Clause 8.1')."
+        },
+        "requirement_text": {
+          "type": "string",
+          "description": "Full textual requirement from the standard."
+        },
+        "min_value": {
+          "type": ["number", "null"],
+          "description": "Minimum acceptable numeric limit."
+        },
+        "max_value": {
+          "type": ["number", "null"],
+          "description": "Maximum acceptable numeric limit."
+        },
+        "unit": {
+          "type": ["string", "null"],
+          "description": "Engineering unit."
+        },
+        "test_method_standard": {
+          "type": ["string", "null"],
+          "description": "Specific testing standard to be used (e.g., 'IS 1608 (Part 1)')."
+        },
+        "test_method_clause": {
+          "type": ["string", "null"],
+          "description": "Specific clause of the test method."
+        },
+        "notes": {
+          "type": ["string", "null"],
+          "description": "Application notes or exceptions (e.g., based on thickness or temperature)."
+        }
+      },
+      "required": ["parameter_name", "governing_clause", "requirement_text"]
+    },
+    "CertificationScheme": {
+      "type": "object",
+      "description": "BIS conformity assessment scheme governing this product.",
+      "properties": {
+        "scheme": {
+          "type": "string",
+          "description": "Governing BIS scheme (e.g., 'Scheme I - ISI Mark (Product Certification)', 'Scheme II - Compulsory Registration Scheme (CRS)', 'Voluntary Certification')."
+        },
+        "is_mandatory": {
+          "type": "boolean",
+          "description": "True if certification is statutorily mandatory prior to sale or procurement."
+        },
+        "certification_body": {
+          "type": "string",
+          "description": "Accredited conformity assessment body (e.g., 'Bureau of Indian Standards')."
+        },
+        "applicable_provisions": {
+          "type": ["string", "null"],
+          "description": "Relevant section of BIS Act 2016 or BIS Conformity Assessment Regulations 2018."
+        }
+      },
+      "required": ["scheme", "is_mandatory", "certification_body"]
+    },
+    "QualityControlOrder": {
+      "type": "object",
+      "description": "Quality Control Order (QCO) regulatory details.",
+      "properties": {
+        "is_covered_by_qco": {
+          "type": "boolean",
+          "description": "Whether a statutory QCO has been notified for this standard."
+        },
+        "qco_title": {
+          "type": ["string", "null"],
+          "description": "Official title of the notification (e.g., 'Steel and Steel Products (Quality Control) Order, 2020')."
+        },
+        "issuing_ministry": {
+          "type": ["string", "null"],
+          "description": "Government ministry or department issuing the order (e.g., 'Department for Promotion of Industry and Internal Trade', 'Ministry of Steel')."
+        },
+        "order_number": {
+          "type": ["string", "null"],
+          "description": "Statutory order notification number (e.g., 'S.O. 167(E)')."
+        },
+        "gazette_date": {
+          "type": ["string", "null"],
+          "description": "Date of notification in the Gazette of India."
+        },
+        "effective_date": {
+          "type": ["string", "null"],
+          "description": "Date on which the QCO entered into force."
+        },
+        "isi_mark_mandatory": {
+          "type": "boolean",
+          "description": "True if goods cannot be manufactured, imported, or procured without ISI mark."
+        },
+        "exemption_provisions": {
+          "type": ["string", "null"],
+          "description": "Provisions for export exemptions, R&D exemptions, or micro/small enterprises."
+        }
+      },
+      "required": ["is_covered_by_qco", "isi_mark_mandatory"]
+    },
+    "ProvenanceRecord": {
+      "type": "object",
+      "description": "Mandatory provenance record tracing regulatory and standard information back to official sources.",
+      "properties": {
+        "portal_url": {
+          "type": "string",
+          "description": "URL to official source record (e.g., Manakonline portal or Gazette repository)."
+        },
+        "gazette_citation": {
+          "type": ["string", "null"],
+          "description": "Official Gazette publication volume, part, and number if statutory."
+        },
+        "official_publication_ref": {
+          "type": "string",
+          "description": "Official catalog citation or publication reference code."
+        },
+        "curated_by": {
+          "type": "string",
+          "enum": ["HUMAN_CURATOR", "VERIFIED_REGISTRY"],
+          "description": "Verification provenance indicator."
+        },
+        "curator_notes": {
+          "type": ["string", "null"],
+          "description": "Notes from human domain verification."
+        }
+      },
+      "required": ["portal_url", "official_publication_ref", "curated_by"]
+    },
+    "VerificationAudit": {
+      "type": "object",
+      "description": "Audit record of human verification.",
+      "properties": {
+        "verification_status": {
+          "type": "string",
+          "enum": ["VERIFIED_OFFICIAL", "PENDING_VERIFICATION", "CROSS_CHECKED"],
+          "description": "Current integrity verification status."
+        },
+        "verified_by": {
+          "type": "string",
+          "description": "Identity or role of verified reviewer."
+        },
+        "verification_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of formal verification."
+        },
+        "verification_method": {
+          "type": "string",
+          "description": "Procedure used for verification (e.g., 'MANAKONLINE_PORTAL_CROSS_CHECK', 'GAZETTE_MATCH')."
+        }
+      },
+      "required": ["verification_status", "verified_by", "verification_date", "verification_method"]
+    }
+  }
+}
