@@ -17,7 +17,7 @@
   --navy-700: #1D4ED8;
   --navy-100: #EFF6FF;
 
-  /* Saffron (Restrained Government Accent) */
+  /* Saffron Accent */
   --saffron-main: #D97706;
   --saffron-light: #FEF3C7;
   --saffron-border: #FCD34D;
@@ -102,7 +102,7 @@ a {
    -------------------------------------------------------------------------- */
 .top-accent-bar {
   height: 4px;
-  background: linear-gradient(90deg, #FF9933 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #138808 66.6%);
+  background: linear-gradient(90deg, var(--saffron-main) 0%, var(--navy-800) 100%);
   width: 100%;
 }
 
