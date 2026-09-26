@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MAANAKNETRA — AI-Powered Procurement & Indian Standards Intelligence</title>
-  <meta name="description" content="Automated tender auditing and deterministic specification linter against Bureau of Indian Standards (BIS) and statutory Quality Control Orders (QCOs).">
+  <meta name="description" content="Turn tender specifications into evidence-backed Indian Standard recommendations. Extract requirements, identify relevant Indian Standards, check lifecycle and certification signals, detect specification gaps, and review supporting evidence.">
   
-  <!-- Google Fonts -->
+  <!-- Modern Clean Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
   <!-- Phosphor Icons -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -18,266 +18,405 @@
 </head>
 <body>
 
-  <!-- Top Government Brand Header -->
-  <header class="gov-header">
+  <!-- Top National Emblem Ribbon -->
+  <div class="top-accent-bar"></div>
+
+  <!-- Enterprise Navigation Header -->
+  <header class="app-header">
     <div class="header-container">
-      <div class="gov-brand">
-        <div class="gov-emblem">
-          <div class="emblem-shield">
-            <i class="ph-bold ph-shield-check"></i>
-          </div>
+      <div class="brand-group">
+        <div class="brand-emblem">
+          <i class="ph-bold ph-shield-check"></i>
         </div>
-        <div class="brand-text">
-          <div class="brand-title">
-            <span class="brand-primary">MAANAK</span><span class="brand-accent">NETRA</span>
-            <span class="gov-tag">SIH 2024 / SIH26108</span>
+        <div class="brand-copy">
+          <div class="brand-title-wrap">
+            <span class="brand-title">MAANAKNETRA</span>
+            <span class="badge-evidence"><i class="ph-bold ph-seal-check"></i> Evidence-Grounded Analysis</span>
           </div>
-          <p class="brand-subtitle">AI-Powered Procurement Specification Audit & Indian Standards Intelligence Platform</p>
+          <span class="brand-tagline">AI-Powered Procurement & Indian Standards Intelligence</span>
         </div>
       </div>
 
-      <div class="header-actions">
-        <div class="status-indicator">
-          <span class="pulse-dot"></span>
-          <span class="indicator-text">Deterministic BIS & QCO Audit Engine Online</span>
-        </div>
-        <button id="quickDemoBtn" class="btn btn-secondary">
+      <div class="header-action-group">
+        <button id="headerDemoBtn" class="btn btn-outline-white" type="button">
           <i class="ph-bold ph-lightning"></i>
-          Load Official Sample Tender
+          Try Sample Tender
+        </button>
+        <button id="headerUploadBtn" class="btn btn-solid-white" type="button">
+          <i class="ph-bold ph-upload-simple"></i>
+          Upload Tender
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main Content Layout -->
-  <main class="main-container">
+  <!-- Main Container -->
+  <main class="main-content">
 
-    <!-- Upload & Initiation Card -->
-    <section class="card upload-card" id="uploadSection">
-      <div class="upload-header">
-        <div>
-          <h2><i class="ph-bold ph-file-text"></i> Audit Procurement Tender</h2>
-          <p class="section-desc">Upload a tender document (PDF, TXT, DOCX) to inspect cited Indian Standards, detect superseded editions, audit statutory QCO compliance, flag vague language, and generate corrected clauses.</p>
-        </div>
-        <div class="upload-shortcuts">
-          <span class="shortcut-pill"><i class="ph-bold ph-check"></i> Deterministic Rules</span>
-          <span class="shortcut-pill"><i class="ph-bold ph-check"></i> Statutory QCO Validation</span>
-          <span class="shortcut-pill"><i class="ph-bold ph-check"></i> Zero LLM Hallucination</span>
-        </div>
+    <!-- Landing Hero & Action Block -->
+    <section class="hero-block" id="heroBlock">
+      <div class="hero-copy">
+        <h1 class="hero-heading">Turn tender specifications into evidence-backed Indian Standard recommendations.</h1>
+        <p class="hero-subheading">Extract requirements, identify relevant Indian Standards, check lifecycle and certification signals, detect specification gaps, and review supporting evidence.</p>
       </div>
 
-      <div class="upload-dropzone" id="dropZone">
-        <input type="file" id="fileInput" accept=".pdf,.txt,.docx" class="file-input-hidden">
-        <div class="dropzone-content">
-          <div class="upload-icon-wrapper">
-            <i class="ph-duotone ph-cloud-arrow-up"></i>
+      <!-- Action Card -->
+      <div class="tender-action-card card">
+        <div class="drop-target" id="dropTarget">
+          <input type="file" id="tenderFileInput" accept=".pdf,.docx,.txt" class="sr-only-input">
+          <div class="drop-target-visual">
+            <div class="drop-icon-box"><i class="ph-duotone ph-file-arrow-up"></i></div>
+            <div class="drop-prompt">
+              <span class="prompt-main">Drag and drop tender document here, or <label for="tenderFileInput" class="prompt-link">browse files</label></span>
+              <span class="prompt-sub">Supports PDF, DOCX, and TXT tender schedules</span>
+            </div>
           </div>
-          <div class="dropzone-prompt">
-            <span class="dropzone-primary-text">Drag & drop your tender document here, or <label for="fileInput" class="browse-link">browse computer</label></span>
-            <span class="dropzone-sub-text">Supported formats: PDF, TXT, Word (.docx) — Max 50 MB</span>
-          </div>
-          <div id="selectedFileInfo" class="selected-file-info hidden">
-            <i class="ph-bold ph-file-pdf file-type-icon"></i>
-            <span id="selectedFileName">filename.pdf</span>
-            <button id="clearFileBtn" class="btn-icon" title="Clear selection"><i class="ph-bold ph-x"></i></button>
+
+          <!-- Selected File Pill -->
+          <div id="fileSelectionPill" class="file-selection-pill hidden">
+            <i class="ph-bold ph-file-pdf"></i>
+            <span id="fileSelectionName">tender_spec.pdf</span>
+            <button id="clearSelectionBtn" class="pill-remove-btn" type="button" title="Remove file"><i class="ph-bold ph-x"></i></button>
           </div>
         </div>
-      </div>
 
-      <div class="upload-actions-bar">
-        <button id="analyzeBtn" class="btn btn-primary btn-large" disabled>
-          <i class="ph-bold ph-magnifying-glass"></i>
-          Execute Complete Audit
-        </button>
-        <span class="or-divider">OR</span>
-        <button id="demoBtn" class="btn btn-outline">
-          <i class="ph-bold ph-flask"></i>
-          Load Pre-audited Demonstration (IS 14220 Submersible Pump Tender)
-        </button>
+        <div class="action-buttons-wrap">
+          <button id="startAuditBtn" class="btn btn-primary-navy" type="button" disabled>
+            <i class="ph-bold ph-upload-simple"></i>
+            Upload Tender
+          </button>
+          <span class="action-divider">or</span>
+          <button id="heroDemoBtn" class="btn btn-saffron-action" type="button">
+            <i class="ph-bold ph-lightning"></i>
+            Try Sample Tender
+          </button>
+        </div>
+
+        <!-- Workflow Pipeline -->
+        <div class="workflow-strip">
+          <span class="wf-step">Tender</span>
+          <i class="ph-bold ph-arrow-right wf-arrow"></i>
+          <span class="wf-step">Requirements</span>
+          <i class="ph-bold ph-arrow-right wf-arrow"></i>
+          <span class="wf-step">Standards</span>
+          <i class="ph-bold ph-arrow-right wf-arrow"></i>
+          <span class="wf-step">Evidence</span>
+          <i class="ph-bold ph-arrow-right wf-arrow"></i>
+          <span class="wf-step">Regulatory Checks</span>
+          <i class="ph-bold ph-arrow-right wf-arrow"></i>
+          <span class="wf-step">Audit</span>
+          <i class="ph-bold ph-arrow-right wf-arrow"></i>
+          <span class="wf-step">Corrected Draft</span>
+        </div>
       </div>
     </section>
 
-    <!-- Loading State Overlay/Card -->
-    <div id="loadingState" class="card loading-card hidden">
-      <div class="spinner-container">
-        <div class="gov-spinner"></div>
-      </div>
-      <div class="loading-content">
-        <h3 id="loadingTitle">Auditing Procurement Document...</h3>
-        <p id="loadingSubtitle">Executing multi-layer regulatory intelligence pipeline...</p>
-        <div class="loading-steps">
-          <div class="step-item active" id="step1"><i class="ph-bold ph-check"></i> Document Ingestion & Optical Parsing</div>
-          <div class="step-item active" id="step2"><i class="ph-bold ph-check"></i> Domain Entity & Parameter Extraction</div>
-          <div class="step-item active" id="step3"><i class="ph-bold ph-check"></i> Standards Knowledge Graph Expansion</div>
-          <div class="step-item active" id="step4"><i class="ph-bold ph-check"></i> Gazette QCO Applicability & ISI Mandate Verification</div>
-          <div class="step-item active" id="step5"><i class="ph-bold ph-check"></i> Deterministic Tender Linter Execution</div>
+    <!-- Loading State -->
+    <div id="auditLoadingState" class="card loading-panel hidden">
+      <div class="loading-ring"></div>
+      <div class="loading-copy">
+        <h3 id="loadingHeadline">Analyzing Procurement Specification...</h3>
+        <p id="loadingMessage">Extracting technical parameters, matching Indian Standards, checking QCO gazette orders, and running tender linter rules.</p>
+        <div class="loading-badge-row">
+          <span class="badge-phase active"><i class="ph-bold ph-check"></i> Parameter Extraction</span>
+          <span class="badge-phase active"><i class="ph-bold ph-check"></i> Standards Retrieval</span>
+          <span class="badge-phase active"><i class="ph-bold ph-check"></i> Regulatory Intelligence</span>
+          <span class="badge-phase active"><i class="ph-bold ph-check"></i> Tender Linter Audit</span>
+          <span class="badge-phase active"><i class="ph-bold ph-check"></i> Clause Rectification</span>
         </div>
       </div>
     </div>
 
-    <!-- Error Alert Banner -->
-    <div id="errorAlert" class="alert alert-danger hidden">
-      <div class="alert-icon"><i class="ph-bold ph-warning-circle"></i></div>
-      <div class="alert-body">
-        <h4 id="errorTitle">Audit Processing Failed</h4>
-        <p id="errorMessage">An unexpected error occurred during document parsing.</p>
+    <!-- Error State -->
+    <div id="auditErrorAlert" class="error-strip hidden">
+      <div class="error-strip-icon"><i class="ph-bold ph-warning-circle"></i></div>
+      <div class="error-strip-copy">
+        <h4 id="errorTitle">Audit Processing Notice</h4>
+        <p id="errorMessage">An unexpected error occurred while parsing the tender document.</p>
       </div>
-      <button class="alert-dismiss" onclick="document.getElementById('errorAlert').classList.add('hidden')"><i class="ph-bold ph-x"></i></button>
+      <button class="error-strip-close" type="button" onclick="document.getElementById('auditErrorAlert').classList.add('hidden')">
+        <i class="ph-bold ph-x"></i>
+      </button>
     </div>
 
-    <!-- Results Section (Visible after analysis) -->
-    <section id="resultsSection" class="results-wrapper hidden">
+    <!-- ====================================================================
+         RESULTS DASHBOARD
+         ==================================================================== -->
+    <section id="auditResultsDashboard" class="results-layout hidden">
 
-      <!-- Human Review Required Banner -->
-      <div id="humanReviewBanner" class="review-banner hidden">
-        <div class="banner-badge">
+      <!-- Human Verification Banner -->
+      <div id="officerReviewBanner" class="verification-alert-banner hidden">
+        <div class="alert-banner-badge">
           <i class="ph-bold ph-warning-octagon"></i>
-          <span>PROCUREMENT OFFICER REVIEW REQUIRED</span>
+          <span>Human verification required before procurement action.</span>
         </div>
-        <div class="banner-content">
-          <h4>Statutory Discrepancies or Specification Ambiguities Detected</h4>
-          <p id="humanReviewReasons">This tender contains regulatory issues (such as superseded standard citations, missing statutory QCO clauses, or unquantified subjective terms) requiring competent technical authority approval prior to bid publication.</p>
-        </div>
-      </div>
-
-      <!-- Document Metadata Header Bar -->
-      <div class="card meta-card">
-        <div class="meta-main">
-          <div class="meta-title-group">
-            <span class="meta-label">DOCUMENT AUDIT REPORT</span>
-            <h1 id="resDocTitle" class="doc-title">Tender Specification</h1>
-            <div class="doc-meta-tags">
-              <span id="resAnalysisId" class="tag tag-mono">ANALYSIS_0000</span>
-              <span id="resPageCount" class="tag"><i class="ph-bold ph-file-text"></i> 3 Pages</span>
-              <span id="resTimestamp" class="tag"><i class="ph-bold ph-clock"></i> Just Now</span>
-              <span id="resDept" class="tag tag-dept"><i class="ph-bold ph-buildings"></i> Public Health & Water Works</span>
-            </div>
-          </div>
-          <div class="meta-actions">
-            <button id="exportJsonBtn" class="btn btn-secondary btn-sm">
-              <i class="ph-bold ph-download-simple"></i>
-              Export JSON Contract
-            </button>
-            <button id="printReportBtn" class="btn btn-secondary btn-sm" onclick="window.print()">
-              <i class="ph-bold ph-printer"></i>
-              Print Audit Sheet
-            </button>
-          </div>
+        <div class="alert-banner-text">
+          <h4>Statutory Deviations & Specification Review Notice</h4>
+          <p id="officerReviewReasons">This tender document requires formal verification by the designated procurement officer prior to publishing or purchase authorization.</p>
         </div>
       </div>
 
-      <!-- Top Score & KPI Dashboard Cards -->
-      <div class="kpi-grid">
-        <!-- Compliance & Risk Tier -->
-        <div class="card kpi-card" id="kpiRiskCard">
-          <div class="kpi-header">
-            <span class="kpi-label">OVERALL PROCUREMENT RISK</span>
-            <i class="ph-bold ph-shield-warning kpi-icon"></i>
-          </div>
-          <div class="kpi-body">
-            <div class="risk-badge-large" id="resRiskBadge">CRITICAL</div>
-            <div class="score-bar-wrapper">
-              <div class="score-label">
-                <span>Specification Health Score</span>
-                <strong id="resComplianceScore">45%</strong>
-              </div>
-              <div class="progress-track">
-                <div id="resScoreProgress" class="progress-bar" style="width: 45%;"></div>
-              </div>
-            </div>
-            <p id="resRiskSummary" class="kpi-subtext">Statutory QCO omissions and superseded citations detected.</p>
+      <!-- Tender Snapshot Bar -->
+      <div class="snapshot-bar card">
+        <div class="snapshot-main">
+          <span class="snapshot-eyebrow">PROCUREMENT INTELLIGENCE DOSSIER</span>
+          <h2 id="snapshotDocTitle" class="snapshot-title">Tender Technical Specification</h2>
+          <div class="snapshot-pills">
+            <span id="snapshotAnalysisId" class="pill pill-mono">ANALYSIS_DOSSIER</span>
+            <span id="snapshotPageCount" class="pill"><i class="ph-bold ph-file-text"></i> <span id="snapshotPageCountVal">3</span> Pages</span>
+            <span id="snapshotCategory" class="pill pill-category"><i class="ph-bold ph-tag"></i> <span id="snapshotCategoryVal">Openwell Submersible Pumpset</span></span>
+            <span id="snapshotTimestamp" class="pill"><i class="ph-bold ph-clock"></i> <span id="snapshotTimestampVal">Just Now</span></span>
           </div>
         </div>
-
-        <!-- Lifecycle Flags -->
-        <div class="card kpi-card">
-          <div class="kpi-header">
-            <span class="kpi-label">STANDARDS LIFECYCLE AUDIT</span>
-            <i class="ph-bold ph-git-branch kpi-icon"></i>
-          </div>
-          <div class="kpi-body">
-            <ul class="kpi-check-list">
-              <li>
-                <span class="check-icon" id="resSupersededIcon"><i class="ph-bold ph-warning"></i></span>
-                <div class="check-info">
-                  <span class="check-title">Superseded Standards Cited</span>
-                  <span class="check-desc" id="resSupersededDesc">2 citations reference obsolete editions</span>
-                </div>
-              </li>
-              <li>
-                <span class="check-icon status-ok" id="resWithdrawnIcon"><i class="ph-bold ph-check"></i></span>
-                <div class="check-info">
-                  <span class="check-title">Withdrawn Standards</span>
-                  <span class="check-desc" id="resWithdrawnDesc">0 withdrawn codes detected</span>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Statutory QCO Mandate Status -->
-        <div class="card kpi-card">
-          <div class="kpi-header">
-            <span class="kpi-label">QUALITY CONTROL ORDER (QCO)</span>
-            <i class="ph-bold ph-seal-check kpi-icon"></i>
-          </div>
-          <div class="kpi-body">
-            <div class="qco-status-block">
-              <div class="qco-indicator-pill danger" id="resQcoPill">
-                <i class="ph-bold ph-x-circle"></i>
-                <span>QCO VIOLATION RISK DETECTED</span>
-              </div>
-              <div class="qco-detail-text" id="resQcoDetail">
-                <strong>Pumps (Quality Control) Order, 2023</strong> is in force under DPIIT S.O. 4333(E). The tender lacks the compulsory Scheme-I BIS ISI Mark licensing clause.
-              </div>
-            </div>
-          </div>
+        <div class="snapshot-actions">
+          <button id="downloadJsonBtn" class="btn btn-secondary-compact" type="button" title="Export full JSON contract">
+            <i class="ph-bold ph-download-simple"></i>
+            Export JSON
+          </button>
+          <button class="btn btn-secondary-compact" type="button" onclick="window.print()">
+            <i class="ph-bold ph-printer"></i>
+            Print Dossier
+          </button>
         </div>
       </div>
 
-      <!-- Navigation Tabs for Detailed Results -->
-      <div class="results-tab-bar">
-        <button class="tab-btn active" data-tab="tabFindings">
-          <i class="ph-bold ph-warning-circle"></i>
-          Linter Findings
-          <span id="tabFindingsCount" class="tab-count-badge">8</span>
-        </button>
-        <button class="tab-btn" data-tab="tabClauses">
-          <i class="ph-bold ph-pencil-line"></i>
-          Rectified Clause Drafts
-          <span id="tabClausesCount" class="tab-count-badge">8</span>
-        </button>
-        <button class="tab-btn" data-tab="tabBOM">
-          <i class="ph-bold ph-table"></i>
-          Standards Bill of Materials (BOM)
-          <span id="tabBomCount" class="tab-count-badge">3</span>
-        </button>
-        <button class="tab-btn" data-tab="tabRecommendations">
-          <i class="ph-bold ph-star"></i>
-          Recommended Standards
-          <span id="tabRecsCount" class="tab-count-badge">2</span>
-        </button>
-        <button class="tab-btn" data-tab="tabGraph">
-          <i class="ph-bold ph-tree-structure"></i>
-          Allied Graph & Normative Standards
-        </button>
-        <button class="tab-btn" data-tab="tabRequirements">
-          <i class="ph-bold ph-list-numbers"></i>
-          Extracted Parameters
-          <span id="tabReqsCount" class="tab-count-badge">12</span>
-        </button>
+      <!-- Top KPI Row (Overall Risk, Compliance Score, Findings, Standards) -->
+      <div class="kpi-banner-grid">
+        <!-- 1. Overall Risk -->
+        <div class="card kpi-item-card" id="kpiRiskCard">
+          <span class="kpi-label">OVERALL RISK</span>
+          <div class="kpi-stat-row">
+            <span id="kpiRiskBadge" class="risk-badge-view risk-CRITICAL">CRITICAL</span>
+          </div>
+          <span id="kpiRiskSubtext" class="kpi-note">Statutory deviations & specification gaps detected</span>
+        </div>
+
+        <!-- 2. Compliance Score -->
+        <div class="card kpi-item-card">
+          <span class="kpi-label">COMPLIANCE SCORE</span>
+          <div class="kpi-stat-row">
+            <span id="kpiComplianceScore" class="kpi-large-number">25%</span>
+          </div>
+          <div class="kpi-meter-track">
+            <div id="kpiComplianceFill" class="kpi-meter-fill" style="width: 25%;"></div>
+          </div>
+        </div>
+
+        <!-- 3. Findings Count -->
+        <div class="card kpi-item-card">
+          <span class="kpi-label">FINDINGS</span>
+          <div class="kpi-stat-row">
+            <span id="kpiFindingsCount" class="kpi-large-number text-crimson">8</span>
+          </div>
+          <span id="kpiFindingsBreakdown" class="kpi-note">1 Critical · 1 High · 6 Medium</span>
+        </div>
+
+        <!-- 4. Standards Count -->
+        <div class="card kpi-item-card">
+          <span class="kpi-label">STANDARDS</span>
+          <div class="kpi-stat-row">
+            <span id="kpiStandardsCount" class="kpi-large-number text-navy">3</span>
+          </div>
+          <span id="kpiStandardsBreakdown" class="kpi-note">Applicable Indian Standards evaluated</span>
+        </div>
       </div>
 
-      <!-- Tab 1: Tender Linter Findings -->
-      <div id="tabFindings" class="tab-content active">
-        <div class="tab-header-row">
+      <!-- Sticky Section Navigation Links -->
+      <nav class="section-nav-strip">
+        <a href="#secRequirements" class="nav-anchor"><i class="ph-bold ph-list-numbers"></i> 1. Requirements</a>
+        <a href="#secRecommended" class="nav-anchor"><i class="ph-bold ph-star"></i> 2. Recommended Standards</a>
+        <a href="#secParameters" class="nav-anchor"><i class="ph-bold ph-check-square"></i> 3. Parameter Evidence</a>
+        <a href="#secRegulatory" class="nav-anchor"><i class="ph-bold ph-scales"></i> 4. Regulatory Intelligence</a>
+        <a href="#secLinter" class="nav-anchor active"><i class="ph-bold ph-warning-circle"></i> 5. Tender Audit (Hero)</a>
+        <a href="#secEvidence" class="nav-anchor"><i class="ph-bold ph-magnifying-glass"></i> 6. Evidence & Traceability</a>
+        <a href="#secRelationships" class="nav-anchor"><i class="ph-bold ph-tree-structure"></i> 7. Standards Relationships</a>
+        <a href="#secCorrected" class="nav-anchor"><i class="ph-bold ph-pencil-line"></i> 8. Corrected Specification</a>
+        <a href="#secBOM" class="nav-anchor"><i class="ph-bold ph-table"></i> Standards BOM</a>
+      </nav>
+
+      <!-- ================================================================
+           SECTION 1 — EXTRACTED REQUIREMENTS
+           ================================================================ -->
+      <section id="secRequirements" class="dossier-block">
+        <div class="block-header">
           <div>
-            <h3>Deterministic Tender Linter Findings</h3>
-            <p class="tab-subtext">Explainable discrepancies flagged by statutory rules, knowledge graph traversals, and specification quality checks.</p>
+            <span class="block-eyebrow">SECTION 1 · REQUIREMENTS EXTRACTION</span>
+            <h3 class="block-title">Extracted Procurement Requirements</h3>
+            <p class="block-desc">Real extracted parameters from tender specifications preserving numerical bounds, comparative constraints, and source clause references.</p>
           </div>
-          <div class="filter-controls">
-            <label>Filter Severity:</label>
-            <select id="severityFilter" class="filter-select">
+        </div>
+
+        <div class="card table-card-wrap">
+          <div class="table-scroll">
+            <table class="enterprise-table">
+              <thead>
+                <tr>
+                  <th style="width: 240px;">Parameter</th>
+                  <th style="width: 220px;">Tender Value</th>
+                  <th>Evidence / Confidence</th>
+                </tr>
+              </thead>
+              <tbody id="requirementsTableBody">
+                <!-- Populated dynamically from API -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           SECTION 2 — RECOMMENDED STANDARDS
+           ================================================================ -->
+      <section id="secRecommended" class="dossier-block">
+        <div class="block-header">
+          <div>
+            <span class="block-eyebrow">SECTION 2 · INDIAN STANDARDS MATCHING</span>
+            <h3 class="block-title">Recommended Indian Standards</h3>
+            <p class="block-desc">Ranked by applicability score with the top primary recommendation visually prioritized. Grounded strictly in verified BIS standards data.</p>
+          </div>
+        </div>
+
+        <div id="recommendedStandardsList" class="recommendations-container">
+          <!-- Populated dynamically from API -->
+        </div>
+      </section>
+
+      <!-- ================================================================
+           SECTION 3 — PARAMETER EVIDENCE
+           ================================================================ -->
+      <section id="secParameters" class="dossier-block">
+        <div class="block-header">
+          <div>
+            <span class="block-eyebrow">SECTION 3 · PARAMETER VERIFICATION</span>
+            <h3 class="block-title">Parameter Evidence Matrix</h3>
+            <p class="block-desc">Technical comparison of tender requirements against prescribed Indian Standard limits. Strictly distinguishes verified compliance, explicit deviation, and ungrounded parameters without inventing conflicts.</p>
+          </div>
+          <div class="state-legend">
+            <span class="legend-badge badge-COMPLIANT"><i class="ph-bold ph-check"></i> COMPLIANT</span>
+            <span class="legend-badge badge-DEVIATING"><i class="ph-bold ph-warning"></i> DEVIATING</span>
+            <span class="legend-badge badge-NOT_SPECIFIED"><i class="ph-bold ph-minus"></i> NOT SPECIFIED</span>
+          </div>
+        </div>
+
+        <div class="card table-card-wrap">
+          <div class="table-scroll">
+            <table class="enterprise-table">
+              <thead>
+                <tr>
+                  <th style="width: 240px;">Parameter</th>
+                  <th style="width: 200px;">Tender</th>
+                  <th>Standard Evidence</th>
+                  <th style="width: 170px;">Assessment</th>
+                </tr>
+              </thead>
+              <tbody id="parameterEvidenceBody">
+                <!-- Populated dynamically from API -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           SECTION 4 — REGULATORY INTELLIGENCE
+           ================================================================ -->
+      <section id="secRegulatory" class="dossier-block">
+        <div class="block-header">
+          <div>
+            <span class="block-eyebrow">SECTION 4 · STATUTORY & LIFECYCLE INTELLIGENCE</span>
+            <h3 class="block-title">Regulatory Intelligence</h3>
+            <p class="block-desc">Evaluation of statutory Quality Control Orders, compulsory Scheme-I ISI Mark requirements, standard currency status, and procurement review signals.</p>
+          </div>
+        </div>
+
+        <div class="regulatory-cards-row">
+          <!-- QCO Panel -->
+          <div class="card reg-panel-card">
+            <div class="reg-panel-top">
+              <div class="panel-icon-title">
+                <i class="ph-bold ph-scales"></i>
+                <h4>Statutory Quality Control Order (QCO)</h4>
+              </div>
+              <span id="regQcoBadge" class="status-pill status-pill-critical">MANDATORY QCO IN FORCE</span>
+            </div>
+            <div class="reg-panel-content">
+              <div class="detail-row">
+                <span class="detail-label">Order Title:</span>
+                <strong id="regQcoTitle" class="detail-value">—</strong>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Gazette Notification:</span>
+                <span id="regQcoOrder" class="detail-value mono">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Issuing Ministry:</span>
+                <span id="regQcoMinistry" class="detail-value">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Certification Indicator:</span>
+                <span id="regQcoScheme" class="detail-value">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Effective Date:</span>
+                <span id="regQcoEffectiveDate" class="detail-value mono">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Verification Status:</span>
+                <span id="regQcoVerificationStatus" class="detail-value font-semibold">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Review Required:</span>
+                <span id="regQcoReviewRequired" class="detail-value">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Review Reason:</span>
+                <span id="regQcoReviewReason" class="detail-value text-amber font-semibold">—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Currency & Lifecycle Panel -->
+          <div class="card reg-panel-card">
+            <div class="reg-panel-top">
+              <div class="panel-icon-title">
+                <i class="ph-bold ph-clock-counter-clockwise"></i>
+                <h4>Standard Lifecycle & Currency</h4>
+              </div>
+              <span id="regLifecycleBadge" class="status-pill status-pill-amber">SUPERSEDED CITATION</span>
+            </div>
+            <div class="reg-panel-content">
+              <div id="supersessionTrackContainer" class="supersession-track">
+                <!-- Dynamically populated from API -->
+              </div>
+              <div id="regLifecycleNotice" class="amendment-box">
+                <i class="ph-bold ph-info"></i>
+                <span id="regLifecycleNoticeText">Evaluation grounded strictly in official BIS Product Manual and gazette records.</span>
+              </div>
+              <div class="regulatory-notice-strip">
+                <i class="ph-bold ph-shield-warning"></i>
+                <span>Human verification required before procurement action. Does not constitute autonomous legal approval.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           SECTION 5 — TENDER AUDIT (HERO FEATURE: VISUALLY DOMINANT)
+           ================================================================ -->
+      <section id="secLinter" class="dossier-block hero-audit-block">
+        <div class="block-header">
+          <div>
+            <div class="hero-badge-wrap">
+              <span class="block-eyebrow">SECTION 5 · DETERMINISTIC AUDIT</span>
+              <span class="pill pill-hero"><i class="ph-bold ph-star-four"></i> HERO AUDIT SUITE</span>
+            </div>
+            <h3 class="block-title">Tender Audit Findings</h3>
+            <p class="block-desc">Comprehensive rule-based audit findings categorized by severity: superseded standards, missing statutory QCO certifications, missing acceptance test codes, and vague procurement phrasing.</p>
+          </div>
+          <div class="block-controls">
+            <label for="linterSeveritySelect">Filter Severity:</label>
+            <select id="linterSeveritySelect" class="form-select-sm">
               <option value="ALL">All Severities</option>
               <option value="CRITICAL">Critical Only</option>
               <option value="HIGH">High Only</option>
@@ -286,160 +425,163 @@
           </div>
         </div>
 
-        <div id="findingsContainer" class="findings-list">
-          <!-- Dynamically populated findings cards -->
+        <div id="linterFindingsContainer" class="findings-stack">
+          <!-- Populated dynamically from API -->
         </div>
-      </div>
+      </section>
 
-      <!-- Tab 2: Corrected Specification Clauses -->
-      <div id="tabClauses" class="tab-content">
-        <div class="tab-header-row">
+      <!-- ================================================================
+           SECTION 6 — EVIDENCE & PROVENANCE
+           ================================================================ -->
+      <section id="secEvidence" class="dossier-block">
+        <div class="block-header">
           <div>
-            <h3>Deterministic Corrected Specification Clauses</h3>
-            <p class="tab-subtext">Review-ready draft clauses synthesized strictly from verified Indian Standards and gazetted QCO requirements. Does not invent ungrounded numbers or legal conclusions.</p>
+            <span class="block-eyebrow">SECTION 6 · TRACEABLE EVIDENCE</span>
+            <h3 class="block-title">Supporting Evidence Registry</h3>
+            <p class="block-desc">Expandable evidence records connecting every finding, requirement, and standard to source clauses, gazetted orders, and verification status.</p>
           </div>
         </div>
 
-        <div id="clausesContainer" class="clauses-grid">
-          <!-- Dynamically populated clause comparison cards -->
+        <div id="evidencePanelsContainer" class="evidence-panels-stack">
+          <!-- Populated dynamically from API -->
         </div>
-      </div>
+      </section>
 
-      <!-- Tab 3: Standards Bill of Materials (BOM) -->
-      <div id="tabBOM" class="tab-content">
-        <div class="tab-header-row">
+      <!-- ================================================================
+           SECTION 7 — STANDARDS RELATIONSHIPS
+           ================================================================ -->
+      <section id="secRelationships" class="dossier-block">
+        <div class="block-header">
           <div>
-            <h3>Standards Bill of Materials (BOM)</h3>
-            <p class="tab-subtext">Complete catalog of governing product standards, testing protocols, safety codes, and material specifications required for procurement execution.</p>
+            <span class="block-eyebrow">SECTION 7 · KNOWLEDGE GRAPH</span>
+            <h3 class="block-title">Standards Relationships & Hierarchy</h3>
+            <p class="block-desc">Real normative dependency chain and allied standards traversal mapped from the primary governing standard.</p>
           </div>
         </div>
 
-        <div class="table-responsive card">
-          <table class="data-table" id="bomTable">
-            <thead>
-              <tr>
-                <th style="width: 60px;">#</th>
-                <th style="width: 130px;">Standard Code</th>
-                <th>Standard Title & Scope</th>
-                <th style="width: 170px;">Role in Procurement</th>
-                <th style="width: 140px;">QCO Mandate</th>
-                <th style="width: 190px;">Tender Status</th>
-                <th>Recommended Action</th>
-              </tr>
-            </thead>
-            <tbody id="bomTableBody">
-              <!-- Dynamically populated BOM rows -->
-            </tbody>
-          </table>
-        </div>
-      </div>
+        <div class="card relationships-card">
+          <div class="relationship-grid">
+            <!-- Left: Normative Dependency Chain -->
+            <div class="normative-chain-col">
+              <span class="col-caption">Primary Normative Dependency Chain</span>
+              
+              <div id="normativeChainStack" class="normative-chain-stack">
+                <!-- Dynamically rendered or grounded hierarchy -->
+                <div class="chain-box primary">
+                  <span class="chain-box-role">PRIMARY PRODUCT STANDARD</span>
+                  <strong class="chain-box-code" id="normativeChainPrimary">IS 14220:2018</strong>
+                  <span class="chain-box-title" id="normativeChainPrimaryTitle">Openwell Submersible Pumpsets — Specification</span>
+                </div>
+                
+                <div class="chain-flow-arrow"><i class="ph-bold ph-arrow-down"></i> <span class="flow-tag">normative reference</span></div>
+                
+                <div class="chain-box allied">
+                  <span class="chain-box-role">SUBMERSIBLE MOTOR SPECIFICATION</span>
+                  <strong class="chain-box-code">IS 9283</strong>
+                  <span class="chain-box-title">Motors for Submersible Pumpsets</span>
+                </div>
 
-      <!-- Tab 4: Recommended Standards & Parameter Evidence -->
-      <div id="tabRecommendations" class="tab-content">
-        <div class="tab-header-row">
-          <div>
-            <h3>Recommended Indian Standards & Technical Parameter Fit</h3>
-            <p class="tab-subtext">Hybrid BM25 and semantic retrieval match against verified Indian Standard scopes, with clause-by-clause parameter evaluation.</p>
-          </div>
-        </div>
+                <div class="chain-flow-arrow"><i class="ph-bold ph-arrow-down"></i> <span class="flow-tag">normative reference</span></div>
 
-        <div id="recommendationsContainer" class="recs-list">
-          <!-- Dynamically populated recommended standards cards -->
-        </div>
-      </div>
-
-      <!-- Tab 5: Allied Standards Graph -->
-      <div id="tabGraph" class="tab-content">
-        <div class="tab-header-row">
-          <div>
-            <h3>Allied Standards Knowledge Graph</h3>
-            <p class="tab-subtext">Relationships mapped from primary product standard to normative references, test methods, and electrical motor safety codes.</p>
-          </div>
-        </div>
-
-        <div class="card graph-summary-card">
-          <div class="graph-metrics-row">
-            <div class="graph-metric">
-              <span class="m-val" id="graphNodesCount">15</span>
-              <span class="m-lbl">Knowledge Nodes</span>
+                <div class="chain-box allied">
+                  <span class="chain-box-role">ENERGY EFFICIENCY CODE</span>
+                  <strong class="chain-box-code">IS 12615</strong>
+                  <span class="chain-box-title">Energy Efficient Induction Motors (Three-Phase)</span>
+                </div>
+              </div>
             </div>
-            <div class="graph-metric">
-              <span class="m-val" id="graphEdgesCount">24</span>
-              <span class="m-lbl">Normative Edges</span>
-            </div>
-            <div class="graph-metric">
-              <span class="m-val" id="graphPrimaryCluster">IS 14220</span>
-              <span class="m-lbl">Governing Cluster</span>
-            </div>
-            <div class="graph-metric">
-              <span class="m-val">Depth 1</span>
-              <span class="m-lbl">Traversal Reach</span>
+
+            <!-- Right: Real Allied Standards Table -->
+            <div class="allied-standards-col">
+              <span class="col-caption">Allied Standards (Real Graph Data)</span>
+              <div class="table-scroll">
+                <table class="enterprise-table compact">
+                  <thead>
+                    <tr>
+                      <th>Standard</th>
+                      <th>Relationship</th>
+                      <th>Parent Standard</th>
+                      <th>Requirement Level</th>
+                    </tr>
+                  </thead>
+                  <tbody id="alliedStandardsBody">
+                    <!-- Populated dynamically from API -->
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div class="table-responsive mt-3">
-            <table class="data-table">
+      <!-- ================================================================
+           SECTION 8 — CORRECTED SPECIFICATION DRAFT
+           ================================================================ -->
+      <section id="secCorrected" class="dossier-block">
+        <div class="block-header">
+          <div>
+            <span class="block-eyebrow">SECTION 8 · RECTIFICATION DRAFT</span>
+            <h3 class="block-title">Corrected Specification Clauses</h3>
+            <p class="block-desc">Clean side-by-side transition from original tender clauses to corrected specification drafts. Grounded in verified Indian Standards and gazetted QCO rules without numerical speculation.</p>
+          </div>
+        </div>
+
+        <div id="correctedClausesContainer" class="clauses-stack">
+          <!-- Populated dynamically from API -->
+        </div>
+      </section>
+
+      <!-- ================================================================
+           STANDARDS BILL OF MATERIALS (BOM)
+           ================================================================ -->
+      <section id="secBOM" class="dossier-block">
+        <div class="block-header">
+          <div>
+            <span class="block-eyebrow">PROCUREMENT BOM</span>
+            <h3 class="block-title">Standards Bill of Materials (BOM)</h3>
+            <p class="block-desc">Complete catalog of standards required for tender execution, indicating procurement role and statutory mandate.</p>
+          </div>
+        </div>
+
+        <div class="card table-card-wrap">
+          <div class="table-scroll">
+            <table class="enterprise-table">
               <thead>
                 <tr>
-                  <th>Connected Standard</th>
-                  <th>Relationship Type</th>
-                  <th>Governing Parent</th>
-                  <th>Target Status</th>
-                  <th>Requirement Level</th>
-                  <th>Technical Relevance Evidence</th>
+                  <th style="width: 50px;">#</th>
+                  <th style="width: 140px;">Standard</th>
+                  <th>Standard Title & Scope</th>
+                  <th style="width: 190px;">Procurement Role</th>
+                  <th style="width: 160px;">Statutory Mandate</th>
+                  <th style="width: 180px;">Tender Status</th>
+                  <th>Action Required</th>
                 </tr>
               </thead>
-              <tbody id="relatedStandardsBody">
-                <!-- Dynamically populated related standards rows -->
+              <tbody id="bomTableBody">
+                <!-- Populated dynamically from API -->
               </tbody>
             </table>
           </div>
         </div>
-      </div>
-
-      <!-- Tab 6: Extracted Requirements -->
-      <div id="tabRequirements" class="tab-content">
-        <div class="tab-header-row">
-          <div>
-            <h3>Extracted Tender Technical Specifications</h3>
-            <p class="tab-subtext">Structured requirements extracted from raw tender clauses, with preserved units, operators, and document source locations.</p>
-          </div>
-        </div>
-
-        <div class="table-responsive card">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th style="width: 120px;">Req ID</th>
-                <th style="width: 140px;">Category</th>
-                <th style="width: 220px;">Parameter Name</th>
-                <th style="width: 150px;">Specified Value</th>
-                <th style="width: 130px;">Normalized</th>
-                <th>Source Tender Clause Text</th>
-              </tr>
-            </thead>
-            <tbody id="requirementsTableBody">
-              <!-- Dynamically populated requirements rows -->
-            </tbody>
-          </table>
-        </div>
-      </div>
+      </section>
 
     </section>
 
   </main>
 
-  <!-- Government Footer -->
-  <footer class="gov-footer">
+  <!-- Product Enterprise Footer -->
+  <footer class="app-footer">
     <div class="footer-container">
-      <div class="footer-col">
-        <h4>MAANAKNETRA</h4>
-        <p>AI-Powered Procurement Specification Audit & Indian Standards Compliance Platform.</p>
-        <span class="footer-subtext">Built for Smart India Hackathon 2024 (Problem Statement SIH26108) | Ministry of Consumer Affairs, Food & Public Distribution | Bureau of Indian Standards (BIS)</span>
+      <div class="footer-brand-side">
+        <div class="footer-title">
+          <i class="ph-bold ph-shield-check"></i>
+          <span>MAANAKNETRA</span>
+        </div>
+        <p class="footer-subtitle">AI-Powered Procurement & Indian Standards Intelligence</p>
       </div>
-      <div class="footer-col text-right">
-        <p><strong>Technical Principles:</strong> Deterministic Rule Engine • Zero Hallucination • Statutory QCO Gazette Anchoring • Officer-Centric Review</p>
-        <p class="footer-subtext">Conforms strictly to <code>contracts/analysis.schema.json</code> and <code>contracts/finding.schema.json</code></p>
+      <div class="footer-meta-side">
+        <p class="footer-guarantee"><strong>Evidence-Grounded Analysis:</strong> Deterministic Rule Engine · Statutory QCO Gazette Anchoring · Human Verification Required</p>
+        <span class="footer-spec">Conforms strictly to <code>contracts/analysis.schema.json</code> & <code>contracts/finding.schema.json</code></span>
       </div>
     </div>
   </footer>
