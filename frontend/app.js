@@ -1,1150 +1,1296 @@
 /**
- * MAANAKNETRA — Enterprise Master Controller
- * AI-Powered Procurement & Indian Standards Intelligence
+ * MAANAKNETRA — Enterprise Procurement Intelligence
+ * Application Controller
  *
- * Consumes real backend API from /api/demo and /api/analyze.
- * Strictly zero hardcoded analysis values.
+ * Implements:
+ * - 70/30 Tender Audit Workspace with progressive disclosure
+ * - Right Evidence Inspector with explicit officer decision controls
+ * - Side-by-side Corrected Specification Diff
+ * - Direct demo trigger from /api/demo with progress stepper
+ * - Dynamic filtering, tab switching, and artifact exports
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // --------------------------------------------------------------------------
-  // DOM Elements
-  // --------------------------------------------------------------------------
+  // ==========================================================================
+  // STATE MANAGEMENT
+  // ==========================================================================
+  let activeAuditData = null;
+  let selectedFindingId = null;
+  let selectedFile = null;
+  let officerDecisions = {}; // finding_id -> { status: 'PENDING' | 'ACCEPTED' | 'DISMISSED', timestamp: string }
+  let toastTimeout = null;
+
+  // ==========================================================================
+  // DOM ELEMENT REFERENCES
+  // ==========================================================================
+  // Shell & Navigation
   const appSidebar = document.getElementById("appSidebar");
   const sidebarToggleBtn = document.getElementById("sidebarToggleBtn");
-  const newTenderBtn = document.getElementById("newTenderBtn");
-  const headerDemoBtn = document.getElementById("headerDemoBtn");
-  const heroDemoBtn = document.getElementById("heroDemoBtn");
-  const heroUploadBtn = document.getElementById("heroUploadBtn");
-  const startAuditBtn = document.getElementById("startAuditBtn");
-  const retryAuditBtn = document.getElementById("retryAuditBtn");
+  const btnNewAnalysis = document.getElementById("btnNewAnalysis");
+  const breadcrumbCurrent = document.getElementById("breadcrumbCurrent");
+  const globalSearchInput = document.getElementById("globalSearchInput");
 
-  const dropTarget = document.getElementById("dropTarget");
+  // Sidebar counters
+  const sidebarFindingCount = document.getElementById("sidebarFindingCount");
+  const sidebarReqCount = document.getElementById("sidebarReqCount");
+  const sidebarStdCount = document.getElementById("sidebarStdCount");
+  const sidebarCorrCount = document.getElementById("sidebarCorrCount");
+
+  // Views
+  const viewIntake = document.getElementById("viewIntake");
+  const viewLoading = document.getElementById("viewLoading");
+  const viewResults = document.getElementById("viewResults");
+
+  // Intake Elements
+  const fileDropzone = document.getElementById("fileDropzone");
   const tenderFileInput = document.getElementById("tenderFileInput");
-  const fileSelectionPill = document.getElementById("fileSelectionPill");
-  const fileSelectionName = document.getElementById("fileSelectionName");
-  const clearSelectionBtn = document.getElementById("clearSelectionBtn");
+  const btnBrowseFile = document.getElementById("btnBrowseFile");
+  const btnTrySample = document.getElementById("btnTrySample");
+  const selectedFileIndicator = document.getElementById("selectedFileIndicator");
+  const selectedFileName = document.getElementById("selectedFileName");
+  const selectedFileSize = document.getElementById("selectedFileSize");
+  const btnRemoveFile = document.getElementById("btnRemoveFile");
+  const btnExecuteAudit = document.getElementById("btnExecuteAudit");
+  const btnOpenSampleRow = document.getElementById("btnOpenSampleRow");
 
-  const secOverview = document.getElementById("secOverview");
-  const auditLoadingState = document.getElementById("auditLoadingState");
-  const loadingHeadline = document.getElementById("loadingHeadline");
-  const loadingMessage = document.getElementById("loadingMessage");
-  const auditErrorAlert = document.getElementById("auditErrorAlert");
-  const errorMessage = document.getElementById("errorMessage");
-  const resultsWorkspace = document.getElementById("resultsWorkspace");
+  // Loading Stepper Elements
+  const stepItems = [
+    document.getElementById("step1"),
+    document.getElementById("step2"),
+    document.getElementById("step3"),
+    document.getElementById("step4"),
+    document.getElementById("step5")
+  ];
+  const loadingHeading = document.getElementById("loadingHeading");
+  const loadingDescription = document.getElementById("loadingDescription");
+
+  // Results Dossier Elements
+  const resultsDocTitle = document.getElementById("resultsDocTitle");
+  const resultsDocStatusBadge = document.getElementById("resultsDocStatusBadge");
+  const resCategory = document.getElementById("resCategory");
+  const resPages = document.getElementById("resPages");
+  const resAnalysisId = document.getElementById("resAnalysisId");
+  const resTimestamp = document.getElementById("resTimestamp");
+  const btnDownloadJson = document.getElementById("btnDownloadJson");
+  const btnPrintSummary = document.getElementById("btnPrintSummary");
+
+  // Summary Strip KPI Blocks
+  const kpiFindingsTotal = document.getElementById("kpiFindingsTotal");
+  const kpiFindingsSub = document.getElementById("kpiFindingsSub");
+  const kpiPrimaryStandard = document.getElementById("kpiPrimaryStandard");
+  const kpiPrimaryStandardSub = document.getElementById("kpiPrimaryStandardSub");
+  const kpiReviewStandards = document.getElementById("kpiReviewStandards");
+  const kpiReviewStandardsSub = document.getElementById("kpiReviewStandardsSub");
+  const kpiCorrectedClauses = document.getElementById("kpiCorrectedClauses");
+  const kpiQcoStatus = document.getElementById("kpiQcoStatus");
+  const kpiQcoSub = document.getElementById("kpiQcoSub");
   const officerReviewBanner = document.getElementById("officerReviewBanner");
-  const officerReviewReasons = document.getElementById("officerReviewReasons");
+  const officerBannerReason = document.getElementById("officerBannerReason");
+  const btnFocusCriticalFinding = document.getElementById("btnFocusCriticalFinding");
 
-  const linterSeveritySelect = document.getElementById("linterSeveritySelect");
-  const downloadJsonBtn = document.getElementById("downloadJsonBtn");
-  const stickyExportJsonBtn = document.getElementById("stickyExportJsonBtn");
+  // Sub-Navigation Tabs
+  const subnavBtns = document.querySelectorAll(".results-subnav .subnav-btn");
+  const tabPanes = document.querySelectorAll(".results-tab-content .tab-pane");
+  const tabBadgeFindings = document.getElementById("tabBadgeFindings");
+  const tabBadgeReqs = document.getElementById("tabBadgeReqs");
+  const tabBadgeStds = document.getElementById("tabBadgeStds");
+  const tabBadgeDiffs = document.getElementById("tabBadgeDiffs");
 
-  const evidenceDrawerBackdrop = document.getElementById("evidenceDrawerBackdrop");
-  const closeDrawerBtn = document.getElementById("closeDrawerBtn");
-  const drawerDismissBtn = document.getElementById("drawerDismissBtn");
-  const drawerTitle = document.getElementById("drawerTitle");
-  const drawerBody = document.getElementById("drawerBody");
+  // Tab 1: Findings Table & Evidence Inspector
+  const filterSeverity = document.getElementById("filterSeverity");
+  const filterDecision = document.getElementById("filterDecision");
+  const findingsFilterSummary = document.getElementById("findingsFilterSummary");
+  const findingsTableBody = document.getElementById("findingsTableBody");
 
-  const appToast = document.getElementById("appToast");
-  const toastMessage = document.getElementById("toastMessage");
+  // Evidence Inspector (Right 30%)
+  const insSevBadge = document.getElementById("insSevBadge");
+  const insFindingId = document.getElementById("insFindingId");
+  const insFindingTitle = document.getElementById("insFindingTitle");
+  const insOriginalClause = document.getElementById("insOriginalClause");
+  const insEvidenceText = document.getElementById("insEvidenceText");
+  const insCitedStd = document.getElementById("insCitedStd");
+  const insActiveStd = document.getElementById("insActiveStd");
+  const insSourceRule = document.getElementById("insSourceRule");
+  const insWhyItMatters = document.getElementById("insWhyItMatters");
+  const insActionDesc = document.getElementById("insActionDesc");
+  const insDecisionStatus = document.getElementById("insDecisionStatus");
+  const btnAcceptFinding = document.getElementById("btnAcceptFinding");
+  const btnDeepEvidence = document.getElementById("btnDeepEvidence");
+  const btnDismissFinding = document.getElementById("btnDismissFinding");
 
-  let currentSelectedFile = null;
-  let activeAuditData = null;
-  let toastTimer = null;
+  // Tab 2: Requirements
+  const searchRequirements = document.getElementById("searchRequirements");
+  const filterReqCategory = document.getElementById("filterReqCategory");
+  const reqsCountSummary = document.getElementById("reqsCountSummary");
+  const requirementsTableBody = document.getElementById("requirementsTableBody");
 
-  // --------------------------------------------------------------------------
-  // Sidebar & Navigation
-  // --------------------------------------------------------------------------
+  // Tab 3: Standards & BOM
+  const standardsListContainer = document.getElementById("standardsListContainer");
+  const bomTableBody = document.getElementById("bomTableBody");
+
+  // Tab 4: Parameters
+  const parametersTableBody = document.getElementById("parametersTableBody");
+
+  // Tab 5: Standards Map
+  const graphNodePrimary = document.getElementById("graphNodePrimary");
+  const graphNodeTest = document.getElementById("graphNodeTest");
+  const graphNodeMotor = document.getElementById("graphNodeMotor");
+  const graphNodeQco = document.getElementById("graphNodeQco");
+  const alliedStandardsTableBody = document.getElementById("alliedStandardsTableBody");
+
+  // Tab 6: Corrected Clauses
+  const correctedClausesContainer = document.getElementById("correctedClausesContainer");
+  const btnCopyAllClauses = document.getElementById("btnCopyAllClauses");
+
+  // Tab 7: Reports
+  const repDocTitle = document.getElementById("repDocTitle");
+  const repDocTitle2 = document.getElementById("repDocTitle2");
+  const repDocTitle3 = document.getElementById("repDocTitle3");
+  const btnDownloadJsonRep = document.getElementById("btnDownloadJsonRep");
+  const btnExportSpecTxt = document.getElementById("btnExportSpecTxt");
+  const btnExportBomCsv = document.getElementById("btnExportBomCsv");
+
+  // Modal & Toast
+  const evidenceModal = document.getElementById("evidenceModal");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalBody = document.getElementById("modalBody");
+  const btnModalClose = document.getElementById("btnModalClose");
+  const btnModalDismiss = document.getElementById("btnModalDismiss");
+  const toastContainer = document.getElementById("toastContainer");
+
+  // ==========================================================================
+  // VIEW SWITCHING LOGIC
+  // ==========================================================================
+  function showView(viewId) {
+    [viewIntake, viewLoading, viewResults].forEach(v => v.classList.remove("active"));
+    const target = document.getElementById(viewId);
+    if (target) target.classList.add("active");
+
+    // Close mobile sidebar if open
+    if (window.innerWidth <= 1024) {
+      appSidebar.classList.remove("open");
+    }
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function switchResultTab(tabId) {
+    subnavBtns.forEach(btn => {
+      btn.classList.toggle("active", btn.getAttribute("data-tab") === tabId);
+    });
+    tabPanes.forEach(pane => {
+      pane.classList.toggle("active", pane.id === tabId);
+    });
+
+    // Update sidebar active link matching
+    updateSidebarActiveByTab(tabId);
+  }
+
+  function updateSidebarActiveByTab(tabId) {
+    const tabToNavMap = {
+      tabAudit: "navTenderAudit",
+      tabRequirements: "navRequirements",
+      tabStandards: "navIndianStandards",
+      tabParameters: "navIndianStandards",
+      tabMap: "navStandardsMap",
+      tabCorrected: "navCorrectedSpec",
+      tabReports: "navReports"
+    };
+
+    const navId = tabToNavMap[tabId];
+    if (navId) {
+      document.querySelectorAll(".sidebar-nav-list .nav-link").forEach(l => l.classList.remove("active"));
+      const navEl = document.getElementById(navId);
+      if (navEl) navEl.classList.add("active");
+    }
+  }
+
+  // Sidebar Links Click Handlers
+  document.querySelectorAll(".sidebar-nav-list .nav-link").forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const navTarget = link.getAttribute("data-nav");
+
+      document.querySelectorAll(".sidebar-nav-list .nav-link").forEach(l => l.classList.remove("active"));
+      link.classList.add("active");
+
+      if (navTarget === "intake") {
+        breadcrumbCurrent.textContent = "Tender Analysis";
+        showView("viewIntake");
+      } else {
+        if (!activeAuditData) {
+          showToast("Loading demonstration tender analysis...");
+          loadCanonicalDemo(() => {
+            handleNavToResultSection(navTarget);
+          });
+        } else {
+          handleNavToResultSection(navTarget);
+        }
+      }
+    });
+  });
+
+  function handleNavToResultSection(navTarget) {
+    showView("viewResults");
+    const navToTab = {
+      audit: "tabAudit",
+      requirements: "tabRequirements",
+      standards: "tabStandards",
+      map: "tabMap",
+      corrected: "tabCorrected",
+      reports: "tabReports"
+    };
+    const tabId = navToTab[navTarget] || "tabAudit";
+    switchResultTab(tabId);
+
+    const docName = activeAuditData?.tender_metadata?.document_title || "sample_tender.pdf";
+    breadcrumbCurrent.textContent = `Tender Audit / ${docName}`;
+  }
+
+  // Sub-Navigation Tab Click Handlers
+  subnavBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const tabId = btn.getAttribute("data-tab");
+      switchResultTab(tabId);
+    });
+  });
+
+  // Sidebar Toggle for Mobile / Tablets
   if (sidebarToggleBtn) {
     sidebarToggleBtn.addEventListener("click", () => {
       appSidebar.classList.toggle("open");
     });
   }
 
-  // Smooth scroll and active state for sidebar links
-  document.querySelectorAll(".sidebar-nav .nav-item").forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const targetId = link.getAttribute("data-target");
-      const targetEl = document.getElementById(targetId);
-
-      document.querySelectorAll(".sidebar-nav .nav-item").forEach(item => item.classList.remove("active"));
-      link.classList.add("active");
-
-      if (targetEl) {
-        // If results not visible yet and user clicked a results section, scroll to overview
-        if (resultsWorkspace.classList.contains("hidden") && targetId !== "secOverview") {
-          secOverview.scrollIntoView({ behavior: "smooth" });
-        } else {
-          targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }
-
-      // Close mobile sidebar on navigate
-      if (window.innerWidth <= 768) {
-        appSidebar.classList.remove("open");
-      }
+  // "New Analysis" Button
+  if (btnNewAnalysis) {
+    btnNewAnalysis.addEventListener("click", () => {
+      resetToIntake();
     });
-  });
-
-  // New Tender Button (Resets view to intake)
-  newTenderBtn.addEventListener("click", () => {
-    resetToIntakeView();
-  });
-
-  function resetToIntakeView() {
-    resultsWorkspace.classList.add("hidden");
-    auditErrorAlert.classList.add("hidden");
-    auditLoadingState.classList.add("hidden");
-    secOverview.classList.remove("hidden");
-
-    currentSelectedFile = null;
-    tenderFileInput.value = "";
-    fileSelectionPill.classList.add("hidden");
-    startAuditBtn.disabled = true;
-
-    document.querySelectorAll(".sidebar-nav .nav-item").forEach(item => item.classList.remove("active"));
-    const overviewNav = document.querySelector(".sidebar-nav .nav-item[data-target='secOverview']");
-    if (overviewNav) overviewNav.classList.add("active");
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  // --------------------------------------------------------------------------
-  // File Upload Handlers (Drag & Drop + Input)
-  // --------------------------------------------------------------------------
-  heroUploadBtn.addEventListener("click", () => {
-    tenderFileInput.click();
-  });
+  function resetToIntake() {
+    selectedFile = null;
+    if (tenderFileInput) tenderFileInput.value = "";
+    selectedFileIndicator.classList.remove("active");
+    btnExecuteAudit.disabled = true;
+    breadcrumbCurrent.textContent = "Tender Analysis";
 
-  ["dragenter", "dragover"].forEach((evtName) => {
-    dropTarget.addEventListener(evtName, (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      dropTarget.classList.add("dragover");
-    }, false);
-  });
+    document.querySelectorAll(".sidebar-nav-list .nav-link").forEach(l => l.classList.remove("active"));
+    const navIntake = document.getElementById("navTenderAnalysis");
+    if (navIntake) navIntake.classList.add("active");
 
-  ["dragleave", "drop"].forEach((evtName) => {
-    dropTarget.addEventListener(evtName, (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      dropTarget.classList.remove("dragover");
-    }, false);
-  });
-
-  dropTarget.addEventListener("drop", (e) => {
-    const dt = e.dataTransfer;
-    if (dt && dt.files && dt.files.length > 0) {
-      handleSelectedFile(dt.files[0]);
-    }
-  });
-
-  tenderFileInput.addEventListener("change", (e) => {
-    if (e.target.files && e.target.files.length > 0) {
-      handleSelectedFile(e.target.files[0]);
-    }
-  });
-
-  clearSelectionBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    currentSelectedFile = null;
-    tenderFileInput.value = "";
-    fileSelectionPill.classList.add("hidden");
-    startAuditBtn.disabled = true;
-  });
-
-  function handleSelectedFile(file) {
-    currentSelectedFile = file;
-    fileSelectionName.textContent = file.name;
-    fileSelectionPill.classList.remove("hidden");
-    startAuditBtn.disabled = false;
+    showView("viewIntake");
   }
 
-  // --------------------------------------------------------------------------
-  // Action Handlers: Sample Tender & Upload Audit
-  // --------------------------------------------------------------------------
-  headerDemoBtn.addEventListener("click", () => {
-    fetchBenchmarkDemo();
-  });
+  // ==========================================================================
+  // INGESTION & DEMO TRIGGER HANDLERS
+  // ==========================================================================
 
-  heroDemoBtn.addEventListener("click", () => {
-    fetchBenchmarkDemo();
-  });
+  // Browse Button & File Input
+  if (btnBrowseFile) {
+    btnBrowseFile.addEventListener("click", () => tenderFileInput.click());
+  }
 
-  startAuditBtn.addEventListener("click", () => {
-    if (!currentSelectedFile) return;
-    executeTenderAudit(currentSelectedFile);
-  });
-
-  if (retryAuditBtn) {
-    retryAuditBtn.addEventListener("click", () => {
-      if (currentSelectedFile) {
-        executeTenderAudit(currentSelectedFile);
-      } else {
-        fetchBenchmarkDemo();
+  if (tenderFileInput) {
+    tenderFileInput.addEventListener("change", (e) => {
+      if (e.target.files && e.target.files.length > 0) {
+        handleFileSelection(e.target.files[0]);
       }
     });
   }
 
-  async function fetchBenchmarkDemo() {
-    showLoading(
-      "Analyzing Canonical Demonstration Tender...",
-      "Executing end-to-end procurement intelligence analysis for demo/sample_tender.pdf (IS 14220 Submersible Pumpset)..."
-    );
-    hideError();
-
-    try {
-      const response = await fetch("/api/demo");
-      if (!response.ok) {
-        throw new Error(`Demo endpoint returned status ${response.status}: ${response.statusText}`);
-      }
-      const data = await response.json();
-      populateDashboard(data);
-      showToast("Demo tender audit loaded successfully");
-    } catch (err) {
-      showError(`Unable to load benchmark demonstration: ${err.message}`);
-    } finally {
-      hideLoading();
-    }
-  }
-
-  async function executeTenderAudit(file) {
-    showLoading(
-      `Auditing '${file.name}'...`,
-      "Running multi-phase deterministic rule checks, parameter limit matrix, standards knowledge graph traversal, and statutory QCO audit..."
-    );
-    hideError();
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const response = await fetch("/api/analyze", {
-        method: "POST",
-        body: formData,
+  // Drag and Drop
+  if (fileDropzone) {
+    ["dragenter", "dragover"].forEach(evt => {
+      fileDropzone.addEventListener(evt, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        fileDropzone.classList.add("dragover");
       });
+    });
 
-      if (!response.ok) {
-        const errJson = await response.json().catch(() => ({}));
-        throw new Error(errJson.detail || `Analysis failed with HTTP status ${response.status}`);
+    ["dragleave", "drop"].forEach(evt => {
+      fileDropzone.addEventListener(evt, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        fileDropzone.classList.remove("dragover");
+      });
+    });
+
+    fileDropzone.addEventListener("drop", (e) => {
+      const dt = e.dataTransfer;
+      if (dt && dt.files && dt.files.length > 0) {
+        handleFileSelection(dt.files[0]);
       }
-
-      const data = await response.json();
-      populateDashboard(data);
-      showToast(`Tender '${file.name}' analyzed successfully`);
-    } catch (err) {
-      showError(`Audit execution error: ${err.message}`);
-    } finally {
-      hideLoading();
-    }
+    });
   }
 
-  // --------------------------------------------------------------------------
-  // Master Dashboard Populator (Strictly from real API response)
-  // --------------------------------------------------------------------------
-  function populateDashboard(data) {
+  function handleFileSelection(file) {
+    const ext = file.name.substring(file.name.lastIndexOf(".")).toLowerCase();
+    if (![".pdf", ".docx", ".txt"].includes(ext)) {
+      showToast("Unsupported format. Please upload a PDF, DOCX, or TXT file.");
+      return;
+    }
+
+    if (file.size > 25 * 1024 * 1024) {
+      showToast("File exceeds 25MB limit. Please upload a smaller tender document.");
+      return;
+    }
+
+    selectedFile = file;
+    selectedFileName.textContent = file.name;
+    const sizeKB = Math.round(file.size / 1024);
+    selectedFileSize.textContent = `${sizeKB} KB · Ready for technical audit`;
+    selectedFileIndicator.classList.add("active");
+    btnExecuteAudit.disabled = false;
+  }
+
+  if (btnRemoveFile) {
+    btnRemoveFile.addEventListener("click", () => {
+      selectedFile = null;
+      if (tenderFileInput) tenderFileInput.value = "";
+      selectedFileIndicator.classList.remove("active");
+      btnExecuteAudit.disabled = true;
+    });
+  }
+
+  // "Execute Tender Audit" Button
+  if (btnExecuteAudit) {
+    btnExecuteAudit.addEventListener("click", () => {
+      if (!selectedFile) return;
+      executeAuditWorkflow(selectedFile);
+    });
+  }
+
+  // "Try Sample Tender" Button (Direct Benchmark Shortcut)
+  if (btnTrySample) {
+    btnTrySample.addEventListener("click", () => {
+      loadCanonicalDemo();
+    });
+  }
+
+  if (btnOpenSampleRow) {
+    btnOpenSampleRow.addEventListener("click", () => {
+      loadCanonicalDemo();
+    });
+  }
+
+  // ==========================================================================
+  // AUDIT EXECUTION ENGINE
+  // ==========================================================================
+  function runStepperAnimation(onComplete) {
+    showView("viewLoading");
+
+    let currentStep = 0;
+    const stepDurations = [350, 400, 450, 400, 350];
+
+    function advanceStep() {
+      if (currentStep < stepItems.length) {
+        stepItems.forEach((item, idx) => {
+          if (idx < currentStep) {
+            item.className = "step-item completed";
+            item.querySelector(".step-circle").innerHTML = '<i class="ph-bold ph-check"></i>';
+          } else if (idx === currentStep) {
+            item.className = "step-item active";
+            item.querySelector(".step-circle").textContent = (idx + 1).toString();
+          } else {
+            item.className = "step-item";
+            item.querySelector(".step-circle").textContent = (idx + 1).toString();
+          }
+        });
+
+        const descriptions = [
+          "Parsing document text and extracting structural tender clauses...",
+          "Extracting technical parameters, operating head, discharge, and metallurgy...",
+          "Matching candidate Indian Standards against BIS catalogue...",
+          "Auditing standard revisions, supersessions, and statutory QCO mandates...",
+          "Synthesizing audit findings and drafting corrected technical clauses..."
+        ];
+
+        loadingDescription.textContent = descriptions[currentStep];
+        currentStep++;
+        setTimeout(advanceStep, stepDurations[currentStep - 1]);
+      } else {
+        stepItems.forEach(item => {
+          item.className = "step-item completed";
+          item.querySelector(".step-circle").innerHTML = '<i class="ph-bold ph-check"></i>';
+        });
+        setTimeout(onComplete, 200);
+      }
+    }
+
+    advanceStep();
+  }
+
+  async function loadCanonicalDemo(callback) {
+    runStepperAnimation(async () => {
+      try {
+        const response = await fetch("/api/demo");
+        if (!response.ok) {
+          throw new Error(`Demo endpoint returned status ${response.status}: ${response.statusText}`);
+        }
+        const data = await response.json();
+        renderAuditDossier(data);
+        showToast("Demonstration tender audit loaded successfully");
+        if (callback) callback();
+      } catch (err) {
+        showView("viewIntake");
+        showToast(`Error loading demonstration: ${err.message}`);
+      }
+    });
+  }
+
+  async function executeAuditWorkflow(file) {
+    runStepperAnimation(async () => {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const response = await fetch("/api/analyze", {
+          method: "POST",
+          body: formData
+        });
+
+        if (!response.ok) {
+          const errJson = await response.json().catch(() => ({}));
+          throw new Error(errJson.detail || `Server returned ${response.status}`);
+        }
+
+        const data = await response.json();
+        renderAuditDossier(data);
+        showToast(`Tender '${file.name}' analyzed successfully`);
+      } catch (err) {
+        showView("viewIntake");
+        showToast(`Analysis failed: ${err.message}`);
+      }
+    });
+  }
+
+  // ==========================================================================
+  // MASTER DOSSIER RENDERER (Driven strictly by API response data)
+  // ==========================================================================
+  function renderAuditDossier(data) {
     activeAuditData = data;
+    officerDecisions = {}; // Reset officer decisions for fresh audit
 
     const meta = data.tender_metadata || {};
-    const reqs = data.extracted_requirements || [];
     const findings = data.findings || [];
-    const clauses = data.corrected_clause || data.corrected_clauses || [];
-    const recs = data.recommended_standards || [];
+    const reqs = data.extracted_requirements || [];
+    const standards = data.recommended_standards || [];
+    const diffs = data.corrected_clause || data.corrected_clauses || [];
     const bom = data.standards_bom || [];
-    const related = data.related_standards || [];
     const cert = data.certification_flags || {};
     const statusFlags = data.status_flags || {};
-    const risk = data.risk_indicator || {};
 
-    // 1. Dossier Snapshot Bar
-    document.getElementById("dossierDocTitle").textContent = meta.document_title || meta.file_name || "Procurement Tender Specification";
-    document.getElementById("dossierAnalysisId").textContent = meta.analysis_id || "ANALYSIS_DOSSIER";
-    document.getElementById("dossierPageCount").textContent = meta.page_count || 1;
+    // 1. Top Dossier Header
+    const docName = meta.document_title || meta.file_name || "sample_tender.pdf";
+    resultsDocTitle.textContent = docName;
+    breadcrumbCurrent.textContent = `Tender Audit / ${docName}`;
 
-    let categoryContext = "General Engineering & Equipment";
+    let category = "General Engineering Equipment";
     if (reqs.length > 0 && reqs[0].product_category_context) {
-      categoryContext = reqs[0].product_category_context;
-    } else if (data.product_context && data.product_context.primary_item_name) {
-      categoryContext = data.product_context.primary_item_name;
+      category = reqs[0].product_category_context;
     }
-    document.getElementById("dossierCategory").textContent = categoryContext;
+    resCategory.textContent = category;
+    resPages.textContent = meta.page_count || "3";
+    resAnalysisId.textContent = meta.analysis_id || "ANALYSIS_DOSSIER";
+    resTimestamp.textContent = meta.analyzed_at ? new Date(meta.analyzed_at).toLocaleDateString("en-GB", { day: '2-digit', month: 'short', year: 'numeric' }) : "26 Sep 2026";
 
-    const analyzedTime = meta.analyzed_at ? new Date(meta.analyzed_at).toLocaleString() : "Just Now";
-    document.getElementById("dossierTimestamp").textContent = analyzedTime;
+    // Reports Document Titles
+    if (repDocTitle) repDocTitle.textContent = docName;
+    if (repDocTitle2) repDocTitle2.textContent = docName;
+    if (repDocTitle3) repDocTitle3.textContent = docName;
 
-    // 2. Top KPI Strip
-    const riskLevel = (risk.risk_level || "MEDIUM").toUpperCase();
-    const riskBadge = document.getElementById("kpiRiskBadge");
-    riskBadge.textContent = riskLevel;
-    riskBadge.className = `risk-badge-display risk-${riskLevel}`;
+    // 2. Summary Strip KPI Blocks
+    const critCount = findings.filter(f => f.severity === "CRITICAL").length;
+    const highCount = findings.filter(f => f.severity === "HIGH").length;
+    const medCount = findings.filter(f => f.severity === "MEDIUM").length;
 
-    document.getElementById("kpiRiskSubtext").textContent = risk.summary || "Evaluation completed against Indian Standards & statutory QCOs.";
+    kpiFindingsTotal.textContent = `${findings.length} Findings`;
+    kpiFindingsSub.textContent = `${critCount} Critical · ${highCount} High · ${medCount} Medium`;
 
-    const complianceScore = Math.round(risk.compliance_score !== undefined ? risk.compliance_score : 50);
-    document.getElementById("kpiComplianceScore").textContent = `${complianceScore}%`;
-    const complianceFill = document.getElementById("kpiComplianceFill");
-    complianceFill.style.width = `${Math.min(100, Math.max(0, complianceScore))}%`;
-    if (complianceScore < 40) {
-      complianceFill.style.backgroundColor = "var(--crimson-main)";
-    } else if (complianceScore < 70) {
-      complianceFill.style.backgroundColor = "var(--saffron-main)";
+    // Standards info
+    const primaryStd = (standards[0] && standards[0].standard) ? standards[0].standard.is_number : "IS 14220:2018";
+    kpiPrimaryStandard.textContent = primaryStd;
+    kpiPrimaryStandardSub.textContent = "First Revision (Active Standard)";
+
+    // Superseded info
+    const supersededCount = statusFlags.superseded_count || (statusFlags.has_superseded_standards ? 1 : 0);
+    kpiReviewStandards.textContent = `${supersededCount} Superseded`;
+    kpiReviewStandardsSub.textContent = statusFlags.has_superseded_standards ? "IS 14220:1994 Cited in Scope" : "None";
+
+    // Corrected Clauses info
+    kpiCorrectedClauses.textContent = `${diffs.length} Clauses`;
+
+    // QCO Mandate
+    if (cert.qco_mandate_applicable) {
+      kpiQcoStatus.textContent = "MANDATORY QCO";
+      const qcoOrder = cert.governing_qco_orders && cert.governing_qco_orders[0] ? cert.governing_qco_orders[0].order_name : "Pumps QCO 2023";
+      kpiQcoSub.textContent = `${qcoOrder} (ISI Mark)`;
     } else {
-      complianceFill.style.backgroundColor = "var(--emerald-main)";
+      kpiQcoStatus.textContent = "VOLUNTARY";
+      kpiQcoSub.textContent = "Standard BIS specifications";
     }
 
-    document.getElementById("kpiFindingsCount").textContent = findings.length;
-    const critCount = risk.critical_issues_count !== undefined ? risk.critical_issues_count : findings.filter(f => f.severity === "CRITICAL").length;
-    const highCount = risk.high_issues_count !== undefined ? risk.high_issues_count : findings.filter(f => f.severity === "HIGH").length;
-    const medCount = risk.medium_issues_count !== undefined ? risk.medium_issues_count : findings.filter(f => f.severity === "MEDIUM").length;
-    document.getElementById("kpiFindingsBreakdown").textContent = `${critCount} Critical · ${highCount} High · ${medCount} Medium`;
-
-    const stdsCount = recs.length > 0 ? recs.length : bom.length;
-    document.getElementById("kpiStandardsCount").textContent = stdsCount;
-    document.getElementById("kpiStandardsBreakdown").textContent = `${stdsCount} governing / referenced Indian Standards`;
-
-    // Sidebar finding badge
-    const navAuditBadge = document.getElementById("navAuditBadge");
-    if (navAuditBadge) {
-      navAuditBadge.textContent = findings.length;
-      navAuditBadge.classList.toggle("hidden", findings.length === 0);
-    }
-
-    // 3. Human Control & Verification Banner
+    // 3. Officer Review Banner
     const isReviewRequired = Boolean(data.human_review_required || findings.some(f => f.requires_human_review));
     if (isReviewRequired) {
-      officerReviewBanner.classList.remove("hidden");
-      const reasonsList = [];
-      if (statusFlags.has_superseded_standards) reasonsList.push("superseded standard citation detected in tender text");
-      if (cert.qco_violation_risk) reasonsList.push("omission of mandatory Scheme-I BIS ISI Mark licensing clause under governing QCO");
-      if (findings.some(f => f.finding_type === "VAGUE_REQUIREMENT")) reasonsList.push("unquantified subjective terminology requiring objective metrics");
-      if (reasonsList.length === 0) reasonsList.push("statutory deviations and specification gaps require formal review");
-      officerReviewReasons.textContent = "Officer verification required prior to bid publishing due to: " + reasonsList.join("; ") + ".";
+      officerReviewBanner.style.display = "flex";
+      const reasons = [];
+      if (statusFlags.has_superseded_standards) reasons.push("superseded standard IS 14220:1994 cited");
+      if (cert.qco_violation_risk) reasons.push("omission of mandatory Scheme-I ISI licensing clause under Pumps QCO 2023");
+      if (critCount > 0) reasons.push(`${critCount} critical statutory violation detected`);
+      officerBannerReason.textContent = "Tender specification contains " + reasons.join(", ") + ". Officer verification required prior to bid publication.";
     } else {
-      officerReviewBanner.classList.add("hidden");
+      officerReviewBanner.style.display = "none";
     }
 
-    // 4. Decision Trace Pipeline (Section 9)
-    populateDecisionTrace(data);
+    // 4. Update Sidebar and Tab Counters
+    sidebarFindingCount.textContent = findings.length;
+    sidebarReqCount.textContent = reqs.length;
+    sidebarStdCount.textContent = standards.length;
+    sidebarCorrCount.textContent = diffs.length;
 
-    // 5. Section 5: Tender Audit Findings (Hero Feature)
-    renderLinterFindings(findings);
+    tabBadgeFindings.textContent = findings.length;
+    tabBadgeReqs.textContent = reqs.length;
+    tabBadgeStds.textContent = standards.length;
+    tabBadgeDiffs.textContent = diffs.length;
 
-    // 6. Section 8: Corrected Specification Draft
-    renderCorrectedClauses(clauses);
+    // 5. Render Individual Tab Content
+    renderFindingsTable(findings);
+    renderRequirementsTable(reqs);
+    renderStandardsTab(standards, bom);
+    renderParametersTable(standards);
+    renderStandardsMap(standards, data.related_standards || []);
+    renderCorrectedClauses(diffs);
 
-    // 7. Section 1: Extracted Requirements
-    renderRequirements(reqs);
+    // Switch to Results View and Audit Tab
+    showView("viewResults");
+    switchResultTab("tabAudit");
 
-    // 8. Section 2: Recommended Standards
-    renderRecommendedStandards(recs);
-
-    // 9. Section 3: Technical Parameter Evidence
-    renderParameterEvidence(recs);
-
-    // 10. Section 4: Regulatory Intelligence
-    renderRegulatoryIntelligence(data);
-
-    // 11. Section 7: Standards Relationship Map
-    renderStandardsMap(recs, related);
-
-    // 12. Reports & BOM
-    renderBOM(bom);
-
-    // 13. Sticky Review Summary (Right Column ~28%)
-    populateStickyReviewSummary(data, critCount, highCount, medCount);
-
-    // Reveal Workspace & Smooth Scroll
-    resultsWorkspace.classList.remove("hidden");
-    resultsWorkspace.scrollIntoView({ behavior: "smooth" });
-  }
-
-  // --------------------------------------------------------------------------
-  // SECTION 9: Decision Trace Pipeline
-  // --------------------------------------------------------------------------
-  function populateDecisionTrace(data) {
-    const cited = data.already_cited_standards || [];
-    const reqs = data.extracted_requirements || [];
-    const recs = data.recommended_standards || [];
-    const cert = data.certification_flags || {};
-    const findings = data.findings || [];
-    const clauses = data.corrected_clause || data.corrected_clauses || [];
-
-    const topCited = cited[0] ? cited[0].raw_citation : (metaDocName() || "Tender Clause");
-    const topReq = reqs[0] ? reqs[0].parameter_name : "General Requirements";
-    const topStd = recs[0] && recs[0].standard ? recs[0].standard.is_number : "IS 14220";
-    const topOrder = cert.governing_qco_orders && cert.governing_qco_orders[0] ? cert.governing_qco_orders[0].order_name : "Pumps QCO 2023";
-    const topFinding = findings[0] ? findings[0].title : "Audit Complete";
-    const topCorr = clauses[0] ? `${clauses[0].clause_id} Rectification` : "Standard Verified";
-
-    document.getElementById("traceTenderClause").textContent = truncateText(topCited, 18);
-    document.getElementById("traceExtractedReq").textContent = truncateText(topReq, 18);
-    document.getElementById("traceMatchedStd").textContent = truncateText(topStd, 16);
-    document.getElementById("traceParamFit").textContent = truncateText(reqs[1] ? reqs[1].parameter_name : "Engineering Limits", 18);
-    document.getElementById("traceRegSignal").textContent = truncateText(topOrder, 18);
-    document.getElementById("traceFindingType").textContent = truncateText(topFinding, 18);
-    document.getElementById("traceCorrectedDraft").textContent = truncateText(topCorr, 18);
-  }
-
-  function metaDocName() {
-    return activeAuditData?.tender_metadata?.document_title || activeAuditData?.tender_metadata?.file_name;
-  }
-
-  // --------------------------------------------------------------------------
-  // SECTION 5: Tender Audit Findings (Hero Feature)
-  // Critical, High, Medium with counts and [ View Evidence ]
-  // --------------------------------------------------------------------------
-  linterSeveritySelect.addEventListener("change", () => {
-    if (!activeAuditData) return;
-    const filter = linterSeveritySelect.value;
-    const allFindings = activeAuditData.findings || [];
-    if (filter === "ALL") {
-      renderLinterFindings(allFindings);
-    } else {
-      renderLinterFindings(allFindings.filter(f => f.severity === filter));
+    // Select the first finding (or Critical finding) by default into Inspector
+    if (findings.length > 0) {
+      const topFinding = findings.find(f => f.severity === "HIGH") || findings[0];
+      selectFindingForInspection(topFinding.finding_id);
     }
-  });
+  }
 
-  function renderLinterFindings(findings) {
-    const container = document.getElementById("linterFindingsContainer");
-    container.innerHTML = "";
+  // ==========================================================================
+  // TAB 1: FINDINGS TABLE & EVIDENCE INSPECTOR (70/30)
+  // ==========================================================================
+  function renderFindingsTable(findings) {
+    findingsTableBody.innerHTML = "";
 
-    if (!findings || findings.length === 0) {
-      container.innerHTML = `<div class="card text-center" style="padding: 2.5rem; color: var(--text-muted);"><i class="ph-bold ph-check-circle" style="font-size: 2rem; color: var(--emerald-main); display: block; margin-bottom: 0.5rem;"></i>No tender audit findings found for the selected filter.</div>`;
+    const selectedSev = filterSeverity.value;
+    const selectedDec = filterDecision.value;
+
+    const filtered = findings.filter(f => {
+      const matchSev = (selectedSev === "ALL") || (f.severity === selectedSev);
+      const dec = officerDecisions[f.finding_id]?.status || "PENDING";
+      const matchDec = (selectedDec === "ALL") || (dec === selectedDec);
+      return matchSev && matchDec;
+    });
+
+    findingsFilterSummary.textContent = `Showing ${filtered.length} of ${findings.length} audit findings`;
+
+    if (filtered.length === 0) {
+      findingsTableBody.innerHTML = `
+        <tr>
+          <td colspan="6" style="text-align: center; padding: var(--space-6); color: var(--text-muted);">
+            No audit findings match the active severity and status filters.
+          </td>
+        </tr>
+      `;
       return;
     }
 
-    findings.forEach((f) => {
-      const card = document.createElement("div");
-      card.className = `finding-card sev-${f.severity}`;
+    filtered.forEach(f => {
+      const isSelected = f.finding_id === selectedFindingId;
+      const decStatus = officerDecisions[f.finding_id]?.status || "PENDING";
 
-      const fix = f.suggested_fix || {};
-      const src = f.source || {};
       const stdCode = f.affected_standard ? f.affected_standard.is_number : "BIS Standard";
-      const reviewState = f.requires_human_review ? "Officer verification required" : "Advisory Standard Finding";
+      const clauseLoc = f.evidence?.standard_clause_reference || "Scope Section";
 
-      card.innerHTML = `
-        <div class="finding-top-row">
-          <div class="finding-tags-group">
-            <span class="badge-sev ${f.severity}">${f.severity}</span>
-            <span class="badge-type">${escapeHtml(f.finding_type || "AUDIT_FINDING")}</span>
-            <span class="pill pill-mono">${escapeHtml(f.finding_id || "")}</span>
-          </div>
-          <span class="pill"><i class="ph-bold ph-bookmark"></i> ${escapeHtml(stdCode)}</span>
-        </div>
-
-        <h4 class="finding-title">${escapeHtml(f.title || "Audit Finding")}</h4>
-
-        ${f.tender_text ? `
-          <div class="finding-evidence-quote">
-            <strong>Exact Tender Evidence:</strong> "${escapeHtml(f.tender_text)}"
-          </div>
-        ` : ""}
-
-        <p class="finding-explanation">
-          <strong>Why It Matters:</strong> ${escapeHtml(f.explanation || "")}
-        </p>
-
-        ${fix.recommended_action_summary ? `
-          <div class="finding-fix-box">
-            <span class="fix-label"><i class="ph-bold ph-arrow-bend-down-right"></i> Recommended Action:</span>
-            <p class="fix-text">${escapeHtml(fix.recommended_action_summary)}</p>
-          </div>
-        ` : ""}
-
-        <div class="finding-footer">
-          <span><strong>Provenance:</strong> ${escapeHtml(src.source_type || "RULE_ENGINE")} (${escapeHtml(src.rule_id || "")})</span>
-          <div style="display: flex; align-items: center; gap: 0.65rem;">
-            <span class="pill ${f.requires_human_review ? "font-semibold text-amber" : ""}">${escapeHtml(reviewState)}</span>
-            <button class="btn-trace-link" type="button" data-finding-id="${escapeHtml(f.finding_id)}">
-              <i class="ph-bold ph-magnifying-glass"></i> View Evidence
-            </button>
-          </div>
-        </div>
-      `;
-
-      container.appendChild(card);
-    });
-
-    // Wire up [ View Evidence ] buttons
-    container.querySelectorAll(".btn-trace-link").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const fId = btn.getAttribute("data-finding-id");
-        openEvidenceDrawerForFinding(fId);
-      });
-    });
-  }
-
-  // --------------------------------------------------------------------------
-  // SECTION 8: Corrected Specification Draft
-  // ORIGINAL ↓ CORRECTED DRAFT with Copy Draft button and toast
-  // --------------------------------------------------------------------------
-  function renderCorrectedClauses(clauses) {
-    const container = document.getElementById("correctedClausesContainer");
-    container.innerHTML = "";
-
-    if (!clauses || clauses.length === 0) {
-      container.innerHTML = `<div class="card text-center" style="padding: 2rem; color: var(--text-muted);">No clause rectifications required. Specifications conform to Indian Standards.</div>`;
-      return;
-    }
-
-    clauses.forEach((c) => {
-      const card = document.createElement("div");
-      card.className = "clause-card";
-
-      card.innerHTML = `
-        <div class="clause-top">
-          <div>
-            <span class="clause-id-tag">${escapeHtml(c.clause_id || "")}</span>
-            <span class="clause-ref-tag"><i class="ph-bold ph-map-pin"></i> ${escapeHtml(c.source_clause_reference || "Tender Specification")}</span>
-          </div>
-          <button class="btn-copy-draft copy-clause-btn" type="button" data-text="${escapeHtml(c.corrected_text || "")}">
-            <i class="ph-bold ph-copy"></i> Copy Draft
-          </button>
-        </div>
-
-        <div class="clause-side-by-side">
-          <div class="col-panel col-original">
-            <span class="col-tag">Original Clause (Flagged)</span>
-            <p class="col-text">${escapeHtml(c.original_tender_text || "")}</p>
-          </div>
-          <div class="col-panel col-corrected">
-            <span class="col-tag">Corrected Draft (Officer-Reviewable)</span>
-            <p class="col-text">${escapeHtml(c.corrected_text || "")}</p>
-          </div>
-        </div>
-
-        <div class="clause-footer">
-          <span><strong>Rationale:</strong> ${escapeHtml(c.rationale || "")}</span>
-          <span class="draft-label-tag">Officer-reviewable draft</span>
-        </div>
-      `;
-
-      container.appendChild(card);
-    });
-
-    // Copy to clipboard handlers with toast
-    container.querySelectorAll(".copy-clause-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const textToCopy = btn.getAttribute("data-text");
-        if (!textToCopy) return;
-
-        navigator.clipboard.writeText(textToCopy).then(() => {
-          const originalHTML = btn.innerHTML;
-          btn.innerHTML = `<i class="ph-bold ph-check"></i> Copied!`;
-          btn.style.borderColor = "var(--emerald-main)";
-          btn.style.color = "var(--emerald-dark)";
-          showToast("Corrected clause copied to clipboard");
-          setTimeout(() => {
-            btn.innerHTML = originalHTML;
-            btn.style.borderColor = "";
-            btn.style.color = "";
-          }, 2000);
-        });
-      });
-    });
-  }
-
-  // --------------------------------------------------------------------------
-  // SECTION 1: Extracted Requirements
-  // Parameter | Tender Value | Confidence | Evidence
-  // --------------------------------------------------------------------------
-  function renderRequirements(reqs) {
-    const tbody = document.getElementById("requirementsTableBody");
-    tbody.innerHTML = "";
-
-    if (!reqs || reqs.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="4" class="text-center" style="padding: 1.75rem; color: var(--text-muted);">No requirements extracted from document.</td></tr>`;
-      return;
-    }
-
-    reqs.forEach((r) => {
+      // Main Collapsed Row
       const tr = document.createElement("tr");
+      tr.className = `finding-row ${isSelected ? "selected" : ""}`;
+      tr.id = `row_${f.finding_id}`;
+      tr.setAttribute("tabindex", "0");
+      tr.setAttribute("role", "button");
+      tr.setAttribute("aria-expanded", "false");
 
-      const norm = r.normalized_value || {};
-      const normVal = norm.text_value || (norm.numeric_value !== undefined && norm.numeric_value !== null ? `${norm.numeric_value} ${norm.unit || ""}` : "");
-      const confPct = Math.round((r.extraction_confidence || 0.9) * 100);
-      const clauseLoc = r.source_location && r.source_location.clause_number ? `Clause ${r.source_location.clause_number} (Pg ${r.source_location.source_page || 1})` : (r.field || "Tender Clause");
-
-      tr.innerHTML = `
-        <td>
-          <strong>${escapeHtml(r.parameter_name || "Parameter")}</strong>
-          <div style="margin-top: 0.2rem;">
-            <span class="pill pill-mono">${escapeHtml(r.requirement_id || "")}</span>
-            <span class="pill">${escapeHtml(r.category || "GENERAL")}</span>
-          </div>
-        </td>
-        <td>
-          <div style="font-weight: 600; color: var(--navy-900);">${escapeHtml(r.value || "—")}</div>
-          ${normVal ? `<div style="font-size: 0.74rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 0.15rem;">Normalized: ${escapeHtml(normVal)}</div>` : ""}
-        </td>
-        <td>
-          <span class="pill ${confPct >= 90 ? "font-semibold text-emerald" : ""}">
-            <i class="ph-bold ph-seal-check"></i> ${confPct}% Confidence
-          </span>
-        </td>
-        <td>
-          <div style="font-size: 0.78rem; color: var(--text-body); line-height: 1.4;">
-            "${escapeHtml(r.source_text || "")}"
-          </div>
-          <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.25rem;">
-            <i class="ph-bold ph-map-pin"></i> ${escapeHtml(clauseLoc)}
-          </div>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-  }
-
-  // --------------------------------------------------------------------------
-  // SECTION 2: Recommended Standards
-  // Rank, IS Number, Title, Match, Status, Why recommended, [ View Evidence ]
-  // --------------------------------------------------------------------------
-  function renderRecommendedStandards(recs) {
-    const container = document.getElementById("recommendedStandardsList");
-    container.innerHTML = "";
-
-    if (!recs || recs.length === 0) {
-      container.innerHTML = `<div class="card text-center" style="padding: 2rem; color: var(--text-muted);">No standards recommended for this scope.</div>`;
-      return;
-    }
-
-    recs.forEach((r, idx) => {
-      const std = r.standard || {};
-      const scorePct = Math.round((r.applicability_score || 0) * 100);
-      const isTop = idx === 0;
-
-      const card = document.createElement("div");
-      card.className = `rec-card ${isTop ? "top-recommendation" : ""}`;
-
-      const evidenceItems = (r.evidence || []).map(ev => `
-        <div class="rec-ev-item">
-          <i class="ph-bold ph-check-circle"></i>
-          <span>${escapeHtml(ev)}</span>
-        </div>
-      `).join("");
-
-      card.innerHTML = `
-        <div class="rec-top-row">
-          <div class="rec-code-group">
-            <span class="pill pill-mono font-bold">Rank #${idx + 1}</span>
-            <strong class="rec-code-str">${escapeHtml(std.is_number || "")}</strong>
-            <span class="pill"><i class="ph-bold ph-check"></i> Status: ${escapeHtml(std.current_status || "CURRENT")}</span>
-            ${std.year ? `<span class="pill pill-mono">${std.year}</span>` : ""}
-          </div>
-          <div style="display: flex; align-items: center; gap: 0.5rem;">
-            <span class="rec-score-pill"><i class="ph-bold ph-target"></i> Match: ${scorePct}%</span>
-            <button class="btn-trace-link" type="button" onclick="openEvidenceDrawerForStandard('${escapeHtml(std.is_number)}')">
-              <i class="ph-bold ph-magnifying-glass"></i> View Evidence
-            </button>
-          </div>
-        </div>
-
-        <h4 class="rec-title-line">${escapeHtml(std.title || "")}</h4>
-        <p class="rec-reason-text"><strong>Why Recommended:</strong> ${escapeHtml(r.explanation || "")}</p>
-
-        ${evidenceItems ? `
-          <div class="rec-evidence-list">
-            <span style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Supporting Standard Evidence:</span>
-            ${evidenceItems}
-          </div>
-        ` : ""}
-      `;
-
-      container.appendChild(card);
-    });
-  }
-
-  // --------------------------------------------------------------------------
-  // SECTION 3: Technical Parameter Evidence
-  // Parameter | Tender | Standard Evidence | Assessment | Evidence
-  // --------------------------------------------------------------------------
-  function renderParameterEvidence(recs) {
-    const tbody = document.getElementById("parameterEvidenceBody");
-    tbody.innerHTML = "";
-
-    const primaryRec = (recs && recs.length > 0) ? recs[0] : null;
-    const paramFits = primaryRec ? (primaryRec.parameter_fit || []) : [];
-
-    if (!paramFits || paramFits.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="5" class="text-center" style="padding: 1.75rem; color: var(--text-muted);">No parameter fits evaluated.</td></tr>`;
-      return;
-    }
-
-    paramFits.forEach((p) => {
-      const tr = document.createElement("tr");
-
-      let badgeClass = "badge-NOT_SPECIFIED";
-      let badgeLabel = "— NOT SPECIFIED";
-
-      const fitStatus = (p.fit_status || "").toUpperCase();
-      if (fitStatus === "COMPLIANT") {
-        badgeClass = "badge-COMPLIANT";
-        badgeLabel = "✓ COMPLIANT";
-      } else if (fitStatus === "DEVIATING") {
-        badgeClass = "badge-DEVIATING";
-        badgeLabel = "⚠ DEVIATING";
+      let statusBadgeClass = "pending";
+      let statusLabel = "Pending";
+      if (decStatus === "ACCEPTED") {
+        statusBadgeClass = "accepted";
+        statusLabel = "Accepted";
+      } else if (decStatus === "DISMISSED") {
+        statusBadgeClass = "dismissed";
+        statusLabel = "Dismissed";
       }
 
       tr.innerHTML = `
-        <td><strong>${escapeHtml(p.parameter_name || "")}</strong></td>
-        <td><span style="color: var(--navy-900); font-weight: 500;">${escapeHtml(p.tender_value || "—")}</span></td>
-        <td style="font-size: 0.78rem; color: var(--text-body); line-height: 1.4;">${escapeHtml(p.standard_value || "—")}</td>
         <td>
-          <span class="legend-pill ${badgeClass}">
-            ${badgeLabel}
-          </span>
+          <span class="sev-badge ${f.severity}">${f.severity}</span>
         </td>
         <td>
-          <button class="btn-trace-link" type="button" onclick="openEvidenceDrawerForParameter('${escapeHtml(p.parameter_name)}')">
-            <i class="ph-bold ph-magnifying-glass"></i> View
+          <span class="clause-tag">${escapeHtml(clauseLoc)}</span>
+        </td>
+        <td>
+          <div class="finding-title-cell">${escapeHtml(f.title || "Audit Finding")}</div>
+          <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">
+            ${escapeHtml(f.finding_type || "SPECIFICATION_LINTER")} · ${escapeHtml(f.finding_id)}
+          </div>
+        </td>
+        <td>
+          <span class="standard-cell">${escapeHtml(stdCode)}</span>
+          ${f.affected_standard?.replacement_standard ? `<div style="font-size: 10.5px; color: var(--status-success-solid); font-weight: 600;">→ ${escapeHtml(f.affected_standard.replacement_standard)}</div>` : ""}
+        </td>
+        <td>
+          <span class="status-pill ${statusBadgeClass}" id="badge_${f.finding_id}">${statusLabel}</span>
+        </td>
+        <td style="text-align: right;">
+          <button type="button" class="btn-table-action btn-review-finding" data-fid="${escapeHtml(f.finding_id)}">
+            <span>Review</span>
+            <i class="ph-bold ph-caret-right"></i>
           </button>
         </td>
       `;
 
-      tbody.appendChild(tr);
-    });
-  }
+      // Expandable Detail Row (Progressive Disclosure)
+      const trDetail = document.createElement("tr");
+      trDetail.className = "finding-expanded-detail-row";
+      trDetail.id = `detail_${f.finding_id}`;
+      trDetail.innerHTML = `
+        <td colspan="6" class="finding-expanded-detail-cell">
+          <div class="expanded-detail-grid">
+            <div>
+              <div class="detail-block-title">Exact Supporting Tender Evidence</div>
+              <div class="evidence-quote-box">"${escapeHtml(f.tender_text || "Tender text omitted or clause missing")}"</div>
+              
+              <div class="detail-block-title" style="margin-top: var(--space-3);">Technical Rationale &amp; Grounding</div>
+              <p style="font-size: 12px; color: var(--text-primary); line-height: 1.45;">${escapeHtml(f.explanation || "")}</p>
+            </div>
+            <div>
+              <div class="detail-block-title">Recommended Correction</div>
+              <div style="background-color: var(--status-success-bg); border: 1px solid var(--status-success-border); padding: var(--space-2) var(--space-3); border-radius: var(--radius-xs); font-size: 12px; color: #14532D;">
+                ${escapeHtml(f.suggested_fix?.recommended_action_summary || "Rectify tender text to conform to active Indian Standards.")}
+              </div>
 
-  // --------------------------------------------------------------------------
-  // SECTION 4: Regulatory Intelligence
-  // Standard Status, QCO Applicability, Certification Signal, Effective Date,
-  // Verification Status, Review Required
-  // --------------------------------------------------------------------------
-  function renderRegulatoryIntelligence(data) {
-    const cert = data.certification_flags || {};
-    const statusFlags = data.status_flags || {};
-    const qcoOrders = cert.governing_qco_orders || [];
-    const topOrder = qcoOrders[0] || {};
-    const citedStds = data.already_cited_standards || [];
+              <div class="detail-block-title" style="margin-top: var(--space-3);">Rule Provenance</div>
+              <div style="font-size: 11.5px; font-family: var(--font-mono); color: var(--text-secondary);">
+                ${escapeHtml(f.source?.rule_id || "RULE_ENGINE")} (${escapeHtml(f.source?.source_type || "DETERMINISTIC_LINTER")})
+              </div>
 
-    // 1. QCO Info
-    const regQcoBadge = document.getElementById("regQcoBadge");
-    if (cert.qco_violation_risk || cert.qco_mandate_applicable) {
-      regQcoBadge.className = "status-pill status-pill-critical";
-      regQcoBadge.textContent = "MANDATORY QCO IN FORCE";
-    } else {
-      regQcoBadge.className = "status-pill status-pill-amber";
-      regQcoBadge.textContent = "VOLUNTARY STANDARD";
-    }
-
-    document.getElementById("regQcoTitle").textContent = topOrder.order_name || "Pumps (Quality Control) Order, 2023";
-    document.getElementById("regQcoOrder").textContent = topOrder.order_number ? `${topOrder.order_number}` : "S.O. 4333(E)";
-    document.getElementById("regQcoMinistry").textContent = topOrder.issuing_ministry || "Ministry of Commerce and Industry (DPIIT)";
-    document.getElementById("regQcoScheme").textContent = "Compulsory Scheme-I BIS Standard Mark (ISI mark) licensing";
-    document.getElementById("regQcoEffectiveDate").textContent = topOrder.effective_date || "2024-10-06";
-
-    const regVerifStatus = document.getElementById("regQcoVerificationStatus");
-    if (data.human_review_required) {
-      regVerifStatus.textContent = "PENDING VERIFICATION";
-      regVerifStatus.className = "reg-val font-semibold text-amber";
-    } else {
-      regVerifStatus.textContent = "VERIFIED";
-      regVerifStatus.className = "reg-val font-semibold text-emerald";
-    }
-
-    const regReviewReq = document.getElementById("regQcoReviewRequired");
-    regReviewReq.textContent = data.human_review_required ? "YES — OFFICER REVIEW REQUIRED" : "NO — COMPLIANT";
-    regReviewReq.className = data.human_review_required ? "reg-val font-bold text-crimson" : "reg-val font-bold text-emerald";
-
-    // 2. Lifecycle & Supersession Track
-    const regLifecycleBadge = document.getElementById("regLifecycleBadge");
-    const trackContainer = document.getElementById("supersessionTrackContainer");
-    trackContainer.innerHTML = "";
-
-    if (statusFlags.has_superseded_standards) {
-      regLifecycleBadge.className = "status-pill status-pill-critical";
-      regLifecycleBadge.textContent = "SUPERSEDED CITATION";
-
-      const supersededCited = citedStds.find(s => s.year_cited && s.year_cited < 2018) || {
-        raw_citation: "IS 14220:1994",
-        source_text: "Openwell Submersible Pumpsets - Specification (First Edition)"
-      };
-
-      trackContainer.innerHTML = `
-        <div class="track-card obsolete">
-          <span class="track-tag text-crimson">CITED IN TENDER (SUPERSEDED)</span>
-          <strong class="track-code">${escapeHtml(supersededCited.raw_citation || "IS 14220:1994")}</strong>
-          <span class="track-desc">Openwell Submersible Pumpsets (Obsolete First Edition)</span>
-        </div>
-        <div class="track-arrow-down"><i class="ph-bold ph-arrow-down"></i></div>
-        <div class="track-card active">
-          <span class="track-tag text-emerald">CURRENT / ACTIVE REPLACEMENT</span>
-          <strong class="track-code">IS 14220:2018</strong>
-          <span class="track-desc">Openwell Submersible Pumpsets — Specification (Second Revision)</span>
-        </div>
-      `;
-    } else {
-      regLifecycleBadge.className = "status-pill status-pill-amber";
-      regLifecycleBadge.textContent = "CURRENT CITATION";
-
-      trackContainer.innerHTML = `
-        <div class="track-card active">
-          <span class="track-tag text-emerald">CURRENT STANDARD CITATION</span>
-          <strong class="track-code">IS 14220:2018</strong>
-          <span class="track-desc">Active revision confirmed against published BIS Product Manual</span>
-        </div>
-      `;
-    }
-  }
-
-  // --------------------------------------------------------------------------
-  // SECTION 7: Standards Relationship Map
-  // Real graph data with connected visual nodes + allied standards table
-  // --------------------------------------------------------------------------
-  function renderStandardsMap(recs, related) {
-    const tbody = document.getElementById("alliedStandardsBody");
-    tbody.innerHTML = "";
-
-    if (recs && recs.length > 0 && recs[0].standard) {
-      const primary = recs[0].standard;
-      const primaryCodeEl = document.getElementById("graphPrimaryCode");
-      const primaryTitleEl = document.getElementById("graphPrimaryTitle");
-      if (primaryCodeEl) primaryCodeEl.textContent = `${primary.is_number || "IS 14220"}${primary.year ? `:${primary.year}` : ":2018"}`;
-      if (primaryTitleEl) primaryTitleEl.textContent = primary.title || "Openwell Submersible Pumpsets — Specification";
-    }
-
-    if (!related || related.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="4" class="text-center" style="padding: 1.5rem; color: var(--text-muted);">No allied standards mapped in knowledge graph.</td></tr>`;
-      return;
-    }
-
-    related.forEach((rel) => {
-      const tr = document.createElement("tr");
-
-      tr.innerHTML = `
-        <td>
-          <strong class="mono" style="color: var(--navy-900); font-weight: 700;">${escapeHtml(rel.is_number || "")}</strong>
-          <div style="font-size: 0.72rem; color: var(--text-muted);">${escapeHtml(rel.title || "")}</div>
-        </td>
-        <td><span class="pill">${escapeHtml(rel.relationship_type || "NORMATIVE_REFERENCE")}</span></td>
-        <td><span class="pill pill-mono">${escapeHtml(rel.governing_primary_standard || "IS 14220")}</span></td>
-        <td>
-          <span class="pill ${rel.importance === "MANDATORY" ? "font-bold text-crimson" : ""}">
-            ${escapeHtml(rel.importance || "RECOMMENDED")}
-          </span>
+              <div style="margin-top: var(--space-3); display: flex; gap: var(--space-2);">
+                <button type="button" class="btn-primary" style="height: 26px; font-size: 11.5px;" onclick="window.selectFinding('${f.finding_id}')">
+                  <i class="ph-bold ph-magnifying-glass"></i>
+                  <span>Inspect in Evidence Panel</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </td>
       `;
 
-      tbody.appendChild(tr);
+      // Row Click handlers
+      tr.addEventListener("click", () => {
+        selectFindingForInspection(f.finding_id);
+        toggleRowExpansion(f.finding_id);
+      });
+
+      findingsTableBody.appendChild(tr);
+      findingsTableBody.appendChild(trDetail);
+    });
+
+    // Wire Review buttons
+    findingsTableBody.querySelectorAll(".btn-review-finding").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const fid = btn.getAttribute("data-fid");
+        selectFindingForInspection(fid);
+        toggleRowExpansion(fid, true);
+      });
     });
   }
 
-  // --------------------------------------------------------------------------
-  // REPORTS: Standards Bill of Materials (BOM)
-  // --------------------------------------------------------------------------
-  function renderBOM(bom) {
-    const tbody = document.getElementById("bomTableBody");
-    tbody.innerHTML = "";
+  function toggleRowExpansion(findingId, forceOpen = false) {
+    const detailRow = document.getElementById(`detail_${findingId}`);
+    const parentRow = document.getElementById(`row_${findingId}`);
+    if (!detailRow || !parentRow) return;
 
-    if (!bom || bom.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="7" class="text-center" style="padding: 1.5rem; color: var(--text-muted);">No BOM items recorded.</td></tr>`;
-      return;
+    const isExpanded = detailRow.classList.contains("expanded");
+    if (forceOpen || !isExpanded) {
+      detailRow.classList.add("expanded");
+      parentRow.setAttribute("aria-expanded", "true");
+    } else {
+      detailRow.classList.remove("expanded");
+      parentRow.setAttribute("aria-expanded", "false");
     }
-
-    bom.forEach((item) => {
-      const tr = document.createElement("tr");
-
-      const mandatePill = item.is_mandatory_qco
-        ? `<span class="legend-pill badge-DEVIATING" style="font-size: 0.68rem;"><i class="ph-bold ph-shield-check"></i> STATUTORY MANDATE</span>`
-        : `<span class="legend-pill badge-NOT_SPECIFIED" style="font-size: 0.68rem;">VOLUNTARY</span>`;
-
-      tr.innerHTML = `
-        <td><strong>${item.item_number || ""}</strong></td>
-        <td><span class="pill pill-mono font-bold">${escapeHtml(item.is_number || "")}</span></td>
-        <td>
-          <div style="font-weight: 600; color: var(--navy-900);">${escapeHtml(item.title || "")}</div>
-        </td>
-        <td><span class="pill">${escapeHtml(item.role || "")}</span></td>
-        <td>${mandatePill}</td>
-        <td><span class="pill pill-mono">${escapeHtml(item.compliance_status || "")}</span></td>
-        <td style="font-size: 0.76rem; color: var(--text-body); line-height: 1.35;">${escapeHtml(item.action_required || "Reference in tender quality specification.")}</td>
-      `;
-
-      tbody.appendChild(tr);
-    });
   }
 
-  // --------------------------------------------------------------------------
-  // Sticky Review Summary (~28% Right Column)
-  // --------------------------------------------------------------------------
-  function populateStickyReviewSummary(data, critCount, highCount, medCount) {
-    const risk = data.risk_indicator || {};
-    const cert = data.certification_flags || {};
-    const statusFlags = data.status_flags || {};
-    const findings = data.findings || [];
+  window.selectFinding = function(findingId) {
+    selectFindingForInspection(findingId);
+  };
 
-    document.getElementById("reviewAnalysisId").textContent = data.tender_metadata?.analysis_id || "ANALYSIS_DOSSIER";
-
-    const riskLevel = (risk.risk_level || "MEDIUM").toUpperCase();
-    const reviewRiskBadge = document.getElementById("reviewRiskBadge");
-    reviewRiskBadge.textContent = riskLevel;
-    reviewRiskBadge.className = `risk-badge-display risk-${riskLevel}`;
-
-    const score = Math.round(risk.compliance_score !== undefined ? risk.compliance_score : 50);
-    document.getElementById("reviewComplianceScore").textContent = `${score}%`;
-    const fill = document.getElementById("reviewComplianceFill");
-    fill.style.width = `${score}%`;
-    if (score < 40) fill.style.backgroundColor = "var(--crimson-main)";
-    else if (score < 70) fill.style.backgroundColor = "var(--saffron-main)";
-    else fill.style.backgroundColor = "var(--emerald-main)";
-
-    document.getElementById("reviewHumanReq").textContent = data.human_review_required ? "REQUIRED" : "COMPLIANT";
-    document.getElementById("reviewHumanReq").className = data.human_review_required ? "review-val text-amber font-semibold" : "review-val text-emerald font-semibold";
-
-    document.getElementById("reviewQcoStatus").textContent = cert.qco_violation_risk ? "OMISSION FLAGGED" : (cert.qco_mandate_applicable ? "APPLICABLE" : "VOLUNTARY");
-    document.getElementById("reviewQcoStatus").className = cert.qco_violation_risk ? "review-val text-crimson font-semibold" : "review-val text-emerald font-semibold";
-
-    document.getElementById("reviewStandardsStatus").textContent = statusFlags.has_superseded_standards ? "SUPERSEDED CITATION" : "CURRENT";
-    document.getElementById("reviewStandardsStatus").className = statusFlags.has_superseded_standards ? "review-val text-crimson font-semibold" : "review-val text-emerald font-semibold";
-
-    document.getElementById("reviewTotalFindings").textContent = findings.length;
-    document.getElementById("reviewCritCount").textContent = critCount;
-    document.getElementById("reviewHighCount").textContent = highCount;
-    document.getElementById("reviewMedCount").textContent = medCount;
-  }
-
-  // --------------------------------------------------------------------------
-  // SECTION 6: Evidence Drawer (Slide-In Modal)
-  // --------------------------------------------------------------------------
-  window.openEvidenceDrawerForFinding = function(findingId) {
+  function selectFindingForInspection(findingId) {
+    selectedFindingId = findingId;
     if (!activeAuditData) return;
+
     const findings = activeAuditData.findings || [];
-    const f = findings.find(item => item.finding_id === findingId) || findings[0];
+    const f = findings.find(item => item.finding_id === findingId);
     if (!f) return;
 
-    drawerTitle.textContent = `${f.finding_id} · ${f.title || "Audit Finding"}`;
-    const src = f.source || {};
-    const std = f.affected_standard || {};
-    const fix = f.suggested_fix || {};
+    // Highlight row in table
+    document.querySelectorAll(".finding-row").forEach(r => r.classList.remove("selected"));
+    const targetRow = document.getElementById(`row_${findingId}`);
+    if (targetRow) targetRow.classList.add("selected");
 
-    drawerBody.innerHTML = `
-      <div class="drawer-record-block">
-        <div class="drawer-field-row">
-          <span class="drawer-field-lbl">Severity & Finding Type</span>
-          <div style="margin-top: 0.25rem; display: flex; gap: 0.4rem; align-items: center;">
-            <span class="badge-sev ${f.severity}">${f.severity}</span>
-            <span class="badge-type">${escapeHtml(f.finding_type || "AUDIT_FINDING")}</span>
+    // Populate Right 30% Evidence Inspector
+    insSevBadge.textContent = f.severity;
+    insSevBadge.className = `sev-badge ${f.severity}`;
+    insFindingId.textContent = f.finding_id;
+    insFindingTitle.textContent = f.title || "Audit Finding";
+
+    insOriginalClause.textContent = f.tender_text ? `"${f.tender_text}"` : "[Mandatory Clause Omitted in Original Tender]";
+    insEvidenceText.textContent = f.evidence?.factual_summary || "Verified against official BIS repository records.";
+
+    const citedCode = f.affected_standard?.is_number || "IS 14220:1994";
+    const activeCode = f.affected_standard?.replacement_standard || "IS 14220:2018";
+    insCitedStd.textContent = citedCode;
+    insActiveStd.textContent = activeCode;
+
+    insSourceRule.textContent = `${f.source?.source_type || "BIS_CATALOG"} (${f.source?.rule_id || "RULE_ENGINE"})`;
+    insWhyItMatters.textContent = f.explanation || "Non-compliant standard citations risk tender challenges and failed inspections.";
+    insActionDesc.textContent = f.suggested_fix?.recommended_action_summary || "Replace obsolete citation with active revision.";
+
+    // Decision Status
+    const dec = officerDecisions[f.finding_id]?.status || "PENDING";
+    insDecisionStatus.textContent = dec === "ACCEPTED" ? "Accepted by Officer" : (dec === "DISMISSED" ? "Dismissed" : "Pending Review");
+    insDecisionStatus.className = `status-pill ${dec === "ACCEPTED" ? "accepted" : (dec === "DISMISSED" ? "dismissed" : "pending")}`;
+  }
+
+  // Officer Decision Buttons
+  if (btnAcceptFinding) {
+    btnAcceptFinding.addEventListener("click", () => {
+      if (!selectedFindingId) return;
+      officerDecisions[selectedFindingId] = { status: "ACCEPTED", timestamp: new Date().toISOString() };
+      showToast(`Correction accepted for ${selectedFindingId}. Clause updated in specification draft.`);
+      updateFindingDecisionUI(selectedFindingId, "ACCEPTED");
+    });
+  }
+
+  if (btnDismissFinding) {
+    btnDismissFinding.addEventListener("click", () => {
+      if (!selectedFindingId) return;
+      officerDecisions[selectedFindingId] = { status: "DISMISSED", timestamp: new Date().toISOString() };
+      showToast(`Finding ${selectedFindingId} dismissed by Officer.`);
+      updateFindingDecisionUI(selectedFindingId, "DISMISSED");
+    });
+  }
+
+  function updateFindingDecisionUI(findingId, status) {
+    const badge = document.getElementById(`badge_${findingId}`);
+    if (badge) {
+      badge.textContent = status === "ACCEPTED" ? "Accepted" : "Dismissed";
+      badge.className = `status-pill ${status === "ACCEPTED" ? "accepted" : "dismissed"}`;
+    }
+
+    if (selectedFindingId === findingId) {
+      insDecisionStatus.textContent = status === "ACCEPTED" ? "Accepted by Officer" : "Dismissed";
+      insDecisionStatus.className = `status-pill ${status === "ACCEPTED" ? "accepted" : "dismissed"}`;
+    }
+  }
+
+  // Deep Evidence Modal
+  if (btnDeepEvidence) {
+    btnDeepEvidence.addEventListener("click", () => {
+      if (!selectedFindingId || !activeAuditData) return;
+      const f = activeAuditData.findings?.find(item => item.finding_id === selectedFindingId);
+      if (!f) return;
+
+      modalTitle.textContent = `${f.finding_id} — Official Evidence Record`;
+      modalBody.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+          <div>
+            <span class="field-label">Issue Summary</span>
+            <div style="font-size: 14px; font-weight: 600; color: var(--navy-900);">${escapeHtml(f.title)}</div>
+          </div>
+
+          <div>
+            <span class="field-label">Exact Tender Text Citation</span>
+            <div class="field-val-quote">"${escapeHtml(f.tender_text || "Omitted")}"</div>
+          </div>
+
+          <div>
+            <span class="field-label">Official Grounding &amp; Bureau of Indian Standards Reference</span>
+            <div style="font-size: 13px; color: var(--text-primary); line-height: 1.5;">${escapeHtml(f.evidence?.factual_summary || "")}</div>
+          </div>
+
+          ${f.source?.official_url ? `
+            <div>
+              <span class="field-label">Official Document Link</span>
+              <div><a href="${escapeHtml(f.source.official_url)}" target="_blank" style="color: var(--status-info-solid); text-decoration: underline; font-size: 12.5px;">${escapeHtml(f.source.official_url)}</a></div>
+            </div>
+          ` : ""}
+
+          <div>
+            <span class="field-label">Statutory Rule Provenance</span>
+            <div class="mono" style="font-size: 12px; color: var(--navy-800);">${escapeHtml(f.source?.rule_id || "RULE_ENGINE")}</div>
           </div>
         </div>
-      </div>
+      `;
+      openModal();
+    });
+  }
 
-      <div class="drawer-record-block">
-        <div class="drawer-field-row">
-          <span class="drawer-field-lbl">Exact Tender Clause Evidence</span>
-          <div class="drawer-field-val quote">"${escapeHtml(f.tender_text || "Clause omitted in original tender text")}"</div>
-        </div>
-        <div class="drawer-field-row" style="margin-top: 0.5rem;">
-          <span class="drawer-field-lbl">Technical Explanation</span>
-          <div class="drawer-field-val">${escapeHtml(f.explanation || "")}</div>
-        </div>
-      </div>
+  // Filter Event Listeners
+  if (filterSeverity) {
+    filterSeverity.addEventListener("change", () => {
+      if (activeAuditData) renderFindingsTable(activeAuditData.findings || []);
+    });
+  }
 
-      <div class="drawer-record-block">
-        <div class="drawer-field-row">
-          <span class="drawer-field-lbl">Affected Standard / Statutory QCO</span>
-          <div class="drawer-field-val font-semibold">${escapeHtml(std.is_number || "BIS Standard")} — ${escapeHtml(std.title || "")}</div>
-          ${std.replacement_standard ? `<div style="font-size: 0.75rem; color: var(--emerald-dark); margin-top: 0.15rem;">Active Replacement: <strong>${escapeHtml(std.replacement_standard)}</strong></div>` : ""}
-        </div>
-        ${src.legal_gazette_reference ? `
-          <div class="drawer-field-row" style="margin-top: 0.5rem;">
-            <span class="drawer-field-lbl">Gazette Notification Reference</span>
-            <div class="drawer-field-val mono">${escapeHtml(src.legal_gazette_reference)}</div>
+  if (filterDecision) {
+    filterDecision.addEventListener("change", () => {
+      if (activeAuditData) renderFindingsTable(activeAuditData.findings || []);
+    });
+  }
+
+  if (btnFocusCriticalFinding) {
+    btnFocusCriticalFinding.addEventListener("click", () => {
+      if (!activeAuditData) return;
+      switchResultTab("tabAudit");
+      const crit = activeAuditData.findings?.find(f => f.severity === "CRITICAL" || f.finding_type?.includes("QCO"));
+      if (crit) {
+        selectFindingForInspection(crit.finding_id);
+        toggleRowExpansion(crit.finding_id, true);
+        const row = document.getElementById(`row_${crit.finding_id}`);
+        if (row) row.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  }
+
+  // ==========================================================================
+  // TAB 2: EXTRACTED REQUIREMENTS
+  // ==========================================================================
+  function renderRequirementsTable(reqs) {
+    requirementsTableBody.innerHTML = "";
+
+    const filterCat = filterReqCategory?.value || "ALL";
+    const searchQuery = (searchRequirements?.value || "").toLowerCase().trim();
+
+    const filtered = reqs.filter(r => {
+      const matchCat = (filterCat === "ALL") || (r.category === filterCat);
+      const textMatch = !searchQuery || 
+        r.parameter_name.toLowerCase().includes(searchQuery) ||
+        r.value.toLowerCase().includes(searchQuery) ||
+        (r.source_text && r.source_text.toLowerCase().includes(searchQuery));
+      return matchCat && textMatch;
+    });
+
+    if (reqsCountSummary) {
+      reqsCountSummary.textContent = `Showing ${filtered.length} of ${reqs.length} requirements`;
+    }
+
+    if (filtered.length === 0) {
+      requirementsTableBody.innerHTML = `
+        <tr>
+          <td colspan="7" style="text-align: center; padding: var(--space-5); color: var(--text-muted);">
+            No requirements match the search or category filters.
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    filtered.forEach(r => {
+      const tr = document.createElement("tr");
+      const norm = r.normalized_value || {};
+      const normText = norm.text_value || (norm.numeric_value !== null ? `${norm.numeric_value} ${norm.unit || ""}` : "—");
+      const confPct = Math.round((r.extraction_confidence || 0.95) * 100);
+      const clauseLoc = r.source_location?.clause_number ? `Clause ${r.source_location.clause_number} (Pg ${r.source_location.source_page || 1})` : "General Scope";
+
+      tr.innerHTML = `
+        <td><span class="clause-tag">${escapeHtml(r.requirement_id)}</span></td>
+        <td><strong>${escapeHtml(r.parameter_name)}</strong></td>
+        <td><span class="clause-tag" style="background: none; border: 1px solid var(--border-main);">${escapeHtml(r.category || "GENERAL")}</span></td>
+        <td><span style="color: var(--navy-900); font-weight: 500;">${escapeHtml(r.value || "—")}</span></td>
+        <td><span class="mono" style="font-size: 12px; color: var(--text-secondary);">${escapeHtml(normText)}</span></td>
+        <td>
+          <span style="font-weight: 600; color: ${confPct >= 90 ? "var(--status-success-solid)" : "var(--status-warning-solid)"};">
+            ${confPct}%
+          </span>
+        </td>
+        <td><span style="font-size: 12px; color: var(--text-muted);">${escapeHtml(clauseLoc)}</span></td>
+      `;
+
+      requirementsTableBody.appendChild(tr);
+    });
+  }
+
+  if (searchRequirements) {
+    searchRequirements.addEventListener("input", () => {
+      if (activeAuditData) renderRequirementsTable(activeAuditData.extracted_requirements || []);
+    });
+  }
+
+  if (filterReqCategory) {
+    filterReqCategory.addEventListener("change", () => {
+      if (activeAuditData) renderRequirementsTable(activeAuditData.extracted_requirements || []);
+    });
+  }
+
+  // ==========================================================================
+  // TAB 3: INDIAN STANDARDS & BOM
+  // ==========================================================================
+  function renderStandardsTab(standards, bom) {
+    // 1. Recommended Standards List
+    standardsListContainer.innerHTML = "";
+    if (standards.length === 0) {
+      standardsListContainer.innerHTML = `<div style="color: var(--text-muted);">No standards recorded.</div>`;
+    } else {
+      standards.forEach((stdItem, idx) => {
+        const std = stdItem.standard || {};
+        const score = Math.round((stdItem.applicability_score || 0.9) * 100);
+        const isPrimary = idx === 0;
+
+        const row = document.createElement("div");
+        row.className = `standard-dense-row ${isPrimary ? "primary" : ""}`;
+
+        const evListHtml = (stdItem.evidence || []).map(ev => `
+          <div class="standard-evidence-item">
+            <i class="ph-bold ph-check"></i>
+            <span>${escapeHtml(ev)}</span>
           </div>
-        ` : ""}
-      </div>
+        `).join("");
 
-      <div class="drawer-record-block">
-        <div class="drawer-field-row">
-          <span class="drawer-field-lbl">Rule Engine Provenance</span>
-          <div class="drawer-field-val mono">${escapeHtml(src.rule_id || "RULE_ENGINE")} (${escapeHtml(src.source_type || "DETERMINISTIC_LINTER")})</div>
+        row.innerHTML = `
+          <div class="standard-row-top">
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <span class="standard-is-pill">${escapeHtml(std.is_number)}</span>
+              ${isPrimary ? `<span class="table-badge compliant">Primary Product Standard</span>` : `<span class="table-badge completed">Allied Standard</span>`}
+              <span class="clause-tag">Applicability: ${score}%</span>
+            </div>
+            <span class="clause-tag">Status: ${escapeHtml(std.current_status || "CURRENT")}</span>
+          </div>
+
+          <div class="standard-title-text">${escapeHtml(std.title || "")}</div>
+          <div class="standard-explanation-text">${escapeHtml(stdItem.explanation || "")}</div>
+
+          ${evListHtml ? `
+            <div class="standard-evidence-tags">
+              <span style="font-weight: 700; text-transform: uppercase; font-size: 11px; color: var(--text-muted); margin-bottom: 2px;">Technical Evidence Citations:</span>
+              ${evListHtml}
+            </div>
+          ` : ""}
+        `;
+
+        standardsListContainer.appendChild(row);
+      });
+    }
+
+    // 2. Standards BOM Table
+    bomTableBody.innerHTML = "";
+    if (bom.length === 0) {
+      bomTableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">No BOM items recorded.</td></tr>`;
+    } else {
+      bom.forEach(b => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${b.item_number}</strong></td>
+          <td><span class="standard-cell">${escapeHtml(b.is_number)}</span></td>
+          <td><strong>${escapeHtml(b.title)}</strong></td>
+          <td><span class="clause-tag">${escapeHtml(b.role)}</span></td>
+          <td>
+            ${b.is_mandatory_qco 
+              ? `<span class="table-badge needs-review">MANDATORY QCO</span>` 
+              : `<span class="table-badge compliant">Voluntary</span>`}
+          </td>
+          <td><span class="clause-tag">${escapeHtml(b.compliance_status)}</span></td>
+          <td style="font-size: 12px; color: var(--text-secondary);">${escapeHtml(b.action_required)}</td>
+        `;
+        bomTableBody.appendChild(tr);
+      });
+    }
+  }
+
+  // ==========================================================================
+  // TAB 4: PARAMETER MATCHING MATRIX
+  // ==========================================================================
+  function renderParametersTable(standards) {
+    parametersTableBody.innerHTML = "";
+    const primary = standards[0] || {};
+    const paramFits = primary.parameter_fit || [];
+
+    if (paramFits.length === 0) {
+      parametersTableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">No parameter fit records evaluated.</td></tr>`;
+      return;
+    }
+
+    paramFits.forEach(p => {
+      const tr = document.createElement("tr");
+      const fitStatus = p.fit_status || "NOT_SPECIFIED_IN_TENDER";
+
+      let statusBadge = `<span class="matrix-status-cell NOT_SPECIFIED_IN_TENDER">NOT SPECIFIED</span>`;
+      if (fitStatus === "COMPLIANT") {
+        statusBadge = `<span class="matrix-status-cell COMPLIANT"><i class="ph-bold ph-check"></i> COMPLIANT</span>`;
+      } else if (fitStatus === "DEVIATING") {
+        statusBadge = `<span class="matrix-status-cell DEVIATING"><i class="ph-bold ph-warning"></i> DEVIATING</span>`;
+      }
+
+      tr.innerHTML = `
+        <td><strong>${escapeHtml(p.parameter_name)}</strong></td>
+        <td><span style="color: var(--navy-900); font-weight: 500;">${escapeHtml(p.tender_value || "—")}</span></td>
+        <td style="font-size: 12.5px; color: var(--text-secondary);">${escapeHtml(p.standard_value || "—")}</td>
+        <td>${statusBadge}</td>
+      `;
+
+      parametersTableBody.appendChild(tr);
+    });
+  }
+
+  // ==========================================================================
+  // TAB 5: STANDARDS RELATIONSHIP MAP
+  // ==========================================================================
+  function renderStandardsMap(standards, related) {
+    alliedStandardsTableBody.innerHTML = "";
+
+    if (related.length === 0) {
+      alliedStandardsTableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No allied standards recorded.</td></tr>`;
+      return;
+    }
+
+    related.forEach(rel => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><span class="standard-cell">${escapeHtml(rel.is_number)}</span></td>
+        <td><strong>${escapeHtml(rel.title)}</strong></td>
+        <td><span class="clause-tag">${escapeHtml(rel.relationship_type)}</span></td>
+        <td><span class="clause-tag">${escapeHtml(rel.governing_primary_standard)}</span></td>
+        <td style="font-size: 12px; color: var(--text-secondary);">${escapeHtml(rel.relevance_notes)}</td>
+      `;
+      alliedStandardsTableBody.appendChild(tr);
+    });
+
+    // Node click interactions
+    [graphNodePrimary, graphNodeTest, graphNodeMotor, graphNodeQco].forEach(node => {
+      if (node) {
+        node.addEventListener("click", () => {
+          showToast(`Inspecting standard relationship: ${node.querySelector(".standard-is-pill, .graph-node-code")?.textContent || "Standard"}`);
+        });
+      }
+    });
+  }
+
+  // ==========================================================================
+  // TAB 6: CORRECTED SPECIFICATION DIFF
+  // ==========================================================================
+  function renderCorrectedClauses(clauses) {
+    correctedClausesContainer.innerHTML = "";
+
+    if (clauses.length === 0) {
+      correctedClausesContainer.innerHTML = `<div style="text-align: center; padding: var(--space-6); color: var(--text-muted);">No clause modifications required. Original specification conforms to Indian Standards.</div>`;
+      return;
+    }
+
+    clauses.forEach(c => {
+      const card = document.createElement("div");
+      card.className = "spec-clause-diff-card";
+
+      card.innerHTML = `
+        <div class="diff-card-header">
+          <div class="diff-header-left">
+            <span class="diff-clause-id">${escapeHtml(c.clause_id)}</span>
+            <span class="diff-source-loc">Source: ${escapeHtml(c.source_clause_reference || "Tender Clause")}</span>
+          </div>
+          <button type="button" class="btn-copy-clause copy-single-btn" data-text="${escapeHtml(c.corrected_text)}">
+            <i class="ph-bold ph-copy"></i>
+            <span>Copy Clause</span>
+          </button>
         </div>
-        <div class="drawer-field-row" style="margin-top: 0.5rem;">
-          <span class="drawer-field-lbl">Verification Status</span>
-          <div class="drawer-field-val font-semibold ${f.requires_human_review ? "text-amber" : "text-emerald"}">
-            ${f.resolution_status || (f.requires_human_review ? "PENDING VERIFICATION" : "VERIFIED")}
+
+        <div class="diff-columns-grid">
+          <div class="diff-col original">
+            <span class="diff-col-title">Original Tender Clause</span>
+            <div class="diff-text-content">${escapeHtml(c.original_tender_text || "—")}</div>
+          </div>
+          <div class="diff-col corrected">
+            <span class="diff-col-title">Corrected Draft (Officer-Reviewable)</span>
+            <div class="diff-text-content">${escapeHtml(c.corrected_text || "—")}</div>
           </div>
         </div>
-      </div>
 
-      ${fix.recommended_action_summary ? `
-        <div class="drawer-record-block" style="background-color: var(--emerald-light); border-color: var(--emerald-border);">
-          <div class="drawer-field-row">
-            <span class="drawer-field-lbl" style="color: var(--emerald-dark);">Recommended Officer Action</span>
-            <div class="drawer-field-val" style="color: #064E3B; font-weight: 500;">${escapeHtml(fix.recommended_action_summary)}</div>
-          </div>
+        <div class="diff-card-footer">
+          <span><strong>Rationale:</strong> ${escapeHtml(c.rationale || "")}</span>
+          <span class="clause-tag">Governing Rule: ${escapeHtml(c.governing_rules ? c.governing_rules.join(", ") : "BIS_CODE")}</span>
         </div>
-      ` : ""}
-    `;
+      `;
 
-    openDrawer();
-  };
+      correctedClausesContainer.appendChild(card);
+    });
 
-  window.openEvidenceDrawerForStandard = function(standardCode) {
+    // Copy single clause buttons
+    correctedClausesContainer.querySelectorAll(".copy-single-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const text = btn.getAttribute("data-text");
+        if (text) {
+          navigator.clipboard.writeText(text).then(() => {
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = `<i class="ph-bold ph-check"></i><span>Copied</span>`;
+            showToast("Corrected clause copied to clipboard");
+            setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
+          });
+        }
+      });
+    });
+  }
+
+  // "Copy All Corrected Clauses" Button
+  if (btnCopyAllClauses) {
+    btnCopyAllClauses.addEventListener("click", () => {
+      if (!activeAuditData) return;
+      const clauses = activeAuditData.corrected_clause || activeAuditData.corrected_clauses || [];
+      if (clauses.length === 0) return;
+
+      const fullDraftText = clauses.map(c => `[Clause ${c.source_clause_reference} - Rectified]:\n${c.corrected_text}\n(Rationale: ${c.rationale})`).join("\n\n---\n\n");
+      navigator.clipboard.writeText(fullDraftText).then(() => {
+        showToast("All 8 corrected specification clauses copied to clipboard");
+      });
+    });
+  }
+
+  // ==========================================================================
+  // EXPORTERS & DOWNLOADS
+  // ==========================================================================
+  function downloadJsonDossier() {
     if (!activeAuditData) return;
-    const recs = activeAuditData.recommended_standards || [];
-    const r = recs.find(item => item.standard && item.standard.is_number.includes(standardCode)) || recs[0];
-    if (!r) return;
+    const jsonStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(activeAuditData, null, 2));
+    const dlAnchor = document.createElement("a");
+    dlAnchor.setAttribute("href", jsonStr);
+    dlAnchor.setAttribute("download", `maanaknetra_audit_${activeAuditData.tender_metadata?.analysis_id || "dossier"}.json`);
+    document.body.appendChild(dlAnchor);
+    dlAnchor.click();
+    dlAnchor.remove();
+    showToast("Audit JSON dossier downloaded successfully");
+  }
 
-    const std = r.standard || {};
-    drawerTitle.textContent = `${std.is_number} · Standard Evidence`;
+  if (btnDownloadJson) btnDownloadJson.addEventListener("click", downloadJsonDossier);
+  if (btnDownloadJsonRep) btnDownloadJsonRep.addEventListener("click", downloadJsonDossier);
 
-    const evList = (r.evidence || []).map(ev => `
-      <div style="font-size: 0.8rem; color: var(--text-body); display: flex; align-items: flex-start; gap: 0.4rem; line-height: 1.45;">
-        <i class="ph-bold ph-check-circle" style="color: var(--emerald-main); margin-top: 0.15rem; flex-shrink: 0;"></i>
-        <span>${escapeHtml(ev)}</span>
-      </div>
-    `).join("");
+  if (btnExportSpecTxt) {
+    btnExportSpecTxt.addEventListener("click", () => {
+      if (!activeAuditData) return;
+      const clauses = activeAuditData.corrected_clause || activeAuditData.corrected_clauses || [];
+      const content = `MAANAKNETRA AUDITED TECHNICAL SPECIFICATION\nTender: ${activeAuditData.tender_metadata?.document_title || "sample_tender.pdf"}\nGenerated: ${new Date().toISOString()}\n\n` +
+        clauses.map(c => `=== Clause ${c.source_clause_reference} ===\n${c.corrected_text}\nRationale: ${c.rationale}\n`).join("\n");
 
-    drawerBody.innerHTML = `
-      <div class="drawer-record-block">
-        <div class="drawer-field-row">
-          <span class="drawer-field-lbl">Indian Standard & Status</span>
-          <div class="drawer-field-val font-semibold">${escapeHtml(std.is_number)}: ${escapeHtml(std.title || "")}</div>
-          <div style="margin-top: 0.35rem; display: flex; gap: 0.5rem;">
-            <span class="pill"><i class="ph-bold ph-check"></i> ${escapeHtml(std.current_status || "CURRENT")}</span>
-            <span class="pill pill-mono">Applicability: ${Math.round((r.applicability_score || 0) * 100)}%</span>
-          </div>
-        </div>
-      </div>
+      const txtStr = "data:text/plain;charset=utf-8," + encodeURIComponent(content);
+      const dlAnchor = document.createElement("a");
+      dlAnchor.setAttribute("href", txtStr);
+      dlAnchor.setAttribute("download", `audited_specification_${activeAuditData.tender_metadata?.analysis_id || "draft"}.txt`);
+      document.body.appendChild(dlAnchor);
+      dlAnchor.click();
+      dlAnchor.remove();
+      showToast("Corrected specification (.txt) exported");
+    });
+  }
 
-      <div class="drawer-record-block">
-        <div class="drawer-field-row">
-          <span class="drawer-field-lbl">Scope & Retrieval Grounding</span>
-          <div class="drawer-field-val">${escapeHtml(r.explanation || "Primary governing Indian Standard for the tender product scope.")}</div>
-        </div>
-      </div>
+  if (btnExportBomCsv) {
+    btnExportBomCsv.addEventListener("click", () => {
+      if (!activeAuditData) return;
+      const bom = activeAuditData.standards_bom || [];
+      let csv = "Item Number,IS Number,Title,Role,Mandatory QCO,Status,Action Required\n";
+      bom.forEach(b => {
+        csv += `"${b.item_number}","${b.is_number}","${b.title}","${b.role}","${b.is_mandatory_qco}","${b.compliance_status}","${b.action_required}"\n`;
+      });
+      const csvStr = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
+      const dlAnchor = document.createElement("a");
+      dlAnchor.setAttribute("href", csvStr);
+      dlAnchor.setAttribute("download", `standards_bom_${activeAuditData.tender_metadata?.analysis_id || "export"}.csv`);
+      document.body.appendChild(dlAnchor);
+      dlAnchor.click();
+      dlAnchor.remove();
+      showToast("Standards BOM CSV exported");
+    });
+  }
 
-      <div class="drawer-record-block">
-        <span class="drawer-field-lbl" style="margin-bottom: 0.5rem; display: block;">Supporting Technical Evidence Quotes</span>
-        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-          ${evList || "<div style='font-size: 0.78rem; color: var(--text-muted);'>No additional evidence quotes extracted.</div>"}
-        </div>
-      </div>
-    `;
+  if (btnPrintSummary) {
+    btnPrintSummary.addEventListener("click", () => {
+      window.print();
+    });
+  }
 
-    openDrawer();
-  };
-
-  window.openEvidenceDrawerForParameter = function(paramName) {
-    if (!activeAuditData) return;
-    const recs = activeAuditData.recommended_standards || [];
-    const primaryRec = recs[0] || {};
-    const paramFits = primaryRec.parameter_fit || [];
-    const p = paramFits.find(item => item.parameter_name === paramName) || paramFits[0];
-    if (!p) return;
-
-    drawerTitle.textContent = `${p.parameter_name} · Parameter Fit`;
-
-    drawerBody.innerHTML = `
-      <div class="drawer-record-block">
-        <div class="drawer-field-row">
-          <span class="drawer-field-lbl">Parameter & Assessment</span>
-          <div class="drawer-field-val font-semibold">${escapeHtml(p.parameter_name)}</div>
-          <div style="margin-top: 0.35rem;">
-            <span class="legend-pill badge-${p.fit_status || 'NOT_SPECIFIED'}">${p.fit_status || 'NOT_SPECIFIED'}</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="drawer-record-block">
-        <div class="drawer-field-row">
-          <span class="drawer-field-lbl">Tender Specified Value</span>
-          <div class="drawer-field-val quote">"${escapeHtml(p.tender_value || "Not specified in tender schedule")}"</div>
-        </div>
-      </div>
-
-      <div class="drawer-record-block">
-        <div class="drawer-field-row">
-          <span class="drawer-field-lbl">Standard Prescribed Requirement & Evidence</span>
-          <div class="drawer-field-val">${escapeHtml(p.standard_value || "—")}</div>
-        </div>
-      </div>
-    `;
-
-    openDrawer();
-  };
-
-  function openDrawer() {
-    evidenceDrawerBackdrop.classList.remove("hidden");
+  // ==========================================================================
+  // MODAL & TOAST UTILITIES
+  // ==========================================================================
+  function openModal() {
+    evidenceModal.classList.add("active");
     document.body.style.overflow = "hidden";
   }
 
-  function closeDrawer() {
-    evidenceDrawerBackdrop.classList.add("hidden");
+  function closeModal() {
+    evidenceModal.classList.remove("active");
     document.body.style.overflow = "";
   }
 
-  closeDrawerBtn.addEventListener("click", closeDrawer);
-  drawerDismissBtn.addEventListener("click", closeDrawer);
-  evidenceDrawerBackdrop.addEventListener("click", (e) => {
-    if (e.target === evidenceDrawerBackdrop) closeDrawer();
+  if (btnModalClose) btnModalClose.addEventListener("click", closeModal);
+  if (btnModalDismiss) btnModalDismiss.addEventListener("click", closeModal);
+  if (evidenceModal) {
+    evidenceModal.addEventListener("click", (e) => {
+      if (e.target === evidenceModal) closeModal();
+    });
+  }
+
+  function showToast(message) {
+    if (toastTimeout) clearTimeout(toastTimeout);
+    toastContainer.innerHTML = `
+      <div class="toast-item">
+        <i class="ph-bold ph-check-circle"></i>
+        <span>${escapeHtml(message)}</span>
+      </div>
+    `;
+    toastTimeout = setTimeout(() => {
+      toastContainer.innerHTML = "";
+    }, 3200);
+  }
+
+  // Keyboard Shortcuts
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeModal();
+    }
+    if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+      e.preventDefault();
+      if (globalSearchInput) globalSearchInput.focus();
+    }
   });
 
-  // --------------------------------------------------------------------------
-  // JSON Contract Exporters
-  // --------------------------------------------------------------------------
-  function triggerJsonDownload() {
-    if (!activeAuditData) return;
-    const jsonStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(activeAuditData, null, 2));
-    const downloadAnchor = document.createElement("a");
-    downloadAnchor.setAttribute("href", jsonStr);
-    downloadAnchor.setAttribute("download", `maanaknetra_audit_${activeAuditData.tender_metadata?.analysis_id || "dossier"}.json`);
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-    showToast("Audit JSON dossier downloaded");
-  }
-
-  downloadJsonBtn.addEventListener("click", triggerJsonDownload);
-  if (stickyExportJsonBtn) {
-    stickyExportJsonBtn.addEventListener("click", triggerJsonDownload);
-  }
-
-  // --------------------------------------------------------------------------
-  // UI Helpers (Loading, Error, Toast, String utilities)
-  // --------------------------------------------------------------------------
-  function showLoading(headline, msg) {
-    loadingHeadline.textContent = headline;
-    loadingMessage.textContent = msg;
-    auditLoadingState.classList.remove("hidden");
-    secOverview.classList.add("hidden");
-    resultsWorkspace.classList.add("hidden");
-    startAuditBtn.disabled = true;
-    heroDemoBtn.disabled = true;
-    headerDemoBtn.disabled = true;
-  }
-
-  function hideLoading() {
-    auditLoadingState.classList.add("hidden");
-    startAuditBtn.disabled = !currentSelectedFile;
-    heroDemoBtn.disabled = false;
-    headerDemoBtn.disabled = false;
-  }
-
-  function showError(msg) {
-    errorMessage.textContent = msg;
-    auditErrorAlert.classList.remove("hidden");
-    secOverview.classList.remove("hidden");
-  }
-
-  function hideError() {
-    auditErrorAlert.classList.add("hidden");
-  }
-
-  function showToast(msg) {
-    if (toastTimer) clearTimeout(toastTimer);
-    toastMessage.textContent = msg;
-    appToast.classList.remove("hidden");
-    toastTimer = setTimeout(() => {
-      appToast.classList.add("hidden");
-    }, 2800);
-  }
-
-  function truncateText(str, maxLen) {
-    if (!str) return "—";
-    if (str.length <= maxLen) return str;
-    return str.substring(0, maxLen - 1) + "…";
+  if (globalSearchInput) {
+    globalSearchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const val = globalSearchInput.value.trim();
+        if (val) {
+          if (!activeAuditData) {
+            loadCanonicalDemo(() => {
+              switchResultTab("tabRequirements");
+              if (searchRequirements) {
+                searchRequirements.value = val;
+                renderRequirementsTable(activeAuditData.extracted_requirements || []);
+              }
+            });
+          } else {
+            switchResultTab("tabRequirements");
+            if (searchRequirements) {
+              searchRequirements.value = val;
+              renderRequirementsTable(activeAuditData.extracted_requirements || []);
+            }
+          }
+        }
+      }
+    });
   }
 
   function escapeHtml(str) {
