@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MAANAKNETRA — AI-Powered Procurement &amp; Indian Standards Intelligence</title>
-  <meta name="description" content="AI-Powered Procurement & Indian Standards Intelligence for automated tender auditing, standards compliance, and specification correction.">
+  <title>MAANAKNETRA — Indian Standards Intelligence for Public Procurement</title>
+  <meta name="description" content="AI-assisted, evidence-backed, officer-reviewed recommendation engine for identifying applicable Indian Standards for procurement specifications.">
 
   <!-- Inter & JetBrains Mono Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,12 +27,23 @@
     <!-- 1. LEFT SIDEBAR (~236px Enterprise Navy) -->
     <aside class="app-sidebar" id="appSidebar" aria-label="Main Navigation">
       <div class="sidebar-header">
-        <div class="brand-emblem" aria-hidden="true">
-          <i class="ph-bold ph-shield-check"></i>
+        <div class="brand-header-top">
+          <div class="brand-emblem" aria-hidden="true">
+            <i class="ph-bold ph-shield-check"></i>
+          </div>
+          <div class="brand-titles">
+            <div class="brand-title-row">
+              <span class="brand-title">MAANAKNETRA</span>
+              <span class="brand-flag" title="Indian Standards Intelligence" aria-label="India">🇮🇳</span>
+            </div>
+            <span class="brand-subtitle">Indian Standards Intelligence for Public Procurement</span>
+          </div>
+          <button type="button" class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close Navigation Sidebar">
+            <i class="ph-bold ph-x"></i>
+          </button>
         </div>
-        <div class="brand-titles">
-          <span class="brand-title">MAANAKNETRA</span>
-          <span class="brand-subtitle">Procurement Intelligence</span>
+        <div class="brand-descriptor-badge">
+          <span>AI-assisted • Evidence-backed • Officer-reviewed</span>
         </div>
       </div>
 
@@ -123,7 +134,7 @@
       <div class="sidebar-footer">
         <div class="system-status-badge">
           <span class="status-dot"></span>
-          <span>Online · BIS Evidence Engine v1.0</span>
+          <span>Online · Standards Evidence Layer v1.0</span>
         </div>
         <div class="officer-profile-mini">
           <div class="officer-avatar-box">RV</div>
@@ -135,17 +146,21 @@
       </div>
     </aside>
 
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
+
     <!-- 2. MAIN APPLICATION CANVAS -->
     <main class="app-main">
 
       <!-- TOP HEADER (Compact 56px) -->
       <header class="top-header">
+        <div class="gov-tricolor-stripe" aria-hidden="true"></div>
         <div class="header-left">
           <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle Navigation Sidebar">
             <i class="ph-bold ph-list"></i>
           </button>
           <nav class="breadcrumb-nav" aria-label="Breadcrumb">
-            <span class="breadcrumb-link">MAANAKNETRA</span>
+            <span class="breadcrumb-link"><span class="breadcrumb-flag" aria-hidden="true">🇮🇳</span> MAANAKNETRA</span>
             <span class="breadcrumb-sep">/</span>
             <span class="breadcrumb-active" id="breadcrumbCurrent">Tender Analysis</span>
           </nav>
@@ -246,7 +261,7 @@
                 <div class="scope-item-icon"><i class="ph-bold ph-check"></i></div>
                 <div class="scope-item-content">
                   <span class="scope-item-title">Indian Standards Matching</span>
-                  <span class="scope-item-sub">Multi-signal hybrid retrieval matching against official BIS standard catalog.</span>
+                  <span class="scope-item-sub">Multi-signal hybrid retrieval matching against BIS standards dataset.</span>
                 </div>
               </li>
               <li class="scope-item">
@@ -619,7 +634,7 @@
                   <div class="inspector-field">
                     <span class="field-label">Evidence from BIS Catalog / Gazette</span>
                     <div class="field-val-text" id="insEvidenceText">
-                      Official BIS standard title and catalog record designate IS 14220:2018 as First Revision replacing original 1994 edition.
+                      BIS standard title and dataset record designate IS 14220:2018 as First Revision replacing original 1994 edition.
                     </div>
                   </div>
 

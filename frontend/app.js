@@ -168,7 +168,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Close mobile sidebar if open
     if (window.innerWidth <= 1024) {
-      appSidebar.classList.remove("open");
+      if (typeof closeSidebar === "function") {
+        closeSidebar();
+      } else {
+        appSidebar.classList.remove("open");
+      }
     }
 
     // Scroll to top
@@ -215,6 +219,10 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelectorAll(".sidebar-nav-list .nav-link").forEach(l => l.classList.remove("active"));
       link.classList.add("active");
 
+      if (window.innerWidth <= 1024) {
+        closeSidebar();
+      }
+
       if (navTarget === "intake") {
         breadcrumbCurrent.textContent = "Tender Analysis";
         showView("viewIntake");
@@ -257,10 +265,35 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Sidebar Toggle for Mobile / Tablets
+  const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+  const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
+
+  function openSidebar() {
+    appSidebar.classList.add("open");
+    if (sidebarBackdrop) sidebarBackdrop.classList.add("active");
+  }
+
+  function closeSidebar() {
+    appSidebar.classList.remove("open");
+    if (sidebarBackdrop) sidebarBackdrop.classList.remove("active");
+  }
+
   if (sidebarToggleBtn) {
     sidebarToggleBtn.addEventListener("click", () => {
-      appSidebar.classList.toggle("open");
+      if (appSidebar.classList.contains("open")) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
     });
+  }
+
+  if (sidebarCloseBtn) {
+    sidebarCloseBtn.addEventListener("click", closeSidebar);
+  }
+
+  if (sidebarBackdrop) {
+    sidebarBackdrop.addEventListener("click", closeSidebar);
   }
 
   // "New Analysis" Button
@@ -755,7 +788,7 @@ document.addEventListener("DOMContentLoaded", () => {
     insFindingTitle.textContent = f.title || "Audit Finding";
 
     insOriginalClause.textContent = f.tender_text ? `"${f.tender_text}"` : "[Mandatory Clause Omitted in Original Tender]";
-    insEvidenceText.textContent = f.evidence?.factual_summary || "Verified against official BIS repository records.";
+    insEvidenceText.textContent = f.evidence?.factual_summary || "Verified against BIS standards dataset.";
 
     const citedCode = f.affected_standard?.is_number || "IS 14220:1994";
     const activeCode = f.affected_standard?.replacement_standard || "IS 14220:2018";
