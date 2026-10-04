@@ -43,17 +43,14 @@ def get_engine() -> ProcurementAnalysisEngine:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
-    FastAPI lifespan handler: Pre-warms the ProcurementAnalysisEngine and
-    vector search index during server startup so real upload requests execute
-    immediately without cold-start latency or blocking the event loop.
+    FastAPI lifespan handler.
+    The analysis engine initializes lazily on the first analysis request.
     """
-    print("[STARTUP] Pre-warming MaanakNetra ProcurementAnalysisEngine...", flush=True)
-    t0 = time.time()
-    try:
-        await run_in_threadpool(get_engine)
-        print(f"[STARTUP] MaanakNetra engine pre-warmed successfully in {round(time.time() - t0, 2)}s.", flush=True)
-    except Exception as e:
-        print(f"[STARTUP] Warning during engine pre-warming ({e}). Fallback mode active.", flush=True)
+    print(
+        "[STARTUP] MaanakNetra backend ready; "
+        "analysis engine will initialize on demand.",
+        flush=True,
+    )
     yield
 
 
