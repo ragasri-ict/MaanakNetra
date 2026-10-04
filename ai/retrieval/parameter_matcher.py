@@ -64,8 +64,17 @@ class ParameterMatcher:
             cat = req.get("category", "")
             p_name = req.get("parameter_name", "")
             val = str(req.get("value", ""))
-            norm = req.get("normalized_value") or {}
-            num_val = norm.get("numeric_value")
+            norm = req.get("normalized_value")
+            num_val = None
+            if isinstance(norm, dict):
+                num_val = norm.get("numeric_value")
+            elif isinstance(norm, (int, float)):
+                num_val = float(norm)
+            elif isinstance(norm, str):
+                try:
+                    num_val = float(norm)
+                except ValueError:
+                    num_val = None
 
             weight = self._get_category_weight(cat)
             total_weight += weight

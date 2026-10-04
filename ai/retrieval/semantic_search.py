@@ -89,7 +89,9 @@ class SemanticSearcher:
 
     def _build_or_load_index(self):
         """Loads cached index or computes and saves new embeddings."""
+        import hashlib
         doc_texts = self._prepare_document_texts()
+        content_hash = hashlib.sha256("".join(doc_texts).encode("utf-8")).hexdigest()
 
         # Check if cache is valid
         if os.path.exists(self.cache_meta) and os.path.exists(self.cache_npz):
@@ -100,6 +102,7 @@ class SemanticSearcher:
                 if (
                     meta.get("model_name") == self.model_name
                     and meta.get("doc_count") == len(self.standards)
+                    and meta.get("content_hash") == content_hash
                     and not self.use_fallback
                 ):
                     data = np.load(self.cache_npz)
@@ -124,6 +127,7 @@ class SemanticSearcher:
                 json.dump({
                     "model_name": self.model_name,
                     "doc_count": len(self.standards),
+                    "content_hash": content_hash,
                     "dimensions": int(self.embeddings.shape[1]),
                     "standards_indexed": [s.get("is_number") for s in self.standards]
                 }, f, indent=2)

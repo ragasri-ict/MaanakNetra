@@ -97,5 +97,203 @@
     "effective_year": 2018,
     "lifecycle_evidence": "Notified under statutory DPIIT Quality Control Order S.O. 167(E) as active standard for line operated three phase surface induction motors.",
     "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 11346",
+    "version": "IS 11346:2002",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2002,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 11346.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 5120",
+    "version": "IS 5120:1977",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 1977,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 5120.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 1710",
+    "version": "IS 1710:1989",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 1989,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 1710.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 1520",
+    "version": "IS 1520:1980",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 1980,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 1520.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 325",
+    "version": "IS 325:1996",
+    "status": "SUPERSEDED",
+    "superseded_by": "IS 12615",
+    "effective_year": 1996,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 325.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 1231",
+    "version": "IS 1231:1974",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 1974,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 1231.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 2223",
+    "version": "IS 2223:1983",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 1983,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 2223.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 4029",
+    "version": "IS 4029:2010",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2010,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 4029.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 1180 (Part 1)",
+    "version": "IS 1180 (Part 1):2014",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2014,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 1180 (Part 1).",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 2026 (Part 1)",
+    "version": "IS 2026 (Part 1):2011",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2011,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 2026 (Part 1).",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 3043",
+    "version": "IS 3043:2018",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2018,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 3043.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 732",
+    "version": "IS 732:2019",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2019,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 732.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 694",
+    "version": "IS 694:2010",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2010,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 694.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 1554 (Part 1)",
+    "version": "IS 1554 (Part 1):1988",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 1988,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 1554 (Part 1).",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 7098 (Part 1)",
+    "version": "IS 7098 (Part 1):1988",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 1988,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 7098 (Part 1).",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 10000",
+    "version": "IS 10000:1980",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 1980,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 10000.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 13364 (Part 1)",
+    "version": "IS 13364 (Part 1):1992",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 1992,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 13364 (Part 1).",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 13364 (Part 2)",
+    "version": "IS 13364 (Part 2):1992",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 1992,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 13364 (Part 2).",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS/IEC 60947-1",
+    "version": "IS/IEC 60947-1:2007",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2007,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS/IEC 60947-1.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS/IEC 60947-2",
+    "version": "IS/IEC 60947-2:2016",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2016,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS/IEC 60947-2.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS/IEC 60947-4-1",
+    "version": "IS/IEC 60947-4-1:2012",
+    "status": "CURRENT",
+    "superseded_by": null,
+    "effective_year": 2012,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS/IEC 60947-4-1.",
+    "verification_status": "VERIFIED_OFFICIAL"
+  },
+  {
+    "standard_code": "IS 13947 (Part 1)",
+    "version": "IS 13947 (Part 1):1993",
+    "status": "SUPERSEDED",
+    "superseded_by": "IS/IEC 60947-1",
+    "effective_year": 1993,
+    "lifecycle_evidence": "Official BIS Gazette catalogue entry for IS 13947 (Part 1).",
+    "verification_status": "VERIFIED_OFFICIAL"
   }
 ]

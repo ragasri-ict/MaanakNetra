@@ -63,6 +63,13 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
   const loadingHeading = document.getElementById("loadingHeading");
   const loadingDescription = document.getElementById("loadingDescription");
+  const loadingSkeletonBox = document.getElementById("loadingSkeletonBox");
+  const loadingErrorBox = document.getElementById("loadingErrorBox");
+  const loadingErrorTitle = document.getElementById("loadingErrorTitle");
+  const loadingErrorStage = document.getElementById("loadingErrorStage");
+  const loadingErrorMessage = document.getElementById("loadingErrorMessage");
+  const btnRetryAudit = document.getElementById("btnRetryAudit");
+  const btnCancelAudit = document.getElementById("btnCancelAudit");
 
   // Results Dossier Elements
   const resultsDocTitle = document.getElementById("resultsDocTitle");
@@ -411,94 +418,202 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ==========================================================================
-  // AUDIT EXECUTION ENGINE
+  // AUDIT EXECUTION ENGINE & STEPPER CONTROLLER
   // ==========================================================================
-  function runStepperAnimation(onComplete) {
+  const stageDescriptions = [
+    "Parsing document text and extracting structural tender clauses...",
+    "Extracting technical parameters, operating conditions, and materials...",
+    "Matching candidate Indian Standards against BIS catalogue...",
+    "Auditing standard revisions, supersessions, and statutory QCO mandates...",
+    "Synthesizing audit findings and drafting corrected technical clauses..."
+  ];
+
+  function setStepperStage(activeIdx) {
+    stepItems.forEach((item, idx) => {
+      if (!item) return;
+      const circle = item.querySelector(".step-circle");
+      if (idx < activeIdx) {
+        item.className = "step-item completed";
+        if (circle) circle.innerHTML = '<i class="ph-bold ph-check"></i>';
+      } else if (idx === activeIdx) {
+        item.className = "step-item active";
+        if (circle) circle.textContent = (idx + 1).toString();
+      } else {
+        item.className = "step-item";
+        if (circle) circle.textContent = (idx + 1).toString();
+      }
+    });
+
+    if (loadingDescription && stageDescriptions[activeIdx]) {
+      loadingDescription.textContent = stageDescriptions[activeIdx];
+    }
+  }
+
+  function setStepperAllCompleted() {
+    stepItems.forEach(item => {
+      if (!item) return;
+      item.className = "step-item completed";
+      const circle = item.querySelector(".step-circle");
+      if (circle) circle.innerHTML = '<i class="ph-bold ph-check"></i>';
+    });
+    if (loadingDescription) {
+      loadingDescription.textContent = "Technical audit synthesized. Generating compliance dossier...";
+    }
+  }
+
+  function setStepperError(failedStageIdx, stageName, errorMsg) {
+    stepItems.forEach((item, idx) => {
+      if (!item) return;
+      const circle = item.querySelector(".step-circle");
+      if (idx < failedStageIdx) {
+        item.className = "step-item completed";
+        if (circle) circle.innerHTML = '<i class="ph-bold ph-check"></i>';
+      } else if (idx === failedStageIdx) {
+        item.className = "step-item error";
+        if (circle) circle.innerHTML = '<i class="ph-bold ph-x"></i>';
+      } else {
+        item.className = "step-item";
+        if (circle) circle.textContent = (idx + 1).toString();
+      }
+    });
+
+    if (loadingSkeletonBox) loadingSkeletonBox.style.display = "none";
+    if (loadingErrorBox) {
+      loadingErrorBox.style.display = "block";
+      if (loadingErrorStage) loadingErrorStage.textContent = `Halted at: ${stageName || "Technical Audit"}`;
+      if (loadingErrorMessage) loadingErrorMessage.textContent = errorMsg || "The audit engine encountered an error while analyzing this document.";
+    }
+    if (loadingHeading) loadingHeading.textContent = "Technical Procurement Audit Halted";
+    if (loadingDescription) loadingDescription.textContent = "Processing stopped. Review the error details below or retry.";
+  }
+
+  function resetLoadingState() {
+    if (loadingSkeletonBox) loadingSkeletonBox.style.display = "block";
+    if (loadingErrorBox) loadingErrorBox.style.display = "none";
+    if (loadingHeading) loadingHeading.textContent = "Executing Technical Procurement Audit";
+  }
+
+  // Retry & Cancel Action Buttons
+  if (btnRetryAudit) {
+    btnRetryAudit.addEventListener("click", () => {
+      if (selectedFile) {
+        executeAuditWorkflow(selectedFile);
+      } else {
+        loadCanonicalDemo();
+      }
+    });
+  }
+
+  if (btnCancelAudit) {
+    btnCancelAudit.addEventListener("click", () => {
+      resetToIntake();
+    });
+  }
+
+  let activeAuditAbortController = null;
+
+  async function executeAuditWorkflow(file) {
+    if (!file) return;
     showView("viewLoading");
+    resetLoadingState();
 
     let currentStep = 0;
-    const stepDurations = [350, 400, 450, 400, 350];
+    setStepperStage(0);
 
-    function advanceStep() {
-      if (currentStep < stepItems.length) {
-        stepItems.forEach((item, idx) => {
-          if (idx < currentStep) {
-            item.className = "step-item completed";
-            item.querySelector(".step-circle").innerHTML = '<i class="ph-bold ph-check"></i>';
-          } else if (idx === currentStep) {
-            item.className = "step-item active";
-            item.querySelector(".step-circle").textContent = (idx + 1).toString();
-          } else {
-            item.className = "step-item";
-            item.querySelector(".step-circle").textContent = (idx + 1).toString();
-          }
-        });
-
-        const descriptions = [
-          "Parsing document text and extracting structural tender clauses...",
-          "Extracting technical parameters, operating head, discharge, and metallurgy...",
-          "Matching candidate Indian Standards against BIS catalogue...",
-          "Auditing standard revisions, supersessions, and statutory QCO mandates...",
-          "Synthesizing audit findings and drafting corrected technical clauses..."
-        ];
-
-        loadingDescription.textContent = descriptions[currentStep];
+    // Incrementally advance stepper through the preliminary stages
+    const stepInterval = setInterval(() => {
+      if (currentStep < 4) {
         currentStep++;
-        setTimeout(advanceStep, stepDurations[currentStep - 1]);
-      } else {
-        stepItems.forEach(item => {
-          item.className = "step-item completed";
-          item.querySelector(".step-circle").innerHTML = '<i class="ph-bold ph-check"></i>';
-        });
-        setTimeout(onComplete, 200);
+        setStepperStage(currentStep);
       }
-    }
+    }, 400);
 
-    advanceStep();
+    const formData = new FormData();
+    formData.append("file", file);
+
+    if (activeAuditAbortController) {
+      activeAuditAbortController.abort();
+    }
+    activeAuditAbortController = new AbortController();
+
+    const timeoutId = setTimeout(() => {
+      if (activeAuditAbortController) {
+        activeAuditAbortController.abort("Audit request timed out after 120 seconds.");
+      }
+    }, 120000);
+
+    try {
+      const response = await fetch("/api/analyze", {
+        method: "POST",
+        body: formData,
+        signal: activeAuditAbortController.signal
+      });
+      clearInterval(stepInterval);
+      clearTimeout(timeoutId);
+
+      const resData = await response.json().catch(() => ({}));
+
+      if (!response.ok || resData.status === "error") {
+        const stageName = resData.stage || (stageDescriptions[currentStep] ? `Stage ${currentStep + 1}` : "Execution");
+        const msg = resData.message || resData.detail || `Server returned HTTP status ${response.status}`;
+        setStepperError(currentStep, stageName, msg);
+        showToast(`Audit failed: ${msg}`);
+        return;
+      }
+
+      // Successful analysis completed
+      setStepperAllCompleted();
+      setTimeout(() => {
+        renderAuditDossier(resData);
+        showToast(`Tender '${file.name}' analyzed successfully`);
+      }, 300);
+
+    } catch (err) {
+      clearInterval(stepInterval);
+      clearTimeout(timeoutId);
+      const isTimeout = err.name === "AbortError" || String(err).includes("timed out");
+      const errMsg = isTimeout
+        ? "The audit engine timed out while processing this document. Please verify network connectivity or upload a smaller tender section."
+        : (err.message || "Network request failed while connecting to MaanakNetra API.");
+      setStepperError(currentStep, "Processing Request", errMsg);
+      showToast(`Analysis halted: ${errMsg}`);
+    }
   }
 
   async function loadCanonicalDemo(callback) {
-    runStepperAnimation(async () => {
-      try {
-        const response = await fetch("/api/demo");
-        if (!response.ok) {
-          throw new Error(`Demo endpoint returned status ${response.status}: ${response.statusText}`);
-        }
-        const data = await response.json();
+    showView("viewLoading");
+    resetLoadingState();
+
+    let currentStep = 0;
+    setStepperStage(0);
+
+    const stepInterval = setInterval(() => {
+      if (currentStep < 4) {
+        currentStep++;
+        setStepperStage(currentStep);
+      }
+    }, 120);
+
+    try {
+      const response = await fetch("/api/demo");
+      clearInterval(stepInterval);
+
+      if (!response.ok) {
+        const errJson = await response.json().catch(() => ({}));
+        throw new Error(errJson.detail || `Demo endpoint returned status ${response.status}`);
+      }
+      const data = await response.json();
+      setStepperAllCompleted();
+      setTimeout(() => {
         renderAuditDossier(data);
         showToast("Demonstration tender audit loaded successfully");
         if (callback) callback();
-      } catch (err) {
-        showView("viewIntake");
-        showToast(`Error loading demonstration: ${err.message}`);
-      }
-    });
-  }
-
-  async function executeAuditWorkflow(file) {
-    runStepperAnimation(async () => {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      try {
-        const response = await fetch("/api/analyze", {
-          method: "POST",
-          body: formData
-        });
-
-        if (!response.ok) {
-          const errJson = await response.json().catch(() => ({}));
-          throw new Error(errJson.detail || `Server returned ${response.status}`);
-        }
-
-        const data = await response.json();
-        renderAuditDossier(data);
-        showToast(`Tender '${file.name}' analyzed successfully`);
-      } catch (err) {
-        showView("viewIntake");
-        showToast(`Analysis failed: ${err.message}`);
-      }
-    });
+      }, 200);
+    } catch (err) {
+      clearInterval(stepInterval);
+      setStepperError(currentStep, "Demo Retrieval", err.message);
+      showToast(`Error loading demonstration: ${err.message}`);
+    }
   }
 
   // ==========================================================================
@@ -527,7 +642,7 @@ document.addEventListener("DOMContentLoaded", () => {
       category = reqs[0].product_category_context;
     }
     resCategory.textContent = category;
-    resPages.textContent = meta.page_count || "3";
+    resPages.textContent = meta.page_count || "1";
     resAnalysisId.textContent = meta.analysis_id || "ANALYSIS_DOSSIER";
     resTimestamp.textContent = meta.analyzed_at ? new Date(meta.analyzed_at).toLocaleDateString("en-GB", { day: '2-digit', month: 'short', year: 'numeric' }) : "26 Sep 2026";
 
@@ -545,14 +660,17 @@ document.addEventListener("DOMContentLoaded", () => {
     kpiFindingsSub.textContent = `${critCount} Critical · ${highCount} High · ${medCount} Medium`;
 
     // Standards info
-    const primaryStd = (standards[0] && standards[0].standard) ? standards[0].standard.is_number : "IS 14220:2018";
+    const primaryStd = (standards[0] && standards[0].standard) ? standards[0].standard.is_number : "BIS Standard";
     kpiPrimaryStandard.textContent = primaryStd;
-    kpiPrimaryStandardSub.textContent = "First Revision (Active Standard)";
+    const pubYear = (standards[0] && standards[0].standard?.year) ? standards[0].standard.year : "";
+    kpiPrimaryStandardSub.textContent = pubYear ? `Active Edition (${pubYear})` : "Active Standard (Current Revision)";
 
     // Superseded info
+    const supFinding = findings.find(f => f.affected_standard?.current_status === "SUPERSEDED" || f.finding_type === "OUTDATED_STANDARD");
+    const supStdCode = supFinding?.affected_standard?.is_number || (statusFlags.has_superseded_standards ? "Superseded Standard" : "None");
     const supersededCount = statusFlags.superseded_count || (statusFlags.has_superseded_standards ? 1 : 0);
     kpiReviewStandards.textContent = `${supersededCount} Superseded`;
-    kpiReviewStandardsSub.textContent = statusFlags.has_superseded_standards ? "IS 14220:1994 Cited in Scope" : "None";
+    kpiReviewStandardsSub.textContent = statusFlags.has_superseded_standards ? `${supStdCode} Cited in Scope` : "None";
 
     // Corrected Clauses info
     kpiCorrectedClauses.textContent = `${diffs.length} Clauses`;
@@ -560,7 +678,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // QCO Mandate
     if (cert.qco_mandate_applicable) {
       kpiQcoStatus.textContent = "MANDATORY QCO";
-      const qcoOrder = cert.governing_qco_orders && cert.governing_qco_orders[0] ? cert.governing_qco_orders[0].order_name : "Pumps QCO 2023";
+      const qcoOrder = (cert.governing_qco_orders && cert.governing_qco_orders[0]) ? cert.governing_qco_orders[0].order_name : "Statutory QCO";
       kpiQcoSub.textContent = `${qcoOrder} (ISI Mark)`;
     } else {
       kpiQcoStatus.textContent = "VOLUNTARY";
@@ -572,9 +690,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isReviewRequired) {
       officerReviewBanner.style.display = "flex";
       const reasons = [];
-      if (statusFlags.has_superseded_standards) reasons.push("superseded standard IS 14220:1994 cited");
-      if (cert.qco_violation_risk) reasons.push("omission of mandatory Scheme-I ISI licensing clause under Pumps QCO 2023");
-      if (critCount > 0) reasons.push(`${critCount} critical statutory violation detected`);
+      if (statusFlags.has_superseded_standards) {
+        reasons.push(`superseded standard ${supStdCode} cited`);
+      }
+      if (cert.qco_violation_risk) {
+        const qcoName = cert.governing_qco_orders?.[0]?.order_name || "Statutory Quality Control Order";
+        reasons.push(`omission of mandatory Scheme-I ISI licensing clause under ${qcoName}`);
+      }
+      if (critCount > 0 && !cert.qco_violation_risk) {
+        reasons.push(`${critCount} critical statutory violation detected`);
+      }
+      if (reasons.length === 0) {
+        reasons.push("identified clauses requiring engineering verification");
+      }
       officerBannerReason.textContent = "Tender specification contains " + reasons.join(", ") + ". Officer verification required prior to bid publication.";
     } else {
       officerReviewBanner.style.display = "none";
@@ -790,8 +918,8 @@ document.addEventListener("DOMContentLoaded", () => {
     insOriginalClause.textContent = f.tender_text ? `"${f.tender_text}"` : "[Mandatory Clause Omitted in Original Tender]";
     insEvidenceText.textContent = f.evidence?.factual_summary || "Verified against BIS standards dataset.";
 
-    const citedCode = f.affected_standard?.is_number || "IS 14220:1994";
-    const activeCode = f.affected_standard?.replacement_standard || "IS 14220:2018";
+    const citedCode = f.affected_standard?.is_number || (f.tender_text ? "Clause Citation" : "BIS Standard");
+    const activeCode = f.affected_standard?.replacement_standard || (f.affected_standard?.current_status === "CURRENT" ? f.affected_standard.is_number : "Active BIS Standard");
     insCitedStd.textContent = citedCode;
     insActiveStd.textContent = activeCode;
 

@@ -91,6 +91,7 @@ class ProcurementAnalysisEngine:
         """
         Executes end-to-end procurement analysis and produces a TenderAnalysisResultDocument.
         """
+        t_start = time.time()
         file_name = "tender_document"
         file_hash_sha256 = None
         page_count = 1
@@ -106,12 +107,18 @@ class ProcurementAnalysisEngine:
             ingested_doc = ingest_document(tender_source)
             raw_tender_text = getattr(ingested_doc, "extracted_text", "") or getattr(ingested_doc, "full_text", "")
             page_count = getattr(ingested_doc, "page_count", 1)
+            print(f"[ANALYZE] PDF extracted: {page_count} pages, {len(raw_tender_text)} chars", flush=True)
+
+            if not raw_tender_text.strip() or len(raw_tender_text.strip()) < 20:
+                raise ValueError("no readable text found in document. Scanned documents without text layer are unsupported.")
+
             reqs_doc = extract_requirements(ingested_doc)
         elif isinstance(tender_source, dict):
             reqs_doc = tender_source
             raw_tender_text = reqs_doc.get("raw_text", "")
             file_name = reqs_doc.get("tender_metadata", {}).get("file_name", "tender_input.json")
             page_count = reqs_doc.get("tender_metadata", {}).get("page_count", 1)
+            print(f"[ANALYZE] PDF extracted: {page_count} pages (pre-parsed input)", flush=True)
         else:
             raise TypeError("tender_source must be a file path string or requirements dictionary.")
 
@@ -119,6 +126,7 @@ class ProcurementAnalysisEngine:
         already_cited_standards = reqs_doc.get("already_cited_standards", [])
         product_context = reqs_doc.get("product_context", {})
         doc_metadata = reqs_doc.get("tender_metadata", {})
+        print(f"[ANALYZE] requirements extracted: {len(extracted_requirements)} technical parameters, {len(already_cited_standards)} cited standards", flush=True)
 
         analysis_id = f"ANALYSIS_{int(time.time())}"
         doc_title = (
@@ -139,9 +147,27 @@ class ProcurementAnalysisEngine:
         }
 
         # 2. Retrieval & Recommended Standards
+        t_ret_start = time.time()
         retrieved_raw = self.retrieval_pipeline.retrieve(reqs_doc, top_k=top_k)
-        primary_recommended = retrieved_raw[0] if retrieved_raw else None
-        primary_is = primary_recommended["is_number"] if primary_recommended else None
+        t_retrieve = time.time() - t_ret_start
+
+        # Check outside-coverage safety:
+        # If top score is below 0.20 and no standards are cited in the tender, or retrieved_raw is empty
+        top_score = 0.0
+        if retrieved_raw:
+            top_score = retrieved_raw[0].get("combined_score", retrieved_raw[0].get("hybrid_score", 0.0))
+        has_cited = len(already_cited_standards) > 0
+        is_outside_coverage = (not has_cited and (top_score < 0.20 or not retrieved_raw))
+
+        if is_outside_coverage:
+            primary_recommended = None
+            primary_is = None
+            retrieved_raw = []
+            print(f"[ANALYZE] outside coverage detected: top_score={top_score}, cited_count={len(already_cited_standards)}", flush=True)
+        else:
+            primary_recommended = retrieved_raw[0] if retrieved_raw else None
+            primary_is = primary_recommended["is_number"] if primary_recommended else None
+            print(f"[ANALYZE] standards matched: primary={primary_is} ({len(retrieved_raw)} candidates retrieved)", flush=True)
 
         recommended_standards: List[Dict[str, Any]] = []
         for r in retrieved_raw:
@@ -232,14 +258,34 @@ class ProcurementAnalysisEngine:
             "expansion_depth": 1,
         }
 
-        # 4. Tender Linter: Execute Rules 1 - 6
-        findings, corrected_clauses = self.linter.lint(
-            extracted_requirements=extracted_requirements,
-            already_cited_standards=already_cited_standards,
-            product_context=product_context,
-            primary_standard_id=primary_is,
-            raw_tender_text=raw_tender_text,
-        )
+        print(f"[ANALYZE] evidence validated: {len(related_standards)} allied standards, graph nodes={graph_summary['total_nodes']}", flush=True)
+
+        # 4. Tender Linter: Execute Rules 1 - 6 with safe graceful fallback
+        try:
+            findings, corrected_clauses = self.linter.lint(
+                extracted_requirements=extracted_requirements,
+                already_cited_standards=already_cited_standards,
+                product_context=product_context,
+                primary_standard_id=primary_is,
+                raw_tender_text=raw_tender_text,
+            )
+        except Exception as linter_err:
+            print(f"[ANALYZE] Warning: Linter encountered error ({linter_err}). Preserving extracted standards and returning fallback clause.", flush=True)
+            findings = []
+            corrected_clauses = [{
+                "clause_id": "CORR_001",
+                "source_clause_reference": "General Technical Specifications",
+                "original_tender_text": "Draft clause synthesis unavailable",
+                "corrected_text": "Draft recommendation — verify against applicable BIS standard.",
+                "rationale": f"Automated clause drafting encountered an exception: {str(linter_err)}. Officer review required.",
+                "governing_rules": ["OFFICER_REVIEW_REQUIRED"],
+                "linked_finding_ids": [],
+                "status": "UNAVAILABLE",
+                "requires_human_review": True,
+            }]
+
+        print(f"[ANALYZE] audit completed: {len(findings)} findings", flush=True)
+        print(f"[ANALYZE] corrected clauses generated: {len(corrected_clauses)} clauses", flush=True)
 
         # 5. Status & Certification Flags Evaluation
         evaluated_standards: set[str] = set()
@@ -421,7 +467,33 @@ class ProcurementAnalysisEngine:
             or any(f.get("requires_human_review", False) for f in findings)
         )
 
-        return {
+        # Outside coverage finding if applicable
+        if is_outside_coverage:
+            findings.append({
+                "finding_id": "FIND_OUTSIDE_COVERAGE",
+                "severity": "LOW",
+                "finding_type": "OTHER",
+                "title": "Outside Curated Standards Catalogue Coverage",
+                "tender_text": doc_title,
+                "affected_requirement": {"requirement_id": None, "parameter_name": None, "tender_clause": None},
+                "affected_standard": {"is_number": "N/A", "version_cited": None, "current_status": "UNKNOWN", "replacement_standard": None},
+                "explanation": "No sufficiently supported Indian Standard match was found in the current curated standards catalogue for this procurement scope. Officer manual standard determination recommended.",
+                "evidence": {
+                    "standard_clause_reference": None,
+                    "qco_order_number": None,
+                    "gazette_date": None,
+                    "official_portal_url": "https://www.services.bis.gov.in/",
+                    "excerpt": "Scope falls outside currently indexed Indian Standards domains (Pumps, Motors, Transformers, Cables, Switchgear, Diesel Generator Sets).",
+                    "verification_status": "UNVERIFIED"
+                },
+                "action_required": "Review technical specifications manually or request standard indexing from BIS.",
+                "suggested_clause": None,
+                "confidence": 1.0,
+                "requires_human_review": True
+            })
+
+        result_dict = {
+            "status": "outside_coverage" if is_outside_coverage else "completed",
             "tender_metadata": tender_metadata,
             "extracted_requirements": extracted_requirements,
             "already_cited_standards": already_cited_standards,
@@ -435,7 +507,21 @@ class ProcurementAnalysisEngine:
             "corrected_clause": corrected_clauses,
             "risk_indicator": risk_indicator,
             "human_review_required": human_review_required,
+            "execution_timing": {
+                "total_duration_seconds": round(time.time() - t_start, 4),
+            },
+            "audit_trail": {
+                "system_name": "MAANAKNETRA Procurement Intelligence",
+                "system_version": "1.0.0",
+                "standards_catalogue_version": "2026.1",
+                "indexed_standards_count": len(self.standards),
+                "embedding_model": "paraphrase-multilingual-MiniLM-L12-v2",
+                "is_reproducible": True,
+                "analysis_timestamp": datetime.now(timezone.utc).isoformat(),
+            }
         }
+        print(f"[ANALYZE] result serialized: {len(json.dumps(result_dict))} bytes", flush=True)
+        return result_dict
 
 
 def analyze_procurement_document(

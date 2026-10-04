@@ -27,10 +27,15 @@
         "issue_date": "2020-03",
         "gazette_notification": null,
         "summary": "Updates to testing tolerances and cable gland specifications as per Product Manual PM/IS 14220.",
-        "affected_clauses": ["Clause 7.2", "Clause 14.1"]
+        "affected_clauses": [
+          "Clause 7.2",
+          "Clause 14.1"
+        ]
       }
     ],
-    "supersedes": ["IS 14220:1994"],
+    "supersedes": [
+      "IS 14220:1994"
+    ],
     "superseded_by": null,
     "withdrawn_reason": null,
     "normative_references": [
@@ -230,10 +235,14 @@
         "issue_date": "2021-02",
         "gazette_notification": null,
         "summary": "Clarification on test tolerances and sampling criteria.",
-        "affected_clauses": ["Clause 10.3"]
+        "affected_clauses": [
+          "Clause 10.3"
+        ]
       }
     ],
-    "supersedes": ["IS 8034:2002"],
+    "supersedes": [
+      "IS 8034:2002"
+    ],
     "superseded_by": null,
     "withdrawn_reason": null,
     "normative_references": [
@@ -332,7 +341,9 @@
     "current_version": "IS 9283:2024",
     "publication_year": 2024,
     "amendments": [],
-    "supersedes": ["IS 9283:2013"],
+    "supersedes": [
+      "IS 9283:2013"
+    ],
     "superseded_by": null,
     "withdrawn_reason": null,
     "normative_references": [
@@ -426,7 +437,9 @@
     "current_version": "IS 9079:2018",
     "publication_year": 2018,
     "amendments": [],
-    "supersedes": ["IS 9079:2002"],
+    "supersedes": [
+      "IS 9079:2002"
+    ],
     "superseded_by": null,
     "withdrawn_reason": null,
     "normative_references": [
@@ -507,7 +520,9 @@
     "current_version": "IS 6595 (Part 1):2018",
     "publication_year": 2018,
     "amendments": [],
-    "supersedes": ["IS 6595 (Part 1):1993"],
+    "supersedes": [
+      "IS 6595 (Part 1):1993"
+    ],
     "superseded_by": null,
     "withdrawn_reason": null,
     "normative_references": [
@@ -585,7 +600,9 @@
     "current_version": "IS 8472:2019",
     "publication_year": 2019,
     "amendments": [],
-    "supersedes": ["IS 8472:1998"],
+    "supersedes": [
+      "IS 8472:1998"
+    ],
     "superseded_by": null,
     "withdrawn_reason": null,
     "normative_references": [
@@ -664,7 +681,9 @@
     "current_version": "IS 996:2009",
     "publication_year": 2009,
     "amendments": [],
-    "supersedes": ["IS 996:1979"],
+    "supersedes": [
+      "IS 996:1979"
+    ],
     "superseded_by": null,
     "withdrawn_reason": null,
     "normative_references": [
@@ -750,10 +769,14 @@
         "issue_date": "2021-06",
         "gazette_notification": null,
         "summary": "Mandating minimum IE2 efficiency level under central government energy efficiency orders.",
-        "affected_clauses": ["Clause 6.1"]
+        "affected_clauses": [
+          "Clause 6.1"
+        ]
       }
     ],
-    "supersedes": ["IS 12615:2011"],
+    "supersedes": [
+      "IS 12615:2011"
+    ],
     "superseded_by": null,
     "withdrawn_reason": null,
     "normative_references": [
@@ -813,5 +836,1703 @@
       "verification_method": "GAZETTE_ORDER_AND_BIS_AUDIT"
     },
     "last_verified": "2026-09-26T00:10:00Z"
+  },
+  {
+    "is_number": "IS 11346",
+    "title": "Code for Acceptance Tests for Agricultural and Rural Water Supply Pumps",
+    "scope": "Prescribes methods for hydraulic performance acceptance testing of rotodynamic pumps for agricultural and rural water supply, covering measurement of discharge, head, pump speed, and calculation of pump and overall efficiency.",
+    "category": "Mechanical Engineering / Fluid Flow Systems",
+    "product_types": [
+      "Centrifugal Pump",
+      "Submersible Pump",
+      "Monoset Pump",
+      "Agricultural Water Pump"
+    ],
+    "keywords": [
+      "acceptance test",
+      "pump performance",
+      "discharge measurement",
+      "total head",
+      "efficiency measurement",
+      "hydraulic test"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 11346:2002",
+    "publication_year": 2002,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 5120"
+    ],
+    "test_standards": [],
+    "safety_standards": [],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 14220",
+      "IS 8034",
+      "IS 9079",
+      "IS 6595 (Part 1)",
+      "IS 8472"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Test Measurement Uncertainty",
+        "governing_clause": "Clause 5.2",
+        "requirement_text": "Measurement instruments for head, discharge, and input power shall be calibrated within specified tolerance bands (Class C or Class B per test protocol).",
+        "min_value": null,
+        "max_value": null,
+        "unit": "%",
+        "test_method_standard": "IS 11346",
+        "notes": "Standard tolerance band ±2.5% for laboratory acceptance."
+      }
+    ],
+    "certification": {
+      "scheme": "Voluntary Standards Scheme",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": "Voluntary Specification",
+      "issuing_ministry": "Ministry of Consumer Affairs, Food and Public Distribution",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_11346",
+      "official_publication_ref": "IS 11346:2002",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 5120",
+    "title": "Technical Requirements for Rotodynamic Special Purpose Pumps",
+    "scope": "Covers technical requirements, construction, allowable materials, casing hydrostatic pressure test, and standard design tolerances for rotodynamic pumps for clear cold water, sewage, and industrial processes.",
+    "category": "Mechanical Engineering / Fluid Flow Systems",
+    "product_types": [
+      "Centrifugal Pump",
+      "Rotodynamic Pump",
+      "Submersible Pump Casing",
+      "Clear Cold Water Pump"
+    ],
+    "keywords": [
+      "rotodynamic pump",
+      "hydrostatic test",
+      "casing pressure",
+      "pump metallurgy",
+      "impeller material",
+      "shaft specification"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 5120:1977",
+    "publication_year": 1977,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [],
+    "test_standards": [
+      "IS 11346"
+    ],
+    "safety_standards": [],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 14220",
+      "IS 8034",
+      "IS 9079"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Hydrostatic Casing Test Pressure",
+        "governing_clause": "Clause 12.1",
+        "requirement_text": "The pump casing shall withstand a hydrostatic test pressure of 1.5 times the maximum allowable working pressure or 2.0 times the rated discharge pressure, whichever is higher, for not less than 5 minutes without leakage.",
+        "min_value": 1.5,
+        "max_value": null,
+        "unit": "x rated pressure",
+        "test_method_standard": "IS 5120",
+        "notes": "Minimum casing hydrostatic test 1.5x working pressure."
+      }
+    ],
+    "certification": {
+      "scheme": "Voluntary Standards Scheme",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": "Voluntary Specification",
+      "issuing_ministry": "Ministry of Consumer Affairs, Food and Public Distribution",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_5120",
+      "official_publication_ref": "IS 5120:1977",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 1710",
+    "title": "Vertical Turbine Pumps for Clear, Cold Water — Specification",
+    "scope": "Covers requirements for vertical turbine pumps (oil or water lubricated) suitable for borehole, sump, or deep well water extraction for agricultural, municipal, and industrial supply.",
+    "category": "Mechanical Engineering / Fluid Flow Systems",
+    "product_types": [
+      "Vertical Turbine Pump",
+      "Borehole Deep Well Pump",
+      "Industrial Water Extraction Pump"
+    ],
+    "keywords": [
+      "vertical turbine",
+      "deep well pump",
+      "bowl assembly",
+      "discharge head",
+      "column pipe",
+      "submerged pump"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 1710:1989",
+    "publication_year": 1989,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 5120",
+      "IS 11346"
+    ],
+    "test_standards": [
+      "IS 11346"
+    ],
+    "safety_standards": [],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 8034",
+      "IS 14220"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Operating Head",
+        "governing_clause": "Clause 8.1",
+        "requirement_text": "Rated head per stage and overall multi-stage head specified per hydraulic duty point.",
+        "min_value": 10.0,
+        "max_value": 300.0,
+        "unit": "meters",
+        "test_method_standard": "IS 11346"
+      }
+    ],
+    "certification": {
+      "scheme": "Voluntary Standards Scheme",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": "Voluntary Specification",
+      "issuing_ministry": "Ministry of Consumer Affairs, Food and Public Distribution",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_1710",
+      "official_publication_ref": "IS 1710:1989",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 1520",
+    "title": "Horizontal Centrifugal Pumps for Clear, Cold, Fresh Water for Agricultural and Industrial Applications",
+    "scope": "Covers design, manufacturing, and performance requirements for single-stage horizontal centrifugal pumps for pumping clear cold water with suction lift up to 7 meters.",
+    "category": "Mechanical Engineering / Fluid Flow Systems",
+    "product_types": [
+      "Horizontal Centrifugal Pump",
+      "End Suction Pump",
+      "Agricultural Surface Pump"
+    ],
+    "keywords": [
+      "horizontal centrifugal",
+      "clear cold water",
+      "suction lift",
+      "impeller",
+      "discharge pressure"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 1520:1980",
+    "publication_year": 1980,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 5120",
+      "IS 11346"
+    ],
+    "test_standards": [
+      "IS 11346"
+    ],
+    "safety_standards": [],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 6595 (Part 1)",
+      "IS 9079"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Maximum Suction Lift",
+        "governing_clause": "Clause 4.1",
+        "requirement_text": "Pumps shall be capable of operating at maximum total suction lift up to 7.0 meters at mean sea level.",
+        "min_value": null,
+        "max_value": 7.0,
+        "unit": "meters",
+        "test_method_standard": "IS 11346"
+      }
+    ],
+    "certification": {
+      "scheme": "Voluntary Standards Scheme",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": "Voluntary Specification",
+      "issuing_ministry": "Ministry of Consumer Affairs, Food and Public Distribution",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_1520",
+      "official_publication_ref": "IS 1520:1980",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 325",
+    "title": "Three-Phase Induction Motors — Specification",
+    "scope": "Specifies requirements and characteristics for three-phase squirrel-cage and slip-ring induction motors for voltages up to and including 1100 V and output ratings up to 1000 kW.",
+    "category": "Electrotechnical / Electrical Machines",
+    "product_types": [
+      "Three-Phase Induction Motor",
+      "Squirrel Cage Motor",
+      "Slip Ring Motor"
+    ],
+    "keywords": [
+      "three-phase motor",
+      "induction motor",
+      "squirrel cage",
+      "efficiency",
+      "line operated motor"
+    ],
+    "status": "SUPERSEDED",
+    "current_version": "IS 325:1996",
+    "publication_year": 1996,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": "IS 12615",
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 1231",
+      "IS 2223",
+      "IS 4029"
+    ],
+    "test_standards": [
+      "IS 4029"
+    ],
+    "safety_standards": [
+      "IS 9283"
+    ],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 12615",
+      "IS 9283"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Supply Voltage",
+        "governing_clause": "Clause 6.1",
+        "requirement_text": "Motors shall be suitable for 415 V ± 10%, 50 Hz ± 5%, 3-phase supply.",
+        "min_value": 373.5,
+        "max_value": 456.5,
+        "unit": "V",
+        "test_method_standard": "IS 4029"
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Product Certification)",
+      "is_mandatory": true,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": true,
+      "qco_title": "Electrical Motors (Quality Control) Order, 2024",
+      "issuing_ministry": "Department for Promotion of Industry and Internal Trade (DPIIT)",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": true,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_325",
+      "official_publication_ref": "IS 325:1996",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 1231",
+    "title": "Dimensions of Three-Phase Foot-Mounted Induction Motors",
+    "scope": "Specifies standard frame numbers, shaft dimensions, center heights, and foot mounting hole dimensions for standard industrial three-phase induction motors.",
+    "category": "Electrotechnical / Electrical Machines",
+    "product_types": [
+      "Foot Mounted Motor",
+      "Motor Frame",
+      "Induction Motor Frame Dimensions"
+    ],
+    "keywords": [
+      "motor frame",
+      "foot-mounted",
+      "shaft extension",
+      "center height",
+      "interchangeability"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 1231:1974",
+    "publication_year": 1974,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [],
+    "test_standards": [],
+    "safety_standards": [],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 12615",
+      "IS 2223"
+    ],
+    "structured_parameters": [],
+    "certification": {
+      "scheme": "Voluntary Standards Scheme",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": "Voluntary Specification",
+      "issuing_ministry": "Ministry of Consumer Affairs, Food and Public Distribution",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_1231",
+      "official_publication_ref": "IS 1231:1974",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 2223",
+    "title": "Dimensions of Flange Mounted A.C. Induction Motors",
+    "scope": "Specifies pitch circle diameter, spigot diameter, shaft dimensions, and flange tolerances for flange-mounted induction motors for direct pump and machine tool coupling.",
+    "category": "Electrotechnical / Electrical Machines",
+    "product_types": [
+      "Flange Mounted Motor",
+      "Motor Flange",
+      "Pump Motor Flange Coupling"
+    ],
+    "keywords": [
+      "flange mounted",
+      "spigot diameter",
+      "pitch circle diameter",
+      "motor flange",
+      "B5 flange",
+      "B14 flange"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 2223:1983",
+    "publication_year": 1983,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [],
+    "test_standards": [],
+    "safety_standards": [],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 12615",
+      "IS 1231"
+    ],
+    "structured_parameters": [],
+    "certification": {
+      "scheme": "Voluntary Standards Scheme",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": "Voluntary Specification",
+      "issuing_ministry": "Ministry of Consumer Affairs, Food and Public Distribution",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_2223",
+      "official_publication_ref": "IS 2223:1983",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 4029",
+    "title": "Guide for Testing Three-Phase Induction Motors",
+    "scope": "Provides methods and guidelines for conducting routine, type, and field acceptance tests on three-phase induction motors, including insulation resistance, high voltage, no-load, locked-rotor, and temperature rise tests.",
+    "category": "Electrotechnical / Electrical Machines",
+    "product_types": [
+      "Three-Phase Motor",
+      "Induction Motor Testing",
+      "Motor Routine Tests"
+    ],
+    "keywords": [
+      "motor testing",
+      "insulation resistance",
+      "locked rotor",
+      "high voltage test",
+      "temperature rise test",
+      "full load test"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 4029:2010",
+    "publication_year": 2010,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [],
+    "test_standards": [
+      "IS 4029"
+    ],
+    "safety_standards": [],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 12615",
+      "IS 9283"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "High Voltage Withstand Test",
+        "governing_clause": "Clause 8.1",
+        "requirement_text": "Motors shall withstand 1000 V + 2 times rated voltage for 1 minute without breakdown.",
+        "min_value": 1830.0,
+        "max_value": null,
+        "unit": "V RMS",
+        "test_method_standard": "IS 4029"
+      }
+    ],
+    "certification": {
+      "scheme": "Voluntary Standards Scheme",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": "Voluntary Specification",
+      "issuing_ministry": "Ministry of Consumer Affairs, Food and Public Distribution",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_4029",
+      "official_publication_ref": "IS 4029:2010",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 1180 (Part 1)",
+    "title": "Outdoor Type Oil Immersed Distribution Transformers Upto and Including 2500 kVA, 33 kV — Specification Part 1 Mineral Oil Immersed",
+    "scope": "Covers design, manufacturing, loss levels (Energy Efficiency Level 1, 2, 3), and standard fittings for three-phase outdoor distribution transformers up to 2500 kVA, 33 kV.",
+    "category": "Electrotechnical / Power Distribution",
+    "product_types": [
+      "Distribution Transformer",
+      "Oil Immersed Transformer",
+      "Outdoor Transformer",
+      "Step Down Transformer"
+    ],
+    "keywords": [
+      "distribution transformer",
+      "oil immersed",
+      "maximum total losses",
+      "energy efficiency level",
+      "copper winding",
+      "33 kv",
+      "11 kv"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 1180 (Part 1):2014",
+    "publication_year": 2014,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 2026 (Part 1)",
+      "IS 3043"
+    ],
+    "test_standards": [
+      "IS 2026 (Part 1)"
+    ],
+    "safety_standards": [
+      "IS 3043"
+    ],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 2026 (Part 1)",
+      "IS 3043"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Maximum Total Losses at 50% Load",
+        "governing_clause": "Clause 7.1, Table 3",
+        "requirement_text": "Maximum total losses at 50% load shall strictly adhere to Star Level limits as prescribed in Table 3.",
+        "min_value": null,
+        "max_value": null,
+        "unit": "Watts",
+        "test_method_standard": "IS 2026 (Part 1)"
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Product Certification)",
+      "is_mandatory": true,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": true,
+      "qco_title": "Distribution Transformers (Quality Control) Order, 2020",
+      "issuing_ministry": "Department for Promotion of Industry and Internal Trade (DPIIT)",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": true,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_1180_(Part_1)",
+      "official_publication_ref": "IS 1180 (Part 1):2014",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 2026 (Part 1)",
+    "title": "Power Transformers — Part 1: General",
+    "scope": "Applies to three-phase and single-phase power transformers (including auto-transformers) for high voltage transmission and distribution networks.",
+    "category": "Electrotechnical / Power Distribution",
+    "product_types": [
+      "Power Transformer",
+      "Auto Transformer",
+      "Step Up Transformer"
+    ],
+    "keywords": [
+      "power transformer",
+      "rated power",
+      "voltage ratio",
+      "vector group",
+      "short circuit withstand",
+      "no load loss"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 2026 (Part 1):2011",
+    "publication_year": 2011,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 3043"
+    ],
+    "test_standards": [
+      "IS 2026 (Part 1)"
+    ],
+    "safety_standards": [
+      "IS 3043"
+    ],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 1180 (Part 1)"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Voltage Ratio Tolerance",
+        "governing_clause": "Clause 9.1",
+        "requirement_text": "Voltage ratio at no-load shall not deviate by more than ±0.5% on principal tapping.",
+        "min_value": null,
+        "max_value": null,
+        "unit": "%",
+        "test_method_standard": "IS 2026 (Part 1)"
+      }
+    ],
+    "certification": {
+      "scheme": "Voluntary Standards Scheme",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": "Voluntary Specification",
+      "issuing_ministry": "Ministry of Consumer Affairs, Food and Public Distribution",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_2026_(Part_1)",
+      "official_publication_ref": "IS 2026 (Part 1):2011",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 3043",
+    "title": "Code of Practice for Earthing",
+    "scope": "Provides detailed engineering practices for design, installation, calculation, and testing of electrical earthing systems for residential, commercial, industrial, and substation installations.",
+    "category": "Electrotechnical / Electrical Safety",
+    "product_types": [
+      "Earthing System",
+      "Earthing Electrode",
+      "Earth Pit",
+      "Substation Earthing"
+    ],
+    "keywords": [
+      "earthing",
+      "grounding",
+      "earth resistance",
+      "electrode",
+      "soil resistivity",
+      "touch potential",
+      "step potential"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 3043:2018",
+    "publication_year": 2018,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 732"
+    ],
+    "test_standards": [
+      "IS 3043"
+    ],
+    "safety_standards": [
+      "IS 3043"
+    ],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 732",
+      "IS 1180 (Part 1)"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Maximum Earth Resistance",
+        "governing_clause": "Clause 14.1",
+        "requirement_text": "Total earth electrode resistance for industrial and pump installations shall not exceed 1.0 Ohm.",
+        "min_value": null,
+        "max_value": 1.0,
+        "unit": "Ohms",
+        "test_method_standard": "IS 3043"
+      }
+    ],
+    "certification": {
+      "scheme": "Voluntary Standards Scheme",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": "Voluntary Specification",
+      "issuing_ministry": "Ministry of Consumer Affairs, Food and Public Distribution",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_3043",
+      "official_publication_ref": "IS 3043:2018",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 732",
+    "title": "Code of Practice for Electrical Wiring Installations",
+    "scope": "Covers design, selection of equipment, erection, testing, and inspection of electrical wiring installations in buildings and plant premises operating at voltages up to 1000 V AC.",
+    "category": "Electrotechnical / Electrical Safety",
+    "product_types": [
+      "Electrical Wiring",
+      "Conduit System",
+      "Distribution Board",
+      "Building Installation"
+    ],
+    "keywords": [
+      "electrical wiring",
+      "conductor sizing",
+      "insulation resistance",
+      "polarity test",
+      "voltage drop",
+      "conduit"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 732:2019",
+    "publication_year": 2019,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 694",
+      "IS 3043"
+    ],
+    "test_standards": [
+      "IS 732"
+    ],
+    "safety_standards": [
+      "IS 732",
+      "IS 3043"
+    ],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 694",
+      "IS 1554 (Part 1)",
+      "IS 3043"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Maximum Voltage Drop",
+        "governing_clause": "Clause 5.2",
+        "requirement_text": "Voltage drop from consumer terminal to any load point shall not exceed 4% of nominal voltage.",
+        "min_value": null,
+        "max_value": 4.0,
+        "unit": "%",
+        "test_method_standard": "IS 732"
+      }
+    ],
+    "certification": {
+      "scheme": "Voluntary Standards Scheme",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": "Voluntary Specification",
+      "issuing_ministry": "Ministry of Consumer Affairs, Food and Public Distribution",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_732",
+      "official_publication_ref": "IS 732:2019",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 694",
+    "title": "Polyvinyl Chloride Insulated Unsheathed and Sheathed Cables/Cords with Rigid and Flexible Conductor for Rated Voltages Upto and Including 450/750 V",
+    "scope": "Covers requirements for single-core and multi-core PVC insulated copper and aluminum cables for electric power and lighting in domestic, commercial, and industrial installations.",
+    "category": "Electrotechnical / Conductors & Cables",
+    "product_types": [
+      "PVC Insulated Cable",
+      "Copper Flexible Cable",
+      "Building Wire",
+      "Submersible Flat Cable"
+    ],
+    "keywords": [
+      "pvc cable",
+      "copper wire",
+      "flexible conductor",
+      "insulation resistance",
+      "conductor resistance",
+      "450/750v"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 694:2010",
+    "publication_year": 2010,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [],
+    "test_standards": [
+      "IS 694"
+    ],
+    "safety_standards": [],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 1554 (Part 1)",
+      "IS 7098 (Part 1)"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Rated Voltage",
+        "governing_clause": "Clause 4.1",
+        "requirement_text": "Cables shall be rated for working voltage up to and including 450/750 V AC.",
+        "min_value": null,
+        "max_value": 750.0,
+        "unit": "V",
+        "test_method_standard": "IS 694"
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Product Certification)",
+      "is_mandatory": true,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": true,
+      "qco_title": "Wires and Cables (Quality Control) Order, 2023",
+      "issuing_ministry": "Department for Promotion of Industry and Internal Trade (DPIIT)",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": true,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_694",
+      "official_publication_ref": "IS 694:2010",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 1554 (Part 1)",
+    "title": "PVC Insulated (Heavy Duty) Electric Cables — Part 1: For Working Voltages Upto and Including 1100 V",
+    "scope": "Covers requirements for PVC insulated, armored and unarmored electric cables for electricity supply, motors, and pump drives up to 1100 V.",
+    "category": "Electrotechnical / Conductors & Cables",
+    "product_types": [
+      "Armoured Power Cable",
+      "Heavy Duty PVC Cable",
+      "Underground Power Cable"
+    ],
+    "keywords": [
+      "armoured cable",
+      "heavy duty cable",
+      "1100 v",
+      "galvanized steel strip",
+      "conductor resistance",
+      "substation cable"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 1554 (Part 1):1988",
+    "publication_year": 1988,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [],
+    "test_standards": [
+      "IS 1554 (Part 1)"
+    ],
+    "safety_standards": [],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 694",
+      "IS 7098 (Part 1)"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Working Voltage",
+        "governing_clause": "Clause 3.1",
+        "requirement_text": "Heavy duty cables suitable for working voltages up to and including 1100 V AC.",
+        "min_value": null,
+        "max_value": 1100.0,
+        "unit": "V",
+        "test_method_standard": "IS 1554 (Part 1)"
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Product Certification)",
+      "is_mandatory": true,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": true,
+      "qco_title": "Wires and Cables (Quality Control) Order, 2023",
+      "issuing_ministry": "Department for Promotion of Industry and Internal Trade (DPIIT)",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": true,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_1554_(Part_1)",
+      "official_publication_ref": "IS 1554 (Part 1):1988",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 7098 (Part 1)",
+    "title": "Cross-linked Polyethylene Insulated Thermoplastic Sheathed Cables — Part 1: For Working Voltage Upto and Including 1100 V",
+    "scope": "Covers design and construction of XLPE insulated power cables for voltages up to 1100 V, providing superior thermal withstand (90°C continuous conductor temperature).",
+    "category": "Electrotechnical / Conductors & Cables",
+    "product_types": [
+      "XLPE Power Cable",
+      "Low Voltage XLPE Cable",
+      "Underground Armoured Cable"
+    ],
+    "keywords": [
+      "xlpe cable",
+      "cross-linked polyethylene",
+      "90 deg c",
+      "1100v",
+      "armoured power cable"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 7098 (Part 1):1988",
+    "publication_year": 1988,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [],
+    "test_standards": [
+      "IS 7098 (Part 1)"
+    ],
+    "safety_standards": [],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 1554 (Part 1)",
+      "IS 694"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Maximum Continuous Conductor Operating Temperature",
+        "governing_clause": "Clause 4.2",
+        "requirement_text": "XLPE insulation shall permit continuous conductor operating temperature up to 90°C and short circuit temperature up to 250°C.",
+        "min_value": null,
+        "max_value": 90.0,
+        "unit": "°C",
+        "test_method_standard": "IS 7098 (Part 1)"
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Product Certification)",
+      "is_mandatory": true,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": true,
+      "qco_title": "Wires and Cables (Quality Control) Order, 2023",
+      "issuing_ministry": "Department for Promotion of Industry and Internal Trade (DPIIT)",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": true,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_7098_(Part_1)",
+      "official_publication_ref": "IS 7098 (Part 1):1988",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 10000",
+    "title": "Methods of Tests for Internal Combustion Engines (General Requirements)",
+    "scope": "Prescribes standard testing conditions, power measurement, fuel consumption, and lubricating oil consumption measurement for reciprocating internal combustion engines driving generator sets, pumps, and agricultural machinery.",
+    "category": "Mechanical Engineering / Thermal & Engines",
+    "product_types": [
+      "Diesel Engine",
+      "Internal Combustion Engine",
+      "DG Set Engine Drive"
+    ],
+    "keywords": [
+      "diesel engine",
+      "brake power",
+      "specific fuel consumption",
+      "speed governing",
+      "dg set engine"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 10000:1980",
+    "publication_year": 1980,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [],
+    "test_standards": [
+      "IS 10000"
+    ],
+    "safety_standards": [],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 13364 (Part 1)",
+      "IS 13364 (Part 2)"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Specific Fuel Consumption Test",
+        "governing_clause": "Part 8, Clause 4.1",
+        "requirement_text": "Specific fuel oil consumption measured at rated brake horsepower under standard reference atmospheric conditions.",
+        "min_value": null,
+        "max_value": null,
+        "unit": "g/kWh",
+        "test_method_standard": "IS 10000"
+      }
+    ],
+    "certification": {
+      "scheme": "Voluntary Standards Scheme",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": "Voluntary Specification",
+      "issuing_ministry": "Ministry of Consumer Affairs, Food and Public Distribution",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_10000",
+      "official_publication_ref": "IS 10000:1980",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 13364 (Part 1)",
+    "title": "A.C. Generators Driven by Reciprocating Internal Combustion Engines — Specification — Part 1: Rated Upto 20 kVA",
+    "scope": "Specifies design, voltage regulation, temperature rise, and testing for single and three-phase synchronous generators rated up to 20 kVA driven by IC engines.",
+    "category": "Electrotechnical / Electrical Machines",
+    "product_types": [
+      "Diesel Generator Set",
+      "AC Synchronous Alternator",
+      "Portable Generator Set"
+    ],
+    "keywords": [
+      "generator set",
+      "alternator",
+      "dg set",
+      "voltage regulation",
+      "rated kva",
+      "power factor"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 13364 (Part 1):1992",
+    "publication_year": 1992,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 10000"
+    ],
+    "test_standards": [
+      "IS 13364 (Part 1)"
+    ],
+    "safety_standards": [
+      "IS 3043"
+    ],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 10000",
+      "IS 13364 (Part 2)"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Voltage Regulation",
+        "governing_clause": "Clause 8.1",
+        "requirement_text": "Voltage regulation from no load to full load at rated power factor shall be within ±5%.",
+        "min_value": -5.0,
+        "max_value": 5.0,
+        "unit": "%",
+        "test_method_standard": "IS 13364 (Part 1)"
+      }
+    ],
+    "certification": {
+      "scheme": "Voluntary Standards Scheme",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": "Voluntary Specification",
+      "issuing_ministry": "Ministry of Consumer Affairs, Food and Public Distribution",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_13364_(Part_1)",
+      "official_publication_ref": "IS 13364 (Part 1):1992",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 13364 (Part 2)",
+    "title": "A.C. Generators Driven by Reciprocating Internal Combustion Engines — Specification — Part 2: Rated Above 20 kVA and Upto 1250 kVA",
+    "scope": "Specifies technical requirements, efficiency, waveform distortion, and overspeed tests for medium and large synchronous alternators rated above 20 kVA and up to 1250 kVA driven by diesel engines.",
+    "category": "Electrotechnical / Electrical Machines",
+    "product_types": [
+      "Diesel Generator Set",
+      "Industrial DG Set",
+      "Synchronous Alternator"
+    ],
+    "keywords": [
+      "industrial dg set",
+      "alternator above 20 kva",
+      "voltage regulation",
+      "waveform distortion",
+      "automatic voltage regulator"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS 13364 (Part 2):1992",
+    "publication_year": 1992,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 10000",
+      "IS 3043"
+    ],
+    "test_standards": [
+      "IS 13364 (Part 2)"
+    ],
+    "safety_standards": [
+      "IS 3043"
+    ],
+    "installation_standards": [],
+    "related_standards": [
+      "IS 10000",
+      "IS 13364 (Part 1)"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Voltage Regulation",
+        "governing_clause": "Clause 9.1",
+        "requirement_text": "Inherent/AVR voltage regulation shall be maintained within ±2.5% across full load variation at 0.8 lagging power factor.",
+        "min_value": -2.5,
+        "max_value": 2.5,
+        "unit": "%",
+        "test_method_standard": "IS 13364 (Part 2)"
+      }
+    ],
+    "certification": {
+      "scheme": "Voluntary Standards Scheme",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": "Voluntary Specification",
+      "issuing_ministry": "Ministry of Consumer Affairs, Food and Public Distribution",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_13364_(Part_2)",
+      "official_publication_ref": "IS 13364 (Part 2):1992",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS/IEC 60947-1",
+    "title": "Low-Voltage Switchgear and Controlgear — Part 1: General Rules",
+    "scope": "Applies to low-voltage switchgear and controlgear intended to be connected to circuits of rated voltage not exceeding 1000 V a.c. or 1500 V d.c.",
+    "category": "Electrotechnical / Switchgear & Controlgear",
+    "product_types": [
+      "Low Voltage Switchgear",
+      "Motor Starter Panel",
+      "Control Panel",
+      "Circuit Breaker"
+    ],
+    "keywords": [
+      "switchgear",
+      "controlgear",
+      "rated insulation voltage",
+      "short circuit making capacity",
+      "creepage distance",
+      "clearance"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS/IEC 60947-1:2007",
+    "publication_year": 2007,
+    "amendments": [],
+    "supersedes": [
+      "IS 13947 (Part 1)"
+    ],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS 3043"
+    ],
+    "test_standards": [
+      "IS/IEC 60947-1"
+    ],
+    "safety_standards": [
+      "IS/IEC 60947-1",
+      "IS 3043"
+    ],
+    "installation_standards": [],
+    "related_standards": [
+      "IS/IEC 60947-2",
+      "IS/IEC 60947-4-1"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Rated Insulation Voltage",
+        "governing_clause": "Clause 4.3.1.2",
+        "requirement_text": "Rated insulation voltage (Ui) shall be equal to or greater than rated operational voltage.",
+        "min_value": 690.0,
+        "max_value": null,
+        "unit": "V",
+        "test_method_standard": "IS/IEC 60947-1"
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Product Certification)",
+      "is_mandatory": true,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": true,
+      "qco_title": "Low-Voltage Switchgear and Controlgear (Quality Control) Order, 2023",
+      "issuing_ministry": "Department for Promotion of Industry and Internal Trade (DPIIT)",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": true,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS/IEC_60947-1",
+      "official_publication_ref": "IS/IEC 60947-1:2007",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS/IEC 60947-2",
+    "title": "Low-Voltage Switchgear and Controlgear — Part 2: Circuit-Breakers",
+    "scope": "Applies to circuit-breakers whose main contacts are intended to be connected to circuits of rated voltage up to 1000 V a.c., covering MCCBs and ACBs.",
+    "category": "Electrotechnical / Switchgear & Controlgear",
+    "product_types": [
+      "Moulded Case Circuit Breaker (MCCB)",
+      "Air Circuit Breaker (ACB)",
+      "Low Voltage Breaker"
+    ],
+    "keywords": [
+      "circuit breaker",
+      "mccb",
+      "acb",
+      "breaking capacity",
+      "ics",
+      "icu",
+      "overload release"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS/IEC 60947-2:2016",
+    "publication_year": 2016,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS/IEC 60947-1"
+    ],
+    "test_standards": [
+      "IS/IEC 60947-2"
+    ],
+    "safety_standards": [
+      "IS/IEC 60947-2"
+    ],
+    "installation_standards": [],
+    "related_standards": [
+      "IS/IEC 60947-1",
+      "IS/IEC 60947-4-1"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Rated Ultimate Short-Circuit Breaking Capacity (Icu)",
+        "governing_clause": "Clause 4.3.5.2",
+        "requirement_text": "Circuit breaker shall provide verified Icu breaking capacity per duty cycle sequence.",
+        "min_value": 10.0,
+        "max_value": null,
+        "unit": "kA",
+        "test_method_standard": "IS/IEC 60947-2"
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Product Certification)",
+      "is_mandatory": true,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": true,
+      "qco_title": "Low-Voltage Switchgear and Controlgear (Quality Control) Order, 2023",
+      "issuing_ministry": "Department for Promotion of Industry and Internal Trade (DPIIT)",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": true,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS/IEC_60947-2",
+      "official_publication_ref": "IS/IEC 60947-2:2016",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS/IEC 60947-4-1",
+    "title": "Low-Voltage Switchgear and Controlgear — Part 4: Contactors and Motor-Starters — Section 1: Electromechanical Contactors and Motor-Starters",
+    "scope": "Applies to electromechanical contactors and motor starters (direct-on-line, star-delta, soft starters) for starting and controlling electric motors up to 1000 V a.c.",
+    "category": "Electrotechnical / Switchgear & Controlgear",
+    "product_types": [
+      "Motor Starter",
+      "Contactor",
+      "DOL Starter",
+      "Star Delta Starter",
+      "Pump Motor Starter"
+    ],
+    "keywords": [
+      "motor starter",
+      "contactor",
+      "dol starter",
+      "star-delta",
+      "thermal overload relay",
+      "ac-3 duty"
+    ],
+    "status": "CURRENT",
+    "current_version": "IS/IEC 60947-4-1:2012",
+    "publication_year": 2012,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "withdrawn_reason": null,
+    "normative_references": [
+      "IS/IEC 60947-1"
+    ],
+    "test_standards": [
+      "IS/IEC 60947-4-1"
+    ],
+    "safety_standards": [
+      "IS/IEC 60947-4-1"
+    ],
+    "installation_standards": [],
+    "related_standards": [
+      "IS/IEC 60947-1",
+      "IS 12615",
+      "IS 9283"
+    ],
+    "structured_parameters": [
+      {
+        "parameter_name": "Utilization Category",
+        "governing_clause": "Clause 4.3.4",
+        "requirement_text": "Contactors and starters for cage induction motors shall be rated for AC-3 duty.",
+        "min_value": null,
+        "max_value": null,
+        "unit": "AC-3",
+        "test_method_standard": "IS/IEC 60947-4-1"
+      }
+    ],
+    "certification": {
+      "scheme": "Scheme I - ISI Mark (Product Certification)",
+      "is_mandatory": true,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": true,
+      "qco_title": "Low-Voltage Switchgear and Controlgear (Quality Control) Order, 2023",
+      "issuing_ministry": "Department for Promotion of Industry and Internal Trade (DPIIT)",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": true,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS/IEC_60947-4-1",
+      "official_publication_ref": "IS/IEC 60947-4-1:2012",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
+  },
+  {
+    "is_number": "IS 13947 (Part 1)",
+    "title": "Specification for Low-Voltage Switchgear and Controlgear — Part 1: General Rules",
+    "scope": "Former Indian Standard for low voltage switchgear general rules.",
+    "category": "Electrotechnical / Switchgear & Controlgear",
+    "product_types": [
+      "Low Voltage Switchgear (Older Specification)"
+    ],
+    "keywords": [
+      "switchgear",
+      "controlgear",
+      "superseded standard"
+    ],
+    "status": "SUPERSEDED",
+    "current_version": "IS 13947 (Part 1):1993",
+    "publication_year": 1993,
+    "amendments": [],
+    "supersedes": [],
+    "superseded_by": "IS/IEC 60947-1",
+    "withdrawn_reason": null,
+    "normative_references": [],
+    "test_standards": [],
+    "safety_standards": [],
+    "installation_standards": [],
+    "related_standards": [
+      "IS/IEC 60947-1"
+    ],
+    "structured_parameters": [],
+    "certification": {
+      "scheme": "Voluntary Standards Scheme",
+      "is_mandatory": false,
+      "certification_body": "Bureau of Indian Standards",
+      "applicable_provisions": "BIS Act 2016 & Conformity Assessment Regulations"
+    },
+    "qco": {
+      "is_covered_by_qco": false,
+      "qco_title": "Voluntary Specification",
+      "issuing_ministry": "Ministry of Consumer Affairs, Food and Public Distribution",
+      "order_number": null,
+      "gazette_date": null,
+      "effective_date": null,
+      "isi_mark_mandatory": false,
+      "exemption_provisions": "Export goods exempted as per BIS Act 2016."
+    },
+    "source": {
+      "portal_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/indian_standards/isdetails/IS_13947_(Part_1)",
+      "official_publication_ref": "IS 13947 (Part 1):1993",
+      "curated_by": "HUMAN_CURATOR",
+      "curator_notes": "Curated from official Bureau of Indian Standards Sectional Committee catalogue."
+    },
+    "verification": {
+      "verification_status": "VERIFIED_OFFICIAL",
+      "verified_by": "Human Standards Specialist (SIH Human Engineering Team)",
+      "verification_date": "2026-10-04T00:00:00Z",
+      "verification_method": "BIS_OFFICIAL_CATALOGUE_AUDIT"
+    },
+    "last_verified": "2026-10-04T00:00:00Z"
   }
 ]

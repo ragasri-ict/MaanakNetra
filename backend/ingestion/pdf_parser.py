@@ -43,7 +43,16 @@ def parse_pdf_file(
     ocr_engine = OCRFallbackEngine() if enable_ocr_fallback else None
     pages: List[PageObject] = []
 
-    for page_idx in range(len(doc)):
+    MAX_BOUNDED_PAGES = 50
+    total_pages = len(doc)
+    pages_to_process = min(total_pages, MAX_BOUNDED_PAGES)
+    if total_pages > MAX_BOUNDED_PAGES:
+        logger.warning(
+            f"Document {file_path} contains {total_pages} pages. "
+            f"Analyzing first {MAX_BOUNDED_PAGES} pages to respect memory and latency bounds."
+        )
+
+    for page_idx in range(pages_to_process):
         page_num = page_idx + 1
         try:
             page = doc[page_idx]
