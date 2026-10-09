@@ -5,6 +5,15 @@ Conforms strictly to contracts/analysis.schema.json and contracts/finding.schema
 """
 
 import os
+# Pin CPU threads and disable CUDA driver allocations to minimize RAM on 512MB hosts
+os.environ.setdefault("CUDA_VISIBLE_DEVICES", "")
+os.environ.setdefault("OMP_NUM_THREADS", "1")
+os.environ.setdefault("MKL_NUM_THREADS", "1")
+os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
+os.environ.setdefault("VECLIB_MAXIMUM_THREADS", "1")
+os.environ.setdefault("NUMEXPR_NUM_THREADS", "1")
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+
 import sys
 import json
 import uuid
@@ -313,11 +322,19 @@ def get_officer_decisions(analysis_id: str):
 def _execute_analysis_task(temp_file_path: str, filename: str) -> Dict[str, Any]:
     """Synchronous CPU worker executed in Starlette threadpool."""
     engine = get_engine()
-    res = engine.analyze(
-        tender_source=temp_file_path,
-        top_k=5,
-        document_title=filename,
-    )
+    try:
+        res = engine.analyze(
+            tender_source=temp_file_path,
+            top_k=5,
+            document_title=filename,
+        )
+    except Exception as e:
+        print(f"[ANALYZE] Analysis worker encountered error ({e}). Activating emergency fallback.", flush=True)
+        res = engine.build_emergency_fallback(
+            tender_source=temp_file_path,
+            document_title=filename,
+            error_context=e,
+        )
     # Save to history
     record_analysis_in_history(res)
     return res
@@ -411,15 +428,25 @@ async def analyze_tender(file: UploadFile = File(...)):
     except Exception as e:
         traceback.print_exc()
         duration = round(time.time() - t_start, 2)
-        print(f"[ANALYZE] processing failed after {duration}s: {e}", flush=True)
-        return JSONResponse(
-            status_code=500,
-            content={
-                "error_code": "INTERNAL_SERVER_ERROR",
-                "message": f"Error executing tender analysis: {str(e)}",
-                "stage": "Executing Technical Procurement Audit",
-            }
-        )
+        print(f"[ANALYZE] processing failed after {duration}s: {e}. Generating safe fallback.", flush=True)
+        try:
+            fallback_res = get_engine().build_emergency_fallback(
+                tender_source=temp_file_path if os.path.exists(temp_file_path) else clean_filename,
+                document_title=clean_filename,
+                error_context=e,
+            )
+            record_analysis_in_history(fallback_res)
+            return JSONResponse(content=fallback_res)
+        except Exception as fb_err:
+            print(f"[ANALYZE] Emergency fallback failed: {fb_err}", flush=True)
+            return JSONResponse(
+                status_code=500,
+                content={
+                    "error_code": "INTERNAL_SERVER_ERROR",
+                    "message": f"Error executing tender analysis: {str(e)}",
+                    "stage": "Executing Technical Procurement Audit",
+                }
+            )
     finally:
         # Clean up temporary file and directory
         if os.path.exists(temp_dir):

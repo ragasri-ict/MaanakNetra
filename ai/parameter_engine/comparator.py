@@ -34,7 +34,19 @@ def compare_parameter(
     p_name = tender_req.get("parameter_name", "")
     raw_val = tender_req.get("value", "")
     tender_unit = tender_req.get("unit")
-    norm_dict = tender_req.get("normalized_value") or {}
+    norm_raw = tender_req.get("normalized_value")
+    if isinstance(norm_raw, dict):
+        norm_dict = norm_raw
+    elif isinstance(norm_raw, (int, float)):
+        norm_dict = {"numeric_value": float(norm_raw), "operator": "EQUAL"}
+    elif isinstance(norm_raw, str):
+        try:
+            norm_dict = {"numeric_value": float(norm_raw), "operator": "EQUAL"}
+        except ValueError:
+            norm_dict = {"raw_string": norm_raw, "operator": "EQUAL"}
+    else:
+        norm_dict = {}
+
     operator = norm_dict.get("operator", "EQUAL")
     num_val = norm_dict.get("numeric_value")
     min_val = norm_dict.get("min_value")

@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 # Configurable embedding model name (Default: practical multilingual model for CPU laptops)
 DEFAULT_EMBEDDING_MODEL = os.environ.get(
     "EMBEDDING_MODEL",
-    "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    "sentence-transformers/all-MiniLM-L6-v2"
 )
 
 INDEX_CACHE_PATH = os.path.join(
@@ -25,6 +25,8 @@ INDEX_META_PATH = os.path.join(
     os.path.dirname(__file__), "..", "..", ".cache", "standards_index_meta.json"
 )
 
+
+from ai.memory_utils import log_memory
 
 class SemanticSearcher:
     """
@@ -53,22 +55,37 @@ class SemanticSearcher:
 
     def _init_encoder(self):
         """Initializes the SentenceTransformer model or falls back gracefully."""
+        log_memory("Semantic model init start")
+        if os.environ.get("RENDER") == "true" or os.environ.get("USE_TFIDF_ONLY") == "true":
+            logger.info("Render/low-memory environment detected. Enforcing TF-IDF semantic proxy to prevent OOM.")
+            self._init_fallback_vectorizer()
+            return
+
         try:
+            import torch
+            torch.set_num_threads(1)
             from sentence_transformers import SentenceTransformer
-            self.model = SentenceTransformer(self.model_name)
+            self.model = SentenceTransformer(self.model_name, device="cpu")
+            self.model.eval()
             self.use_fallback = False
+            log_memory("Semantic model init complete")
         except Exception as e:
             logger.warning(
                 f"SentenceTransformer not available for '{self.model_name}' ({e}). "
                 f"Falling back to character/subword TF-IDF semantic proxy."
             )
-            self.use_fallback = True
-            from sklearn.feature_extraction.text import TfidfVectorizer
-            self.fallback_vectorizer = TfidfVectorizer(
-                ngram_range=(1, 3),
-                sublinear_tf=True,
-                max_features=4096
-            )
+            self._init_fallback_vectorizer()
+
+    def _init_fallback_vectorizer(self):
+        """Initializes the TF-IDF vectorizer fallback."""
+        self.use_fallback = True
+        from sklearn.feature_extraction.text import TfidfVectorizer
+        self.fallback_vectorizer = TfidfVectorizer(
+            ngram_range=(1, 3),
+            sublinear_tf=True,
+            max_features=4096
+        )
+        log_memory("Semantic model fallback ready")
 
     def _prepare_document_texts(self) -> List[str]:
         """Creates semantic search representations for all standards."""
@@ -90,6 +107,7 @@ class SemanticSearcher:
     def _build_or_load_index(self):
         """Loads cached index or computes and saves new embeddings."""
         import hashlib
+        log_memory("Index load/build start")
         doc_texts = self._prepare_document_texts()
         content_hash = hashlib.sha256("".join(doc_texts).encode("utf-8")).hexdigest()
 
@@ -107,6 +125,7 @@ class SemanticSearcher:
                 ):
                     data = np.load(self.cache_npz)
                     self.embeddings = data["embeddings"]
+                    log_memory("Index loaded from cache")
                     return
             except Exception as e:
                 logger.warning(f"Failed to read index cache ({e}), rebuilding.")
@@ -115,7 +134,22 @@ class SemanticSearcher:
         os.makedirs(os.path.dirname(self.cache_npz), exist_ok=True)
 
         if not self.use_fallback and self.model is not None:
-            raw_embs = self.model.encode(doc_texts, convert_to_numpy=True, show_progress_bar=False)
+            try:
+                import torch
+                with torch.inference_mode():
+                    raw_embs = self.model.encode(doc_texts, convert_to_numpy=True, show_progress_bar=False)
+            except Exception as enc_err:
+                logger.warning(f"Error encoding document texts ({enc_err}). Reverting to TF-IDF.")
+                self.use_fallback = True
+                from sklearn.feature_extraction.text import TfidfVectorizer
+                self.fallback_vectorizer = TfidfVectorizer(ngram_range=(1, 3), sublinear_tf=True, max_features=4096)
+                matrix = self.fallback_vectorizer.fit_transform(doc_texts).toarray()
+                norms = np.linalg.norm(matrix, axis=1, keepdims=True)
+                norms = np.where(norms == 0, 1e-12, norms)
+                self.embeddings = matrix / norms
+                log_memory("Index build fallback complete")
+                return
+
             # Normalize for cosine similarity
             norms = np.linalg.norm(raw_embs, axis=1, keepdims=True)
             norms = np.where(norms == 0, 1e-12, norms)
@@ -131,12 +165,17 @@ class SemanticSearcher:
                     "dimensions": int(self.embeddings.shape[1]),
                     "standards_indexed": [s.get("is_number") for s in self.standards]
                 }, f, indent=2)
+            log_memory("Index build complete and cached")
         else:
             # Fallback vectorizer
+            if self.fallback_vectorizer is None:
+                from sklearn.feature_extraction.text import TfidfVectorizer
+                self.fallback_vectorizer = TfidfVectorizer(ngram_range=(1, 3), sublinear_tf=True, max_features=4096)
             matrix = self.fallback_vectorizer.fit_transform(doc_texts).toarray()
             norms = np.linalg.norm(matrix, axis=1, keepdims=True)
             norms = np.where(norms == 0, 1e-12, norms)
             self.embeddings = matrix / norms
+            log_memory("Index build fallback complete")
 
     def score(self, query_text: str) -> List[Tuple[Dict[str, Any], float]]:
         """
@@ -146,14 +185,26 @@ class SemanticSearcher:
         if not query_text or self.embeddings is None:
             return [(std, 0.0) for std in self.standards]
 
+        sims = None
         if not self.use_fallback and self.model is not None:
-            q_emb = self.model.encode([query_text], convert_to_numpy=True, show_progress_bar=False)
-            norm = np.linalg.norm(q_emb)
-            if norm > 0:
-                q_emb = q_emb / norm
-            # Cosine similarity (dot product on normalized vectors)
-            sims = np.dot(self.embeddings, q_emb.T).flatten()
-        else:
+            try:
+                import torch
+                with torch.inference_mode():
+                    q_emb = self.model.encode([query_text], convert_to_numpy=True, show_progress_bar=False)
+                norm = np.linalg.norm(q_emb)
+                if norm > 0:
+                    q_emb = q_emb / norm
+                # Cosine similarity (dot product on normalized vectors)
+                sims = np.dot(self.embeddings, q_emb.T).flatten()
+            except Exception as e:
+                logger.warning(f"Error in SentenceTransformer score ({e}). Using TF-IDF fallback.")
+                sims = None
+
+        if sims is None:
+            if self.fallback_vectorizer is None:
+                from sklearn.feature_extraction.text import TfidfVectorizer
+                self.fallback_vectorizer = TfidfVectorizer(ngram_range=(1, 3), sublinear_tf=True, max_features=4096)
+                self.fallback_vectorizer.fit(self._prepare_document_texts())
             q_vec = self.fallback_vectorizer.transform([query_text]).toarray()
             norm = np.linalg.norm(q_vec)
             if norm > 0:

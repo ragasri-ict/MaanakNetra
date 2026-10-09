@@ -261,6 +261,9 @@ class ProcurementAnalysisEngine:
         print(f"[ANALYZE] evidence validated: {len(related_standards)} allied standards, graph nodes={graph_summary['total_nodes']}", flush=True)
 
         # 4. Tender Linter: Execute Rules 1 - 6 with safe graceful fallback
+        is_degraded = False
+        audit_mode = "FULL_AI_AUDIT"
+        fallback_reason = None
         try:
             findings, corrected_clauses = self.linter.lint(
                 extracted_requirements=extracted_requirements,
@@ -271,7 +274,29 @@ class ProcurementAnalysisEngine:
             )
         except Exception as linter_err:
             print(f"[ANALYZE] Warning: Linter encountered error ({linter_err}). Preserving extracted standards and returning fallback clause.", flush=True)
+            is_degraded = True
+            audit_mode = "DETERMINISTIC_FALLBACK"
+            fallback_reason = f"Stage 5 linter failure: {type(linter_err).__name__}"
             findings = []
+
+            # Deterministic fallback check for outdated standards
+            for cited in already_cited_standards:
+                code = cited.get("standard_code", "")
+                year_cited = cited.get("year_cited")
+                raw_cite = cited.get("raw_citation")
+                full_code = raw_cite or (f"{code}:{year_cited}" if year_cited else code)
+                if not full_code: continue
+                status_res = self.reg_service.get_standard_status(full_code)
+                if status_res.get("status") in ("SUPERSEDED", "WITHDRAWN"):
+                    findings.append({
+                        "finding_id": f"FALLBACK_OUTDATED_{code.replace(' ', '_')}",
+                        "severity": "HIGH",
+                        "finding_type": "OUTDATED_STANDARD",
+                        "title": f"Superseded Indian Standard Cited: {full_code}",
+                        "affected_standard": {"is_number": full_code, "current_status": status_res.get("status")},
+                        "requires_human_review": True
+                    })
+
             corrected_clauses = [{
                 "clause_id": "CORR_001",
                 "source_clause_reference": "General Technical Specifications",
@@ -518,10 +543,58 @@ class ProcurementAnalysisEngine:
                 "embedding_model": "paraphrase-multilingual-MiniLM-L12-v2",
                 "is_reproducible": True,
                 "analysis_timestamp": datetime.now(timezone.utc).isoformat(),
+                "is_degraded": is_degraded,
+                "audit_mode": audit_mode,
+                "fallback_reason": fallback_reason,
             }
         }
         print(f"[ANALYZE] result serialized: {len(json.dumps(result_dict))} bytes", flush=True)
         return result_dict
+
+    def build_emergency_fallback(
+        self,
+        tender_source: Union[str, Dict[str, Any]],
+        document_title: str,
+        error_context: Exception,
+    ) -> Dict[str, Any]:
+        """Provides a safe, deterministic fallback result when analysis fails."""
+        return {
+            "status": "completed",
+            "tender_metadata": {
+                "analysis_id": f"FALLBACK_{int(time.time())}",
+                "document_title": document_title,
+                "file_name": document_title,
+                "page_count": 1,
+                "analyzed_at": datetime.now(timezone.utc).isoformat(),
+            },
+            "extracted_requirements": [],
+            "already_cited_standards": [],
+            "recommended_standards": [],
+            "related_standards": [],
+            "graph_summary": {},
+            "status_flags": {"has_superseded_standards": False},
+            "certification_flags": {},
+            "findings": [{
+                "finding_id": "FIND_EMERGENCY_FALLBACK",
+                "severity": "MEDIUM",
+                "finding_type": "OTHER",
+                "title": "Analysis Encountered an Error",
+                "tender_text": document_title,
+                "affected_standard": {"is_number": "N/A", "current_status": "UNKNOWN"},
+                "explanation": f"The analysis engine encountered a system error: {str(error_context)}",
+                "requires_human_review": True,
+            }],
+            "standards_bom": [],
+            "corrected_clause": [],
+            "risk_indicator": {"risk_level": "MEDIUM", "compliance_score": 50.0},
+            "human_review_required": True,
+            "audit_trail": {
+                "is_degraded": True,
+                "audit_mode": "EMERGENCY_FALLBACK",
+                "fallback_reason": str(error_context),
+                "analysis_timestamp": datetime.now(timezone.utc).isoformat(),
+            }
+        }
 
 
 def analyze_procurement_document(

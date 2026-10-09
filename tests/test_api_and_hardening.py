@@ -179,3 +179,123 @@ def test_sample_tender_output_unchanged():
             for f in result["findings"]
         )
         assert has_superseded_finding
+
+
+def test_stage5_normal_execution():
+    """Normal Stage 5 must succeed and indicate full AI audit in audit_trail."""
+    engine = ProcurementAnalysisEngine()
+    dummy_tender = {
+        "tender_metadata": {"document_title": "Test Submersible Pump Tender", "page_count": 1},
+        "extracted_requirements": [
+            {
+                "requirement_id": "REQ_001",
+                "parameter_name": "Motor Power",
+                "source_text": "Motor rating 5.5 kW, 415V",
+                "normalized_value": "5.5",
+                "unit": "kW",
+                "governing_clause": "Clause 2.1",
+                "page": 1,
+                "confidence": 0.95
+            }
+        ],
+        "already_cited_standards": [
+            {
+                "standard_code": "IS 14220",
+                "year_cited": 1994,
+                "raw_citation": "IS 14220:1994",
+                "verbatim_citation": "Pump must comply with IS 14220:1994",
+                "clause_reference": "2.1",
+                "is_active": False,
+                "confidence": 0.99
+            }
+        ],
+        "product_context": {"primary_item_name": "Submersible Pumpset", "category": "Pumps"},
+        "raw_text": "Submersible pumpset tender specification IS 14220:1994."
+    }
+    result = engine.analyze(dummy_tender, top_k=3)
+    assert result["status"] == "completed"
+    assert result["audit_trail"]["is_degraded"] is False
+    assert result["audit_trail"]["audit_mode"] == "FULL_AI_AUDIT"
+    assert len(result["findings"]) > 0
+
+
+def test_stage5_failure_triggers_deterministic_fallback(monkeypatch):
+    """When Stage 5 linter raises an error, deterministic fallback must engage gracefully."""
+    engine = ProcurementAnalysisEngine()
+
+    def mock_lint_failure(*args, **kwargs):
+        raise RuntimeError("Simulated Stage 5 Memory/Timeout Failure")
+
+    monkeypatch.setattr(engine.linter, "lint", mock_lint_failure)
+
+    dummy_tender = {
+        "tender_metadata": {"document_title": "Test Submersible Pump Tender", "page_count": 1},
+        "extracted_requirements": [
+            {
+                "requirement_id": "REQ_001",
+                "parameter_name": "Motor Power",
+                "source_text": "Motor rating 5.5 kW, 415V",
+                "normalized_value": "5.5",
+                "unit": "kW",
+                "governing_clause": "Clause 2.1",
+                "page": 1,
+                "confidence": 0.95
+            }
+        ],
+        "already_cited_standards": [
+            {
+                "standard_code": "IS 14220",
+                "year_cited": 1994,
+                "raw_citation": "IS 14220:1994",
+                "verbatim_citation": "Pump must comply with IS 14220:1994",
+                "clause_reference": "2.1",
+                "is_active": False,
+                "confidence": 0.99
+            }
+        ],
+        "product_context": {"primary_item_name": "Submersible Pumpset", "category": "Pumps"},
+        "raw_text": "Submersible pumpset tender specification IS 14220:1994."
+    }
+
+    result = engine.analyze(dummy_tender, top_k=3)
+    assert result["status"] == "completed"
+    assert result["audit_trail"]["is_degraded"] is True
+    assert result["audit_trail"]["audit_mode"] == "DETERMINISTIC_FALLBACK"
+    assert "Simulated Stage 5" in result["audit_trail"].get("fallback_reason", "")
+
+    # Required fields must all be present and valid
+    for req_field in [
+        "tender_metadata", "extracted_requirements", "already_cited_standards",
+        "recommended_standards", "related_standards", "graph_summary",
+        "status_flags", "certification_flags", "findings", "standards_bom",
+        "corrected_clause", "risk_indicator", "human_review_required"
+    ]:
+        assert req_field in result, f"Missing field in fallback result: {req_field}"
+
+    # Must accurately flag superseded IS 14220:1994 deterministically
+    assert result["status_flags"]["has_superseded_standards"] is True
+    assert any(f["finding_type"] == "OUTDATED_STANDARD" for f in result["findings"])
+
+
+def test_api_analyze_stage5_failure_returns_200(client, monkeypatch):
+    """POST /api/analyze must return HTTP 200 and schema-valid response even if Stage 5 fails."""
+    from backend.app import get_engine
+    engine = get_engine()
+
+    def mock_lint_failure(*args, **kwargs):
+        raise RuntimeError("Simulated Render 502 Out-Of-Memory during Stage 5")
+
+    monkeypatch.setattr(engine.linter, "lint", mock_lint_failure)
+
+    sample_pdf = os.path.join(WORKSPACE_ROOT, "demo", "sample_tender.pdf")
+    if os.path.exists(sample_pdf):
+        with open(sample_pdf, "rb") as f:
+            pdf_bytes = f.read()
+        files = {"file": ("sample_tender.pdf", pdf_bytes, "application/pdf")}
+        res = client.post("/api/analyze", files=files)
+        assert res.status_code == 200
+        data = res.json()
+        assert data["status"] == "completed"
+        assert data["audit_trail"]["is_degraded"] is True
+        assert data["audit_trail"]["audit_mode"] == "DETERMINISTIC_FALLBACK"
+        assert len(data["findings"]) > 0
